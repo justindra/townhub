@@ -94,3 +94,5 @@ module.exports = {
   tabWidth: 2,
 };
 ```
+
+Now when you commit all this new code, Prettier should run over all the text and keep your code formatted nicely.
