@@ -1,8 +1,14 @@
 import MyStack from './MyStack';
-import * as sst from '@serverless-stack/resources';
+import { App } from '@serverless-stack/resources';
 
-export default function main(app: sst.App): void {
+export default function main(app: App): void {
   new MyStack(app, 'my-stack');
 
   // Add more stacks
+
+  // API Gateway Stack
+  // - ApiGateway
+  // - Route53 Alias to it
+  // - Add first Serverless service with an ApiGateway defined in the CDK
+  // - End result should have https://api.townhub.ca/test
 }
