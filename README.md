@@ -16,15 +16,3 @@ This is the list of technologies that I may use. Or might not, just an idea at t
 | [TypeScript](https://www.typescriptlang.org/)               | Main programming language                                                                                  |
 | [Prettier](https://prettier.io/)                            | Keep our code pretty                                                                                       |
 | [Vue](https://vuejs.org/)                                   | For frontend code                                                                                          |
-
-## Folder Structure
-
-This repository is a monorepo that contains all code for all of the infrastructure, backend and frontend. The idea is that we should be able to easily deploy this project into a new AWS organisation if we need to. Here is a bit of a rough structure of what I think would be in each directory.
-
-```bash
-.
-├── docs            # Any additional documentations and write-ups
-├── infrastructure  # Infrastructure
-├── backend         # Backend code - should mainly be lambda functions and services
-└── frontend        # Frontend code - should be the different frontend apps
-```
