@@ -1,0 +1,19 @@
+{
+  "name": "@townhub/infra-cdk",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "sst test",
+    "build": "sst build",
+    "deploy": "sst deploy",
+    "remove": "sst remove"
+  },
+  "dependencies": {
+    "@aws-cdk/core": "1.61.0",
+    "@serverless-stack/cli": "0.1.10",
+    "@serverless-stack/resources": "0.1.10"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.61.0"
+  }
+}

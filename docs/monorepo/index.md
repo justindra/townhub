@@ -37,7 +37,7 @@ $ npx lerna init
 
 Now update `lerna.json` that was created in the root to be the following:
 
-```json
+```jsonc
 {
   "version": "0.0.0",
   "npmClient": "yarn", // Set Yarn as default package manager
