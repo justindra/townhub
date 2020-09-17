@@ -8,6 +8,7 @@
     "infrastructure/*"
   ],
   "devDependencies": {
+    "@types/jest": "^26.0.14",
     "husky": "^4.3.0",
     "lerna": "^3.22.1",
     "lint-staged": "^10.4.0",
