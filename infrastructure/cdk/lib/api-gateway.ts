@@ -8,24 +8,35 @@ import { HostedZone, ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { ApiGateway as ApiGatewayTarget } from '@aws-cdk/aws-route53-targets';
 import { CfnOutput } from '@aws-cdk/core';
 
+export interface ApiGatewayStackProps extends StackProps {
+  /** The root domain name, used to lookup a Route53 Hosted Zone */
+  rootDomainName: string;
+}
+
+/**
+ * A Stack that defines an API Gateway Rest Endpoint for a custom domain.
+ * It should create it on the endpoint `api.[domainName]` for production or
+ * `api.[stage].[domainName]` for other stages.
+ *
+ * @output ApiGatewayRestApiId
+ * @output ApiGatewayRestApiRootResourceId
+ * @output ApiDomainName
+ */
 export default class ApiGatewayStack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps, rootDomainName = '') {
+  constructor(
+    scope: App,
+    id: string,
+    { rootDomainName, ...props }: ApiGatewayStackProps
+  ) {
     super(scope, id, props);
 
-    if (!rootDomainName) {
-      console.warn(
-        'Root Domain Name required. Skipping generation without it.'
-      );
-      return;
-    }
-
-    // Define the custom domain for the api
+    // Define the custom domain to use for the api
     const apiDomainName =
       scope.stage === 'prod'
         ? `api.${rootDomainName}`
         : `api.${scope.stage}.${rootDomainName}`;
 
-    // Find the hosted zone in route53
+    // Find the hosted zone in Route53
     const hostedZone = HostedZone.fromLookup(this, 'HostedZone', {
       domainName: rootDomainName,
     });
