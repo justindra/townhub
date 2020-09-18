@@ -8,6 +8,7 @@
 
 # production
 /build
+cdk.context.json
 
 # typescript
 *.js

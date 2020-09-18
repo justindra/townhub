@@ -1,8 +1,8 @@
-import MyStack from './MyStack';
-import * as sst from '@serverless-stack/resources';
+import { App } from '@serverless-stack/resources';
+import ApiGatewayStack from './api-gateway';
 
-export default function main(app: sst.App): void {
-  new MyStack(app, 'my-stack');
-
-  // Add more stacks
+export default function main(app: App): void {
+  new ApiGatewayStack(app, 'ApiGatewayStack', {
+    rootDomainName: 'townhub.ca',
+  });
 }
