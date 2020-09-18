@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.61.0",
+    "@aws-cdk/aws-route53": "1.61.0",
+    "@aws-cdk/aws-route53-targets": "1.61.0",
     "@aws-cdk/aws-ssm": "1.61.0",
     "@aws-cdk/core": "1.61.0",
     "@serverless-stack/cli": "0.1.10",

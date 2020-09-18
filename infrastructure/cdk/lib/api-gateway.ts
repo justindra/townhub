@@ -1,40 +1,42 @@
 import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { RestApi } from '@aws-cdk/aws-apigateway';
-import { StringParameter } from '@aws-cdk/aws-ssm';
-import { Certificate } from '@aws-cdk/aws-certificatemanager';
-// API Gateway Stack
-// - ApiGateway
-// - Route53 Alias to it
-// - Add first Serverless service with an ApiGateway defined in the CDK
-// - Create a sub-domain based on the environment, unless prod, then stick to the root domain
-// - End result should have https://api.townhub.ca/test or https://api.dev.townhub.ca/test
+import {
+  Certificate,
+  CertificateValidation,
+} from '@aws-cdk/aws-certificatemanager';
+import { HostedZone, ARecord, RecordTarget } from '@aws-cdk/aws-route53';
+import { ApiGateway as ApiGatewayTarget } from '@aws-cdk/aws-route53-targets';
+import { CfnOutput } from '@aws-cdk/core';
 
 export default class ApiGatewayStack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps) {
+  constructor(scope: App, id: string, props?: StackProps, rootDomainName = '') {
     super(scope, id, props);
 
+    if (!rootDomainName) {
+      console.warn(
+        'Root Domain Name required. Skipping generation without it.'
+      );
+      return;
+    }
+
+    // Define the custom domain for the api
     const apiDomainName =
       scope.stage === 'prod'
-        ? 'api.townhub.ca'
-        : `api.${scope.stage}.townhub.ca`;
+        ? `api.${rootDomainName}`
+        : `api.${scope.stage}.${rootDomainName}`;
 
-    const sslCertificateArn = StringParameter.fromStringParameterAttributes(
-      this,
-      'sslCertificateArn',
-      {
-        parameterName: `/ssl-certificate/townhub-arn/${scope.region}`,
-      }
-    );
+    // Find the hosted zone in route53
+    const hostedZone = HostedZone.fromLookup(this, 'HostedZone', {
+      domainName: rootDomainName,
+    });
 
-    // Instead of from ARN, we need to create a new certificate in our hosted zone.
-    // https://docs.aws.amazon.com/cdk/api/latest/docs/aws-certificatemanager-readme.html#dns-validation
+    // Create a new SSL Certificate for the Api Domain
+    const sslCertificate = new Certificate(this, 'sslCertificate', {
+      domainName: apiDomainName,
+      validation: CertificateValidation.fromDns(hostedZone),
+    });
 
-    const sslCertificate = Certificate.fromCertificateArn(
-      this,
-      'sslCertificate',
-      sslCertificateArn.stringValue
-    );
-
+    // Create the REST-API endpoint
     const api = new RestApi(this, 'ApiGateway', {
       restApiName: `${scope.name}-${scope.stage}-ApiGateway`,
       description: `The main API Gateway for ${scope.name}`,
@@ -44,6 +46,25 @@ export default class ApiGatewayStack extends Stack {
       },
     });
 
+    // An endpoint must have a default method at the root
     api.root.addMethod('ANY');
+
+    // Create a new A Record to point to the API Gateway
+    new ARecord(this, 'ARecord', {
+      zone: hostedZone,
+      target: RecordTarget.fromAlias(new ApiGatewayTarget(api)),
+      recordName: apiDomainName,
+    });
+
+    // Output different values so it can be referenced by other stacks
+    new CfnOutput(this, 'ApiGatewayRestApiId', {
+      value: api.restApiId,
+    });
+    new CfnOutput(this, 'ApiGatewayRestApiRootResourceId', {
+      value: api.restApiRootResourceId,
+    });
+    new CfnOutput(this, 'ApiDomainName', {
+      value: apiDomainName,
+    });
   }
 }
