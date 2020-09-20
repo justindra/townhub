@@ -1,0 +1,6 @@
+{
+  "name": "townhub-infra-ssl",
+  "type": "@serverless-stack/resources",
+  "stage": "dev",
+  "region": "us-west-2"
+}
