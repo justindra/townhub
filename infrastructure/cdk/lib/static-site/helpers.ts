@@ -1,3 +1,5 @@
+import * as cdkContextJson from '../../cdk.context.json';
+
 /**
  * Get the domain name for a website host based on the stage and any subdomain
  * requirements.
@@ -17,4 +19,10 @@ export const getDomainName = (
   if (!subdomain) return defaultDomain;
 
   return `${subdomain}.${defaultDomain}`;
+};
+
+export const getCertificateArnFromContext = () => {
+  const keys = Object.keys(cdkContextJson);
+  const arnKey = keys.find((val) => val.includes('ssm:account')) ?? '';
+  return (cdkContextJson as any)[arnKey];
 };

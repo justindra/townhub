@@ -8,8 +8,8 @@ import {
 } from '@aws-cdk/aws-cloudfront';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
-// import { SSLGlobalStack } from './ssl-global';
-import { getDomainName } from './helpers';
+import { getCertificateArnFromContext, getDomainName } from './helpers';
+// import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -19,7 +19,6 @@ export interface StaticSiteStackProps extends StackProps {
    * the root domain name.
    */
   subdomain?: string;
-  sslCertificateArn: string;
 }
 
 /**
@@ -32,12 +31,7 @@ export default class StaticSiteStack extends Stack {
   constructor(
     scope: App,
     id: string,
-    {
-      rootDomainName,
-      subdomain,
-      sslCertificateArn,
-      ...props
-    }: StaticSiteStackProps
+    { rootDomainName, subdomain, ...props }: StaticSiteStackProps
   ) {
     super(scope, id, props);
 
@@ -53,11 +47,9 @@ export default class StaticSiteStack extends Stack {
       domainName: rootDomainName,
     });
 
-    // // Create an SSL Certificate for the Website domain in the `us-east-1`
-    // // region as that's what is required for CloudFront
-    // const sslCertificate = new SSLGlobalStack(scope, 'SslCertificateGlobalRegion', {
-    //   rootDomainName
-    // });
+    // Get the SSL Certificate ARN (see @townhub/infra-ssl for details)
+    // const sslCertificateArn = StringParameter.valueFromLookup(this, '/ssl-certs/global')
+    const sslCertificateArn = getCertificateArnFromContext();
 
     // Create the bucket
     const bucket = new Bucket(this, 'StaticSiteBucket');
@@ -113,6 +105,9 @@ export default class StaticSiteStack extends Stack {
     });
     new CfnOutput(this, 'WebsiteBucketArn', {
       value: bucket.bucketArn,
+    });
+    new CfnOutput(this, 'CertificateArn', {
+      value: sslCertificateArn,
     });
   }
 }

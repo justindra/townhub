@@ -1,5 +1,6 @@
 import { App, Stack, StackProps } from '@serverless-stack/resources';
 import { CfnOutput } from '@aws-cdk/core';
+import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export type ParameterStackProps = StackProps & {
   certificateArn: string;
@@ -17,6 +18,11 @@ export class ParameterStack extends Stack {
     { certificateArn, ...props }: ParameterStackProps
   ) {
     super(scope, id, props);
+
+    new StringParameter(this, 'SSLGlobalCertificateParameter', {
+      stringValue: certificateArn,
+      parameterName: '/ssl-certs/global',
+    });
 
     new CfnOutput(this, 'SSLGlobalCertificate', {
       value: certificateArn,

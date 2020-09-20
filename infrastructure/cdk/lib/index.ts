@@ -9,6 +9,5 @@ export default function main(app: App): void {
 
   new StaticSiteStack(app, 'StaticHomePageStack', {
     rootDomainName: 'townhub.ca',
-    sslCertificateArn: 'b.certificateArn',
   });
 }
