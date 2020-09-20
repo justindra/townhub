@@ -48,6 +48,8 @@ export default class StaticSiteStack extends Stack {
     });
 
     // Get the SSL Certificate ARN (see @townhub/infra-ssl for details)
+    // Ideally the below should work, but it doesn't for some reason, issue has been logged
+    // https://github.com/aws/aws-cdk/issues/10446
     // const sslCertificateArn = StringParameter.valueFromLookup(this, '/ssl-certs/global')
     const sslCertificateArn = getCertificateArnFromContext();
 
