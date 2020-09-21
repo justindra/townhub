@@ -31,7 +31,8 @@ const certificateArnBuffer = execSync(
   --query "Stacks[0].Outputs[0].OutputValue" \
   --region us-east-1`
 );
-const certificateArn = certificateArnBuffer.toString();
+// Remove any newline characters just in case
+const certificateArn = certificateArnBuffer.toString().replace(/\r?\n|\r/g, '');
 
 // Export it as an ENV Variable so the next deploy can use it
 process.env.CERTIFICATE_ARN = certificateArn;

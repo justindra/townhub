@@ -6,7 +6,7 @@
     "test": "sst test",
     "build": "sst build",
     "deploy": "./scripts/deploy.js townhub-dev",
-    "remove": "sst remove"
+    "remove": "./scripts/remove.js townhub-dev"
   },
   "dependencies": {
     "@aws-cdk/aws-certificatemanager": "1.61.0",

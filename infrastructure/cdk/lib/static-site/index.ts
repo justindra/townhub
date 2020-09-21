@@ -1,6 +1,6 @@
 import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
-import { CfnOutput } from '@aws-cdk/core';
+import { CfnOutput, RemovalPolicy } from '@aws-cdk/core';
 import { Bucket } from '@aws-cdk/aws-s3';
 import {
   CloudFrontWebDistribution,
@@ -8,8 +8,8 @@ import {
 } from '@aws-cdk/aws-cloudfront';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
-import { getCertificateArnFromContext, getDomainName } from './helpers';
-// import { StringParameter } from '@aws-cdk/aws-ssm';
+import { getDomainName } from './helpers';
+import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -48,13 +48,18 @@ export default class StaticSiteStack extends Stack {
     });
 
     // Get the SSL Certificate ARN (see @townhub/infra-ssl for details)
-    // Ideally the below should work, but it doesn't for some reason, issue has been logged
+    // StringParameter.valueFromLookup seems to add a newline character at the end,
+    // so we should remove it before using.
     // https://github.com/aws/aws-cdk/issues/10446
-    // const sslCertificateArn = StringParameter.valueFromLookup(this, '/ssl-certs/global')
-    const sslCertificateArn = getCertificateArnFromContext();
+    const sslCertificateArn = StringParameter.valueFromLookup(
+      this,
+      '/ssl-certs/global'
+    ).replace(/\r?\n|\r/g, '');
 
     // Create the bucket
-    const bucket = new Bucket(this, 'StaticSiteBucket');
+    const bucket = new Bucket(this, 'StaticSiteBucket', {
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
 
     // Create the CloudFront OAI
     const oai = new OriginAccessIdentity(this, 'OAI', {
