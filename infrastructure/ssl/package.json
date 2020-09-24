@@ -1,21 +1,16 @@
 {
-  "name": "@townhub/infra-cdk",
+  "name": "@townhub/infra-ssl",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "test": "sst test",
     "build": "sst build",
-    "deploy": "sst deploy",
-    "remove": "sst remove"
+    "deploy": "./scripts/deploy.js townhub-dev",
+    "remove": "./scripts/remove.js townhub-dev"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.61.0",
-    "@aws-cdk/aws-cloudfront": "1.61.0",
-    "@aws-cdk/aws-iam": "1.61.0",
+    "@aws-cdk/aws-certificatemanager": "1.61.0",
     "@aws-cdk/aws-route53": "1.61.0",
-    "@aws-cdk/aws-route53-targets": "1.61.0",
-    "@aws-cdk/aws-s3": "1.61.0",
-    "@aws-cdk/aws-ssm": "1.61.0",
     "@aws-cdk/core": "1.61.0",
     "@serverless-stack/cli": "0.1.10",
     "@serverless-stack/resources": "0.1.10"

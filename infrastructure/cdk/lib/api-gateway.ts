@@ -7,6 +7,7 @@ import {
 import { HostedZone, ARecord, RecordTarget } from '@aws-cdk/aws-route53';
 import { ApiGateway as ApiGatewayTarget } from '@aws-cdk/aws-route53-targets';
 import { CfnOutput } from '@aws-cdk/core';
+import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface ApiGatewayStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -65,6 +66,20 @@ export default class ApiGatewayStack extends Stack {
       zone: hostedZone,
       target: RecordTarget.fromAlias(new ApiGatewayTarget(api)),
       recordName: apiDomainName,
+    });
+
+    // Output the different values into SSM as an alternative to CFN Outputs
+    new StringParameter(this, 'ApiGatewayRestApiId', {
+      parameterName: `/townhub/${scope.stage}/api-gateway/rest-api-id`,
+      stringValue: api.restApiId,
+    });
+    new StringParameter(this, 'ApiGatewayRestApiRootResourceId', {
+      parameterName: `/townhub/${scope.stage}/api-gateway/rest-api-root-resource-id`,
+      stringValue: api.restApiRootResourceId,
+    });
+    new StringParameter(this, 'ApiDomainName', {
+      parameterName: `/townhub/${scope.stage}/api-gateway/domain-name`,
+      stringValue: apiDomainName,
     });
 
     // Output different values so it can be referenced by other stacks
