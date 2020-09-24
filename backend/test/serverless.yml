@@ -1,0 +1,28 @@
+service: townhub-test
+
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+provider:
+  name: aws
+  runtime: ${file(../shared/provider.yml):runtime}
+  region: ${file(../shared/provider.yml):region}
+  profile: ${file(../shared/provider.yml):profile}
+  stage: ${file(../shared/provider.yml):stage}
+  apiGateway: ${file(../shared/api-gateway.yml)}
+
+custom:
+  cors: ${file(../shared/cors.yml)}
+
+plugins:
+  - serverless-bundle
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http:
+          path: hello
+          method: get
+          cors: ${self:custom.cors}

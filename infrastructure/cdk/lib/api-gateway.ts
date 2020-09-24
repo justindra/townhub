@@ -56,6 +56,9 @@ export default class ApiGatewayStack extends Stack {
         domainName: apiDomainName,
         certificate: sslCertificate,
       },
+      deployOptions: {
+        stageName: scope.stage,
+      },
     });
 
     // An endpoint must have a default method at the root
@@ -69,15 +72,15 @@ export default class ApiGatewayStack extends Stack {
     });
 
     // Output the different values into SSM as an alternative to CFN Outputs
-    new StringParameter(this, 'ApiGatewayRestApiId', {
+    new StringParameter(this, 'ParamApiGatewayRestApiId', {
       parameterName: `/townhub/${scope.stage}/api-gateway/rest-api-id`,
       stringValue: api.restApiId,
     });
-    new StringParameter(this, 'ApiGatewayRestApiRootResourceId', {
+    new StringParameter(this, 'ParamApiGatewayRestApiRootResourceId', {
       parameterName: `/townhub/${scope.stage}/api-gateway/rest-api-root-resource-id`,
       stringValue: api.restApiRootResourceId,
     });
-    new StringParameter(this, 'ApiDomainName', {
+    new StringParameter(this, 'ParamApiDomainName', {
       parameterName: `/townhub/${scope.stage}/api-gateway/domain-name`,
       stringValue: apiDomainName,
     });
