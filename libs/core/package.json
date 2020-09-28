@@ -1,0 +1,9 @@
+{
+  "name": "@townhub-libs/core",
+  "version": "0.0.0",
+  "main": "dist/index",
+  "license": "MIT",
+  "dependencies": {
+    "change-case": "^4.1.1"
+  }
+}

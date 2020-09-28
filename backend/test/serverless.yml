@@ -12,10 +12,20 @@ provider:
   stage: ${file(../shared/provider.yml):stage}
   apiGateway: ${file(../shared/api-gateway.yml)}
 
+package:
+  individually: true
+
 custom:
   cors: ${file(../shared/cors.yml)}
+  # scripts:
+  #   hooks:
+  #     'before:deploy:createDeploymentArtifacts': yarn run build
+  bundle:
+    packager: yarn
+    sourcemaps: false
 
 plugins:
+  - serverless-plugin-scripts
   - serverless-bundle
 
 functions:

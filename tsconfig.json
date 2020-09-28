@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.build.json",
+
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@townhub-libs/core": ["libs/core/src"]
+    }
+  }
+}
