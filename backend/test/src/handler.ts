@@ -14,7 +14,7 @@ export const hello = async (event) => {
     body: JSON.stringify(
       {
         message: 'Go Serverless v1.0! Your function executed successfully!',
-        test: `${HELLO_CAMEL}, ${HELLO_SENTENCE}, ${YAY}`,
+        test: `${HELLO_CAMEL}, ${HELLO_SENTENCE}, ${YAY}, ${a.magic}`,
         input: event,
       },
       null,

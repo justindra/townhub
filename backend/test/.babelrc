@@ -1,0 +1,18 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "12"
+        }
+      }
+    ],
+    [
+      "@babel/preset-typescript",
+      {
+        "onlyRemoveTypeImports": true // this is important for proper files watching
+      }
+    ]
+  ]
+}

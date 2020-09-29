@@ -20,13 +20,14 @@ custom:
   # scripts:
   #   hooks:
   #     'before:deploy:createDeploymentArtifacts': yarn run build
-  bundle:
-    packager: yarn
-    sourcemaps: false
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    packager: 'yarn'
+    includeModules: true
 
 plugins:
-  - serverless-plugin-scripts
-  - serverless-bundle
+  # - serverless-plugin-scripts
+  - serverless-webpack
 
 functions:
   hello:
