@@ -2,6 +2,7 @@
   "name": "@townhub-libs/core",
   "version": "0.0.0",
   "main": "dist/index",
+  "module": "dist/index",
   "private": true,
   "dependencies": {
     "change-case": "^4.1.1",
@@ -9,5 +10,8 @@
   },
   "devDependencies": {
     "@types/uuid": "^8.3.0"
+  },
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js"
   }
 }

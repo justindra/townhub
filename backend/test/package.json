@@ -7,5 +7,9 @@
   "dependencies": {
     "@townhub-libs/core": "^0.0.0"
   },
-  "scripts": {}
+  "scripts": {
+    "build:dependencies": "lerna run build --scope @townhub/test --include-dependencies",
+    "predeploy": "yarn run build:dependencies",
+    "deploy": "sls deploy"
+  }
 }
