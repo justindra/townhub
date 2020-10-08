@@ -1,4 +1,4 @@
-import { HELLO_CAMEL, YAY, HELLO_SENTENCE } from '@townhub-libs/core';
+import { HELLO_CAMEL, HELLO_SENTENCE } from '@townhub-libs/core';
 
 class TestClass {
   magic: string;
@@ -14,7 +14,7 @@ export const hello = async (event) => {
     body: JSON.stringify(
       {
         message: 'Go Serverless v1.0! Your function executed successfully!',
-        test: `${HELLO_CAMEL}, ${HELLO_SENTENCE}, ${YAY}, ${a.magic}`,
+        test: `${HELLO_CAMEL}, ${HELLO_SENTENCE}, ${a.magic}`,
         input: event,
       },
       null,

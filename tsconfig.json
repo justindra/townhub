@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@townhub-libs/core": ["libs/core/src"]
+      "@townhub-libs/core": ["libs/core/src"],
+      "@townhub-libs/core/*": ["libs/core/src/*"]
     }
   }
 }

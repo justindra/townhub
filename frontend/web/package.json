@@ -36,7 +36,6 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0"
   }
 }

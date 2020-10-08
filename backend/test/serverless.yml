@@ -17,17 +17,12 @@ package:
 
 custom:
   cors: ${file(../shared/cors.yml)}
-  # scripts:
-  #   hooks:
-  #     'before:deploy:createDeploymentArtifacts': yarn run build
-  webpack:
-    webpackConfig: 'webpack.config.js'
-    packager: 'yarn'
-    includeModules: true
+  rollup:
+    config: ../shared/rollup.config.js
+    installCommand: yarn add
 
 plugins:
-  # - serverless-plugin-scripts
-  - serverless-webpack
+  - serverless-rollup-plugin
 
 functions:
   hello:
@@ -35,5 +30,12 @@ functions:
     events:
       - http:
           path: hello
+          method: get
+          cors: ${self:custom.cors}
+  another:
+    handler: src/another.main
+    events:
+      - http:
+          path: another
           method: get
           cors: ${self:custom.cors}
