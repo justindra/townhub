@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "es2019",
+    "moduleResolution": "node",
+
+    "sourceMap": true,
+
+    // Paths to shared libraries
+    "baseUrl": ".",
+    "paths": {
+      "@townhub-libs/core": ["libs/core/src"],
+      "@townhub-libs/core/*": ["libs/core/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
