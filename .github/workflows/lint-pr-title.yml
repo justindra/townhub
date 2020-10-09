@@ -1,3 +1,4 @@
+# This lints the PR title and to make sure that it follows conventional commit
 name: 'Lint PR Title'
 on:
   pull_request:

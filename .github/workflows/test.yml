@@ -1,3 +1,7 @@
+# This should run all tests in the repository
+#
+# At some point we should update this to run only certain tests depending
+# on the code that was changed in the PR. But run the whole thing on master
 name: Unit tests
 
 on:
