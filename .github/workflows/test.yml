@@ -1,4 +1,4 @@
-name: Run all Unit Tests
+name: Unit tests
 
 on:
   push:
@@ -23,4 +23,12 @@ jobs:
       - uses: c-hive/gha-yarn-cache@v1
       # Run install and test
       - run: yarn install
-      - run: yarn test
+      - name: Run tests with coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: ziishaned/jest-reporter-action@v0.1.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-command: yarn test --coverage
+      - name: Run tests
+        if: ${{ github.event_name != 'pull_request' }}
+        run: yarn test
