@@ -6,6 +6,9 @@
 
     "sourceMap": true,
 
+    "strict": true,
+    "esModuleInterop": true,
+
     // Paths to shared libraries
     "baseUrl": ".",
     "paths": {

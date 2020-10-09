@@ -12,6 +12,7 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@types/jest": "^26.0.14",
     "husky": "^4.3.0",
+    "jest": "^26.5.2",
     "lerna": "^3.22.1",
     "lint-staged": "^10.4.0",
     "prettier": "2.1.2",
@@ -19,7 +20,11 @@
     "rollup-plugin-typescript2": "^0.27.3",
     "rollup-plugin-uglify": "^6.0.4",
     "serverless-rollup-plugin": "^2.1.0",
+    "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
+  },
+  "scripts": {
+    "test": "jest"
   },
   "husky": {
     "hooks": {
