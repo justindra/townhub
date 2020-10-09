@@ -19,5 +19,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
+      # Cache Yarn packages to reduce install time
+      - uses: c-hive/gha-yarn-cache@v1
+      # Run install and test
       - run: yarn install
       - run: yarn test
