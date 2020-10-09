@@ -1,5 +1,5 @@
 {
-  "name": "@townhub/infra-cdk",
+  "name": "@townhub-infra/cdk",
   "version": "0.0.0",
   "private": true,
   "scripts": {

@@ -4,6 +4,7 @@ import {
   HELLOCLASS,
   TEST,
 } from '@townhub-libs/core';
+import { APIGatewayProxyHandler } from 'aws-lambda';
 
 class TestClass {
   magic: TEST;
@@ -12,7 +13,7 @@ class TestClass {
   }
 }
 
-export const hello = async (event) => {
+export const hello: APIGatewayProxyHandler = async (event) => {
   const a = new TestClass();
   const b = new HELLOCLASS();
   return {
