@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - setup-github-workflows
   pull_request:
     branches:
       - master
@@ -25,7 +24,7 @@ jobs:
       - run: yarn install
       - name: Run tests with coverage
         if: ${{ github.event_name == 'pull_request' }}
-        uses: ziishaned/jest-reporter-action@0.1.1
+        uses: hayuna/jest-reporter-action@v0.1.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-command: yarn test --coverage
