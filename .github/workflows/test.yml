@@ -25,7 +25,7 @@ jobs:
       - run: yarn install
       - name: Run tests with coverage
         if: ${{ github.event_name == 'pull_request' }}
-        uses: ziishaned/jest-reporter-action@v0.1.1
+        uses: ziishaned/jest-reporter-action@0.1.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           test-command: yarn test --coverage
