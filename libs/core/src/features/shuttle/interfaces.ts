@@ -64,14 +64,14 @@ export interface Schedule extends BaseEntity {
   routeId: string;
   /** The day the route starts becoming active */
   startDate: number;
-  /** The day the route starts becoming inactive */
-  endDate?: number;
+  /** The day the route starts becoming inactive, -1 means it never becomes inactive */
+  endDate: number;
   /** The different time the route starts */
   startTimes: ScheduleStartTimes[];
 }
 
 /** The data for a particular data */
-export interface DailyData {
+export interface DailyData extends BaseEntity {
   /** The date this data is related to, should be the 12pm on that date */
   timestamp: number;
   /** The town this data relates to */
