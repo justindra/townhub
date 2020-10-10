@@ -83,26 +83,3 @@ export interface DailyData extends BaseEntity {
   /** The list of routes used on that day */
   routes: Route[];
 }
-
-export const getStopDetails = (): StopSchedule[] => {
-  // Try and see if it already exists (cached in DB)
-  // Get the stop
-  // Find all routes scheduled today
-  // For each schedule, check if this stop exists, if so then write down
-  // and save that detail and return the full schedule for this stop
-  return [];
-};
-
-// OR WE CAN DO THE BELOW AS A CRON JOB EVERY MORNING
-// OR WE DO THE BELOW THE FIRST TIME SOMEONE ASKS FOR A SCHEDULE
-// WHICH WILL TAKE LONGER FOR THAT FIRST REQUEST
-
-export const generateStopSchedulesForToday = (): StopSchedule[] => {
-  // Find all schedules for today
-  // Go through each route and work out different times
-  // for each stop that is being used today and then save that in the database
-  // so that we can get the stop for today.
-  return [];
-};
-
-// Will also need to get the list of stops for the day, or routes for the day with stops attached to those routes
