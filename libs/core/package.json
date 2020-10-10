@@ -5,7 +5,9 @@
   "module": "dist/index",
   "private": true,
   "dependencies": {
+    "@sentry/node": "^5.25.0",
     "change-case": "^4.1.1",
+    "luxon": "^1.25.0",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
