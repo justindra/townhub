@@ -18,8 +18,11 @@ export const getDayDateRange = (
   const endOfDay = currentTime.endOf('day');
 
   return {
-    startOfDay: startOfDay.valueOf(),
-    middleOfDay: middleOfDay.valueOf(),
-    endOfDay: endOfDay.valueOf(),
+    startOfDayValue: startOfDay.valueOf(),
+    startOfDay: startOfDay,
+    middleOfDayValue: middleOfDay.valueOf(),
+    middleOfDay: middleOfDay,
+    endOfDayValue: endOfDay.valueOf(),
+    endOfDay: endOfDay,
   };
 };

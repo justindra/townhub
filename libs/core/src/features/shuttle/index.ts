@@ -1,11 +1,15 @@
-import { StopSchedule } from './interfaces';
 import { DEFAULT_TIMEZONE, getDayDateRange } from '../../helpers';
 import {
   DailyScheduleDatabase,
   RouteDatabase,
   ScheduleDatabase,
+  StopDatabase,
 } from './database';
 import uniq from 'lodash.uniq';
+import {
+  generateStopSchedulesForDate,
+  getStopIdsFromRouteList,
+} from './helpers';
 
 /**
  * Get a single day's worth of data
@@ -21,41 +25,51 @@ export const getDailyData = async (
   const DailySchedule = new DailyScheduleDatabase();
   const Schedule = new ScheduleDatabase();
   const Route = new RouteDatabase();
+  const Stop = new StopDatabase();
 
   // Get the date ranges
-  const { startOfDay, middleOfDay, endOfDay } = getDayDateRange(
-    timestamp,
-    timezone
-  );
+  const {
+    startOfDayValue,
+    middleOfDay,
+    middleOfDayValue,
+    endOfDayValue,
+  } = getDayDateRange(timestamp, timezone);
   // Check if daily data already exists and just return that if it does
   const availableDailySchedules = await DailySchedule.getByTimestamp(
-    middleOfDay,
+    middleOfDayValue,
     townId
   );
   if (availableDailySchedules.length) return availableDailySchedules[0];
 
   // Get all schedules for today
-  const schedules = await Schedule.getByTimestamp(startOfDay, endOfDay, townId);
+  const schedules = await Schedule.getByTimestamp(
+    startOfDayValue,
+    endOfDayValue,
+    townId
+  );
 
   // Get all routes based on the schedule
   const routeIds = uniq(schedules.map((schedule) => schedule.routeId));
   const routes = await Route.hydrate(routeIds);
 
+  // Get all stops based on routes
+  const stopIds = getStopIdsFromRouteList(routes);
+  const stops = await Stop.hydrate(stopIds);
+
+  const stopSchedules = generateStopSchedulesForDate(
+    schedules,
+    routes,
+    stops,
+    middleOfDay
+  );
+
   const newDailySchedule = await DailySchedule.create({
     townId,
-    timestamp: middleOfDay,
-    stops: [],
+    timestamp: middleOfDayValue,
+    stops: stopSchedules,
     schedules,
-    routes: [],
+    routes: routes,
   });
 
   return newDailySchedule;
-};
-
-export const generateStopSchedulesForToday = (): StopSchedule[] => {
-  // Find all schedules for today
-  // Go through each route and work out different times
-  // for each stop that is being used today and then save that in the database
-  // so that we can get the stop for today.
-  return [];
 };

@@ -21,22 +21,43 @@ export interface HandlerResult<TData = any> {
   statusCode?: number;
 }
 
-export type HandlerFunction<TData = any> = (
+export interface HandlerDetails<TPathParameters = any> {
+  townId: string;
+  userId: string;
+  pathParameters: TPathParameters;
+}
+
+export type HandlerFunction<TDataResult = any, TPathParameters = any> = (
+  details: HandlerDetails<TPathParameters>,
   event: APIGatewayProxyEventV2,
   context: Context
-) => HandlerResult<TData> | Promise<HandlerResult<TData>>;
+) => HandlerResult<TDataResult> | Promise<HandlerResult<TDataResult>>;
 
 /**
  * A wrapper around any API Gateway Requests. Allowing any errors to be
  * captured and sent to Sentry
  * @param handler
  */
-export const ApiGatewayWrapper = <TData = any>(
-  handler: HandlerFunction<TData>
+export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
+  handler: HandlerFunction<TDataResult, TPathParameters>
 ): APIGatewayProxyHandlerV2 => {
   return async (event, context) => {
     try {
-      const result = await handler(event, context);
+      const townId = event.headers['town-id'] ?? 'n/a';
+      const userId = event.headers['user-id'] ?? 'public';
+
+      Sentry.setUser({ id: userId });
+      Sentry.setContext('Town', { townId });
+
+      const pathParameters: TPathParameters =
+        ((event.pathParameters as unknown) as TPathParameters) ??
+        ({} as TPathParameters);
+
+      const result = await handler(
+        { townId, userId, pathParameters },
+        event,
+        context
+      );
       return {
         statusCode: result.statusCode || 200,
         body: JSON.stringify({

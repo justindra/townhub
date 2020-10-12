@@ -9,6 +9,13 @@ export interface RouteStop {
   legMinutes: number;
 }
 
+/** A calculated version of RouteStop for a particular date and startTime */
+export interface RouteStopDepartureTime {
+  stopId: string;
+  /** The time of departure in minutes since midnight of the date */
+  departureTimeMinutes: number;
+}
+
 /** A shuttle's route */
 export interface Route extends BaseEntity {
   /** The town this belongs to */
@@ -51,8 +58,12 @@ export interface ScheduleStartTimes {
   /** The time the schedule starts in minutes since midnight */
   startTimeMinutes: number;
   /**
-   * The day of the week this start time is in operation, starting with Sunday as 0
+   * The day of the week this start time is in operation, starting with Monday as 1
+   * and ending with Sunday as 7
    * e.g. for Monday, Wednesday and Friday - [1, 3, 5]
+   *
+   * These numbers are based on Luxon's specs
+   * https://moment.github.io/luxon/docs/class/src/datetime.js~DateTime.html#instance-get-weekday
    * */
   daysInOperation: number[];
 }
