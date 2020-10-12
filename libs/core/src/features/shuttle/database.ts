@@ -54,7 +54,7 @@ export class ScheduleDatabase extends Database<Schedule> {
 }
 export class DailyScheduleDatabase extends Database<DailyData> {
   constructor() {
-    super('SHUTTLE_SCHEDULE_DATABASE_NAME');
+    super('SHUTTLE_DAILY_SCHEDULE_DATABASE_NAME');
   }
 
   /**
