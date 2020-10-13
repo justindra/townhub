@@ -6,7 +6,7 @@ import {
 } from 'aws-lambda';
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
+  dsn: process.env.SENTRY_DSN || '',
   environment: process.env.STAGE || process.env.NODE_ENV || 'dev',
 });
 

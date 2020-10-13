@@ -5,10 +5,10 @@ import {
   Schedule,
   Stop,
   StopSchedule,
-} from './interfaces';
+} from '../interfaces';
 import { DateTime } from 'luxon';
 import uniq from 'lodash.uniq';
-import { sortNumberAscending } from '../../helpers';
+import { sortNumberAscending } from '../../../helpers';
 
 /**
  * Get the list of Stop Ids being used in a given list of routes

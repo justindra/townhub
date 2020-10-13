@@ -11,9 +11,9 @@ import {
   Schedule,
   Stop,
   StopSchedule,
-} from './interfaces';
+} from '../interfaces';
 import { DateTime } from 'luxon';
-import { DEFAULT_TIMEZONE } from '../../helpers';
+import { DEFAULT_TIMEZONE } from '../../../helpers';
 
 describe('shuttle helpers', () => {
   describe('getStopIdsFromRouteList', () => {

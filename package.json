@@ -9,6 +9,9 @@
     "infrastructure/*"
   ],
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-multi-entry": "^4.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@types/aws-lambda": "^8.10.63",
     "@types/jest": "^26.0.14",
@@ -23,6 +26,7 @@
     "serverless": "^2.5.0",
     "serverless-rollup-plugin": "^2.1.0",
     "ts-jest": "^26.4.1",
+    "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
   "scripts": {
