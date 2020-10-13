@@ -1,7 +1,7 @@
 {
   "name": "@townhub-libs/core",
   "version": "0.0.0",
-  "main": "dist/index",
+  "main": "dist/index.common",
   "module": "dist/index",
   "private": true,
   "dependencies": {
