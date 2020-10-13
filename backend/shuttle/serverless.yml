@@ -36,6 +36,6 @@ functions:
     handler: src/get-daily-data.main
     events:
       - http:
-          path: shuttles/daily/:timestamp
+          path: shuttles/daily/{timestamp}
           method: get
           cors: ${self:custom.cors}
