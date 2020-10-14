@@ -2,13 +2,18 @@
   "name": "@townhub-libs/core",
   "version": "0.0.0",
   "main": "dist/index",
-  "module": "dist/index",
+  "module": "dist/index.es",
   "private": true,
   "dependencies": {
+    "@sentry/node": "^5.25.0",
     "change-case": "^4.1.1",
+    "lodash.uniq": "^4.5.0",
+    "luxon": "^1.25.0",
     "uuid": "^8.3.1"
   },
   "devDependencies": {
+    "@types/lodash.uniq": "^4.5.6",
+    "@types/luxon": "^1.25.0",
     "@types/uuid": "^8.3.0"
   },
   "scripts": {

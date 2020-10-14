@@ -6,6 +6,7 @@ headers:
   - X-Api-Key
   - X-Amz-Security-Token
   - X-Amz-User-Agent
-  - Timezone
-  - User-Id
+  - Timezone # The timezone the request is being made from
+  - Town-Id # The id of the Town that is being used to perform the request
+  - User-Id # The id of the user that is performing the request
 allowCredentials: false
