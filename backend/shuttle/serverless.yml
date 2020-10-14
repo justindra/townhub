@@ -23,7 +23,7 @@ package:
 
 custom:
   cors: ${file(../shared/cors.yml)}
-  shuttles: ${file(../shared/features.yml):shuttles}
+  shuttles: ${file(../shared/modules/shuttles.yml)}
   rollup:
     config: ../../build/rollup.config.js
     installCommand: yarn add
