@@ -1,40 +1,40 @@
 import { Database } from '../../base/database';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
 
-export const SHUTTLE_DATABASES = {
+export const SHUTTLES_DATABASES = {
   STOP: {
-    ENV: 'SHUTTLE_STOP_DATABASE_NAME',
+    ENV: 'SHUTTLE_STOPS_DATABASE_NAME',
     CF_OUTPUT: 'StopsTableName',
   },
   ROUTE: {
-    ENV: 'SHUTTLE_ROUTE_DATABASE_NAME',
+    ENV: 'SHUTTLE_ROUTES_DATABASE_NAME',
     CF_OUTPUT: 'RoutesTableName',
   },
   SCHEDULE: {
-    ENV: 'SHUTTLE_SCHEDULE_DATABASE_NAME',
+    ENV: 'SHUTTLE_SCHEDULES_DATABASE_NAME',
     CF_OUTPUT: 'SchedulesTableName',
   },
   DAILY_SCHEDULE: {
-    ENV: 'SHUTTLE_DAILY_SCHEDULE_DATABASE_NAME',
+    ENV: 'SHUTTLE_DAILY_SCHEDULES_DATABASE_NAME',
     CF_OUTPUT: 'DailySchedulesTableName',
   },
 };
 
-export class StopDatabase extends Database<Stop> {
+export class StopsDatabase extends Database<Stop> {
   constructor() {
-    super(SHUTTLE_DATABASES.STOP.ENV);
+    super(SHUTTLES_DATABASES.STOP.ENV);
   }
 }
 
-export class RouteDatabase extends Database<Route> {
+export class RoutesDatabase extends Database<Route> {
   constructor() {
-    super(SHUTTLE_DATABASES.ROUTE.ENV);
+    super(SHUTTLES_DATABASES.ROUTE.ENV);
   }
 }
 
-export class ScheduleDatabase extends Database<Schedule> {
+export class SchedulesDatabase extends Database<Schedule> {
   constructor() {
-    super(SHUTTLE_DATABASES.SCHEDULE.ENV);
+    super(SHUTTLES_DATABASES.SCHEDULE.ENV);
   }
 
   /**
@@ -71,9 +71,9 @@ export class ScheduleDatabase extends Database<Schedule> {
     });
   }
 }
-export class DailyScheduleDatabase extends Database<DailyData> {
+export class DailySchedulesDatabase extends Database<DailyData> {
   constructor() {
-    super(SHUTTLE_DATABASES.DAILY_SCHEDULE.ENV);
+    super(SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV);
   }
 
   /**

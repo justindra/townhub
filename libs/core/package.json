@@ -1,8 +1,8 @@
 {
   "name": "@townhub-libs/core",
   "version": "0.0.0",
-  "main": "dist/index.common",
-  "module": "dist/index",
+  "main": "dist/index",
+  "module": "dist/index.es",
   "private": true,
   "dependencies": {
     "@sentry/node": "^5.25.0",

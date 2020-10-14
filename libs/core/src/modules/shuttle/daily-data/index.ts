@@ -1,9 +1,9 @@
 import { DEFAULT_TIMEZONE, getDayDateRange } from '../../../helpers';
 import {
-  DailyScheduleDatabase,
-  RouteDatabase,
-  ScheduleDatabase,
-  StopDatabase,
+  DailySchedulesDatabase,
+  RoutesDatabase,
+  SchedulesDatabase,
+  StopsDatabase,
 } from '../database';
 import uniq from 'lodash.uniq';
 import {
@@ -22,10 +22,10 @@ export const getDailyData = async (
   timestamp: number,
   timezone: string = DEFAULT_TIMEZONE
 ) => {
-  const DailySchedule = new DailyScheduleDatabase();
-  const Schedule = new ScheduleDatabase();
-  const Route = new RouteDatabase();
-  const Stop = new StopDatabase();
+  const DailySchedules = new DailySchedulesDatabase();
+  const Schedules = new SchedulesDatabase();
+  const Routes = new RoutesDatabase();
+  const Stops = new StopsDatabase();
 
   // Get the date ranges
   const {
@@ -35,14 +35,14 @@ export const getDailyData = async (
     endOfDayValue,
   } = getDayDateRange(timestamp, timezone);
   // Check if daily data already exists and just return that if it does
-  const availableDailySchedules = await DailySchedule.getByTimestamp(
+  const availableDailySchedules = await DailySchedules.getByTimestamp(
     middleOfDayValue,
     townId
   );
   if (availableDailySchedules.length) return availableDailySchedules[0];
 
   // Get all schedules for today
-  const schedules = await Schedule.getByTimestamp(
+  const schedules = await Schedules.getByTimestamp(
     startOfDayValue,
     endOfDayValue,
     townId
@@ -50,11 +50,11 @@ export const getDailyData = async (
 
   // Get all routes based on the schedule
   const routeIds = uniq(schedules.map((schedule) => schedule.routeId));
-  const routes = await Route.hydrate(routeIds);
+  const routes = await Routes.hydrate(routeIds);
 
   // Get all stops based on routes
   const stopIds = getStopIdsFromRouteList(routes);
-  const stops = await Stop.hydrate(stopIds);
+  const stops = await Stops.hydrate(stopIds);
 
   const stopSchedules = generateStopSchedulesForDate(
     schedules,
@@ -63,7 +63,7 @@ export const getDailyData = async (
     middleOfDay
   );
 
-  const newDailySchedule = await DailySchedule.create({
+  const newDailySchedule = await DailySchedules.create({
     townId,
     timestamp: middleOfDayValue,
     stops: stopSchedules,
