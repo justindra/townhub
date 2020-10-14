@@ -1,4 +1,4 @@
-service: townhub-api-shuttle
+service: townhub-services-shuttles
 
 provider:
   name: aws

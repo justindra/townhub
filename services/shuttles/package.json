@@ -1,5 +1,5 @@
 {
-  "name": "@townhub-api/test",
+  "name": "@townhub-services/shuttles",
   "private": true,
   "version": "0.0.0",
   "main": "dist/index",
@@ -8,8 +8,9 @@
     "@townhub-libs/core": "^0.0.0"
   },
   "scripts": {
-    "build:dependencies": "lerna run build --scope @townhub-api/test --include-dependencies",
+    "build:dependencies": "lerna run build --scope @townhub-services/shuttles --include-dependencies",
     "predeploy": "yarn run build:dependencies",
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "remove": "serverless remove"
   }
 }

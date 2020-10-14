@@ -13,10 +13,10 @@ This repository is a monorepo that contains all code for all of the infrastructu
 |   ├── databases
 |   ├── ci-cd
 |   └── apps
-├── backend         # Backend code - should mainly be lambda functions and services
+├── services        # Backend code - should mainly be lambda functions and other services
 |   ├── service-a
 |   └── service-b
-├── frontend        # Frontend code - should be the different frontend apps
+├── apps            # Frontend code - should be the different frontend apps
 |   ├── homepage
 |   ├── app-a
 |   └── app-b

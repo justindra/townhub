@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "workspaces": [
-    "backend/*",
+    "services/*",
     "frontend/*",
     "libs/*",
     "infrastructure/*"
@@ -31,7 +31,7 @@
   },
   "scripts": {
     "test": "jest",
-    "deploy:backend": "lerna run deploy --scope @townhub-api/* --"
+    "deploy:services": "lerna run deploy --scope @townhub-services/* --"
   },
   "husky": {
     "hooks": {

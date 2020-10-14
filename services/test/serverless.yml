@@ -1,9 +1,5 @@
 service: townhub-test
 
-# app and org for use with dashboard.serverless.com
-#app: your-app-name
-#org: your-org-name
-
 provider:
   name: aws
   runtime: ${file(../shared/provider.yml):runtime}
