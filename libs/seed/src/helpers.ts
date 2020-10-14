@@ -1,5 +1,4 @@
 import { CloudFormation } from 'aws-sdk';
-import { SHUTTLE_DATABASES } from '@townhub-libs/core';
 
 interface DatabaseDetail {
   ENV: string;
@@ -19,22 +18,23 @@ const setEnvVars = (
   });
 };
 
-export const setTableNames = async () => {
+interface StackConfiguration {
+  /** The name of the stack to search for */
+  name: string;
+  databaseDetails: DatabaseDetail[];
+}
+
+export const setTableNamesFromStack = async (config: StackConfiguration[]) => {
   const CF = new CloudFormation();
 
-  const shuttleStack = await CF.describeStacks({
-    // TODO: Update to use stage properly
-    StackName: 'dev-townhub-infra-cdk-FeatureShuttleStack',
-  }).promise();
+  // For each of the configs we set the env variables required
+  for (const stackConfig of config) {
+    const stack = await CF.describeStacks({
+      StackName: stackConfig.name,
+    }).promise();
 
-  shuttleStack.Stacks?.forEach((stack) => {
-    const details: DatabaseDetail[] = [
-      SHUTTLE_DATABASES.STOP,
-      SHUTTLE_DATABASES.ROUTE,
-      SHUTTLE_DATABASES.SCHEDULE,
-      SHUTTLE_DATABASES.DAILY_SCHEDULE,
-    ];
-
-    setEnvVars(details, stack.Outputs);
-  });
+    stack.Stacks?.forEach((stack) => {
+      setEnvVars(stackConfig.databaseDetails, stack.Outputs);
+    });
+  }
 };

@@ -8,24 +8,12 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
-import {
-  SHUTTLES_DATABASES,
-  TOWNS_DATABASE,
-  TownsDatabase,
-} from '@townhub-libs/core';
+import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/core';
 import { setTableNamesFromStack } from './helpers';
 
+/** Input the list of towns as a seed */
 const main = async () => {
   await setTableNamesFromStack([
-    {
-      name: 'dev-townhub-infra-cdk-module-shuttle',
-      databaseDetails: [
-        SHUTTLES_DATABASES.STOP,
-        SHUTTLES_DATABASES.ROUTE,
-        SHUTTLES_DATABASES.SCHEDULE,
-        SHUTTLES_DATABASES.DAILY_SCHEDULE,
-      ],
-    },
     {
       name: 'dev-townhub-infra-cdk-module-town',
       databaseDetails: [TOWNS_DATABASE],
@@ -35,7 +23,7 @@ const main = async () => {
 
   await Towns.create({
     hid: 'fernie',
-    timezone: 'America/Los_Angeles',
+    timezone: 'America/Denver',
     name: 'Fernie',
     modules: [
       {
