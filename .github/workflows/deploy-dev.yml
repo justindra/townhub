@@ -5,6 +5,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'apps/**'
+      - 'libs/**'
+      - 'services/**'
 
 jobs:
   build:
