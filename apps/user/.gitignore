@@ -1,0 +1,12 @@
+# Expo Builds
+.expo/*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+# expo-yarn-workspaces auto-generated
+__generated__

@@ -10,3 +10,6 @@ dist
 
 # Test directories
 coverage
+
+# macOS
+.DS_Store
