@@ -2,6 +2,7 @@
   "main": "__generated__/AppEntry.js",
   "name": "@townhub-apps/user",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -43,6 +44,5 @@
     "expo-yarn-workspaces": "^1.2.1",
     "jest-expo": "~39.0.0",
     "typescript": "~3.9.5"
-  },
-  "private": true
+  }
 }
