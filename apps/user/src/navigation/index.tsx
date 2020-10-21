@@ -5,11 +5,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { ColorSchemeName } from 'react-native';
 
-import { HomePage, ShuttlesPage, NotFound } from '../screens';
+import { HomePage, NotFound } from '../screens';
 import { RootStackParamList } from './interfaces';
 import { LinkingConfiguration } from './linking-configuration';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { DarkTheme, DefaultTheme } from './theme';
+import { ShuttleModule } from '../modules';
 
 export interface NavigationProps {
   colorScheme: ColorSchemeName
@@ -34,7 +35,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
       <Stack.Screen name='root' component={HomePage} />
-      <Stack.Screen name='shuttles' component={ShuttlesPage} />
+      <Stack.Screen name='shuttles' component={ShuttleModule} />
       <Stack.Screen
         name='notFound'
         component={NotFound}
