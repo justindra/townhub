@@ -34,15 +34,19 @@ const useHorizontalListStyles = () => {
  */
 export const HorizontalListScroll: React.FC<{
   style?: StyleProp<ViewStyle>;
-}> = ({ style, children }) => {
+  nestedScrollEnabled?: boolean;
+}> = ({ children, ...props }) => {
   const styles = useHorizontalListStyles();
   const totalChildren = Children.count(children);
   if (totalChildren === 0) return null;
   return (
     <ScrollView
-      style={style}
       contentContainerStyle={styles.container}
-      horizontal>
+      horizontal
+      centerContent={true}
+      showsHorizontalScrollIndicator={false}
+      {...props}
+      >
       {Children.map(children, (child, index) => {
         // First child
         if (index < 1)

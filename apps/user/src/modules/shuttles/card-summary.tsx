@@ -40,12 +40,13 @@ const useNextShuttleIconStyles = () => {
   return StyleSheet.create({
     surface: {
       marginRight: theme.spacing(0.5),
+      marginTop: theme.spacing(0.25),
       alignItems: 'center',
       borderWidth: 1,
       borderColor: theme.colors.text,
       borderRadius: theme.roundness,
-      padding: theme.spacing(0.25),
-      width: theme.spacing(3),
+      padding: theme.spacing(0.125),
+      width: theme.spacing(2.75),
     },
     title: {
       margin: 0,
@@ -88,13 +89,11 @@ export const CardSummary: React.FC<{
         }}
       />
       <Card.Content style={styles.cardContent}>
-        <HorizontalListScroll>
+        <HorizontalListFlex>
           <Chip>06:15 am</Chip>
           <Chip>08:15 am</Chip>
           <Chip>10:15 am</Chip>
-          <Chip>12:15 pm</Chip>
-          <Chip>01:15 pm</Chip>
-        </HorizontalListScroll>
+        </HorizontalListFlex>
       </Card.Content>
       <Card.Content style={styles.cardContent}>
         <HorizontalListFlex>

@@ -34,7 +34,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name='root' component={HomePage} />
+      {/* <Stack.Screen name='root' component={HomePage} /> */}
       <Stack.Screen name='shuttles' component={ShuttleModule} />
       <Stack.Screen
         name='notFound'
