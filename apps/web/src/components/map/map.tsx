@@ -37,6 +37,13 @@ const MapControls: React.FC = () => {
   return null;
 };
 
+export interface MapProps {
+  /** The current route being shown */
+  route: string[];
+  /** List of stops in that route */
+  stops: string[];
+}
+
 export const Map: React.FC<MapContainerProps> = ({ children, ...props }) => {
   const theme = useTheme();
   const mapTile =

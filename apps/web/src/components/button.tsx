@@ -5,7 +5,7 @@ import {
   ButtonProps,
 } from '@material-ui/core';
 
-const useButtonStyle = makeStyles((theme) => ({
+const useButtonStyle = makeStyles(() => ({
   root: {
     borderRadius: 50,
   },
