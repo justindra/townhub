@@ -14,22 +14,17 @@ const useHorizontalListStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(0.5),
       flexShrink: 0,
       '&:first-child': {
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
       },
       '&:last-child': {
-        marginRight: theme.spacing(1)
+        marginRight: theme.spacing(1),
       },
     },
   },
-  
 }));
 
 export const HorizontalList: React.FC = ({ children }) => {
   const horizontalListClasses = useHorizontalListStyles();
 
-  return (
-    <div className={horizontalListClasses.container}>
-      {children}
-    </div>
-  );
+  return <div className={horizontalListClasses.container}>{children}</div>;
 };

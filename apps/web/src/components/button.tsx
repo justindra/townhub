@@ -1,11 +1,15 @@
 import React from 'react';
-import { makeStyles, Button as MuiButton, ButtonProps } from '@material-ui/core';
+import {
+  makeStyles,
+  Button as MuiButton,
+  ButtonProps,
+} from '@material-ui/core';
 
 const useButtonStyle = makeStyles((theme) => ({
-    root: {
-      borderRadius: 50,
-    },
-  }));
+  root: {
+    borderRadius: 50,
+  },
+}));
 
 /**
  * Update the button component to always have fully rounded ends

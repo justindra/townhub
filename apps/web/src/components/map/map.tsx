@@ -32,10 +32,10 @@ const MapControls: React.FC = () => {
 
     return () => {
       active = false;
-    }
+    };
   }, []);
   return null;
-}
+};
 
 export const Map: React.FC<MapContainerProps> = ({ children, ...props }) => {
   const theme = useTheme();
@@ -50,7 +50,7 @@ export const Map: React.FC<MapContainerProps> = ({ children, ...props }) => {
       scrollWheelZoom={false}
       zoomControl={false}
       {...props}>
-        <MapControls />
+      <MapControls />
       <TileLayer
         attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
         url={url}

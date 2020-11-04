@@ -9,7 +9,7 @@ export const getCurrentGeoLocation = async (): Promise<LatLngExpression> => {
         (position: Position) => {
           const coords: LatLngExpression = {
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
           };
 
           resolve(coords);
@@ -20,7 +20,7 @@ export const getCurrentGeoLocation = async (): Promise<LatLngExpression> => {
         },
         {
           // Wait for a maximum of 5s
-          timeout: 5000
+          timeout: 5000,
         }
       );
     } else {
@@ -29,4 +29,4 @@ export const getCurrentGeoLocation = async (): Promise<LatLngExpression> => {
       reject();
     }
   });
-}
+};
