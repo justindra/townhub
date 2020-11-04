@@ -8,8 +8,8 @@ import {
 
 const useCardSummaryStyles = makeStyles((theme) => ({
     card: {
-      maxWidth: `calc(100vw - ${theme.spacing(2)})`,
-      width: theme.spacing(25),
+      maxWidth: `calc(100vw - ${theme.spacing(4)}px)`,
+      width: theme.spacing(50),
     },
     cardContent: {
       paddingHorizontal: 0,
@@ -19,23 +19,19 @@ const useCardSummaryStyles = makeStyles((theme) => ({
 
 const useNextShuttleIconStyles = makeStyles((theme) => ({
     surface: {
-      marginRight: theme.spacing(0.5),
-      marginTop: theme.spacing(0.25),
-      alignItems: 'center',
-      borderWidth: 1,
-      borderRadius: theme.shape.borderRadius,
-      borderColor: theme.palette.text.primary,
-      padding: theme.spacing(0.125),
-      width: theme.spacing(2.75),
+      textAlign: 'center',
+      padding: `${theme.spacing(0.5)}px ${theme.spacing(1)}px`,
+      marginTop: theme.spacing(1),
+      marginRight: theme.spacing(1)
     },
     title: {
-      margin: 0,
-      padding: 0,
+      fontWeight: 600,
+      lineHeight: 'initial',
+      letterSpacing: '0.05em',
+      marginBottom: -theme.spacing(0.5)
     },
     caption: {
-      margin: 0,
-      marginTop: theme.spacing(-0.5),
-      padding: 0,
+      lineHeight: 'initial'
     },
   })
 );
@@ -43,9 +39,9 @@ const useNextShuttleIconStyles = makeStyles((theme) => ({
 export const NextShuttleIcon: React.FC<{ minutes: number }> = ({ minutes }) => {
   const styles = useNextShuttleIconStyles();
   return (
-    <Paper className={styles.surface}>
-      <Typography className={styles.title}>{minutes}</Typography>
-      <Typography className={styles.caption}>min</Typography>
+    <Paper className={styles.surface} variant='outlined'>
+      <Typography className={styles.title} variant='body1'>{minutes}</Typography>
+      <Typography className={styles.caption} variant='caption'>min</Typography>
     </Paper>
   );
 };
@@ -58,13 +54,11 @@ export const CardSummary: React.FC<{
   const styles = useCardSummaryStyles();
 
   return (
-    <Card className={styles.card}>
+    <Card className={styles.card} elevation={3}>
       <CardHeader
         title={title}
-        subtitle={subtitle}
-        right={() => {
-          return <NextShuttleIcon minutes={minutes} />;
-        }}
+        subheader={subtitle}
+        action={<NextShuttleIcon minutes={minutes} />}
       />
       <CardContent className={styles.cardContent}>
         <HorizontalList>

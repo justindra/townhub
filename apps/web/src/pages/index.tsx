@@ -3,6 +3,11 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ShuttleModule } from '../modules';
 
 export const PageRoutes: FC = () => {
+  // TODO: Get the HID of the town from the URL and go get the details.
+  // If no HID exists, forward to home page to choose Town
+
+  // TODO: Get the list of modules available, if only one then
+  // redirect to that module
   return (
     <Switch>
       <Route path='/shuttles' component={ShuttleModule} />

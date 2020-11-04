@@ -1,47 +1,76 @@
+import { makeStyles, rgbToHex } from '@material-ui/core';
 import React from 'react';
 import { Button, Map } from '../../components';
 import { HorizontalList } from '../../components/horizontal-list';
+import { CardSummary } from './card-summary';
+
+const useShuttlePageStyles = makeStyles((theme) => ({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  map: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 0
+  },
+  routeList: {
+    position: 'absolute',
+    top: theme.spacing(2),
+    left: 0, right: 0,
+    zIndex: 5
+  },
+  stopList: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    left: 0, right: 0,
+    zIndex: 5,
+  }
+}))
 
 export const ShuttleModule: React.FC = () => {
+  const shuttlePageClasses = useShuttlePageStyles();
+  
   return (
-    <div>
+    <div className={shuttlePageClasses.container}>
       <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: '#6c9867',
-        }}>
+        className={shuttlePageClasses.map}>
         <Map />
       </div>
       <div
-        style={{
-          position: 'absolute',
-          top: 16,
-          left: 0,
-          right: 0,
-        }}>
+        className={shuttlePageClasses.routeList}>
         <HorizontalList>
           <Button variant='contained' color='primary'>
-            Test
+            Morning
           </Button>
-          <Button variant='contained' color='primary'>
-            Test
+          <Button variant='contained'>
+            Afternoon
           </Button>
-          <Button variant='contained' color='primary'>
-            Test
-          </Button>
-          <Button variant='contained' color='primary'>
-            Test
-          </Button>
-          <Button variant='contained' color='primary'>
-            Test
+          <Button variant='contained'>
+            Evening
           </Button>
         </HorizontalList>
       </div>
-      hello
+      <div className={shuttlePageClasses.stopList}>
+        <HorizontalList>
+          <CardSummary
+            title='Dose Cafe'
+            subtitle='100 1st St'
+            minutes={20}/>
+            <CardSummary
+            title='asdasd'
+            subtitle='asdasd'
+            minutes={20}/>
+            <CardSummary
+            title='asdasd'
+            subtitle='asdasd'
+            minutes={20}/>
+        </HorizontalList>
+      </div>
     </div>
   );
 };

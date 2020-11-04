@@ -6,9 +6,13 @@ const useHorizontalListStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     overflow: 'auto',
+    // We need this padding to make sure that shadows of child components are
+    // not cut off
+    paddingBottom: 2,
     '& > *': {
       marginLeft: theme.spacing(0.5),
       marginRight: theme.spacing(0.5),
+      flexShrink: 0,
       '&:first-child': {
         marginLeft: theme.spacing(1)
       },
