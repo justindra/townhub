@@ -3,7 +3,7 @@ import { Marker, useMap, useMapEvent, ZoomControl } from 'react-leaflet';
 import { Map } from '../../components';
 
 interface ShuttleMapProps {
-  stops: any[];
+  stops: string[];
   onStopClick?: (stopId: string) => void;
   onMapClick?: () => void;
 }
