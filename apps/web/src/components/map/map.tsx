@@ -2,9 +2,7 @@ import { useTheme } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import {
   MapContainer,
-  Marker,
   TileLayer,
-  ZoomControl,
   MapContainerProps,
   useMap,
 } from 'react-leaflet';
@@ -62,7 +60,6 @@ export const Map: React.FC<MapContainerProps> = ({ children, ...props }) => {
         attribution='© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>'
         url={url}
       />
-      <ZoomControl position='bottomright' />
       {children}
     </MapContainer>
   );
