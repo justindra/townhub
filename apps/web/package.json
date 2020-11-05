@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "@redux-offline/redux-offline": "^2.6.0",
     "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-leaflet": "^3.0.0",
     "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5",
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
