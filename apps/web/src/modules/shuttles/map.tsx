@@ -14,8 +14,8 @@ const Markers = [
   { id: '3', point: { lat: 50.99101551077011, lng: -118.16259384155275 } },
 ];
 
-export const MapClickDetector: React.FC<{onMapClick: () => void}> = ({
-  onMapClick
+export const MapClickDetector: React.FC<{ onMapClick: () => void }> = ({
+  onMapClick,
 }) => {
   useMapEvent('click', (evt) => {
     onMapClick();
@@ -54,11 +54,11 @@ export const MarkerGenerator: React.FC<{
 
 export const ShuttleMap: React.FC<ShuttleMapProps> = ({
   onStopClick = () => {},
-  onMapClick = () => {}
+  onMapClick = () => {},
 }) => {
   return (
     <Map>
-      <MapClickDetector onMapClick={onMapClick} />  
+      <MapClickDetector onMapClick={onMapClick} />
       <MarkerGenerator onMarkerClick={onStopClick} />
     </Map>
   );
