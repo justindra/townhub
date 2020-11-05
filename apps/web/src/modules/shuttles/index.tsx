@@ -44,7 +44,6 @@ export const ShuttleModule: React.FC = () => {
 
   const handleStopClick = (id: string) => {
     setOpenedStopId(`${id} - asdasd`);
-    console.log(id);
   };
 
   const handleMapClick = () => {
