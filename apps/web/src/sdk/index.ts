@@ -2,6 +2,7 @@ import { combineReducers, compose, createStore } from 'redux';
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
 import { townModulesReducer, TownModulesStoreState } from './reducers';
+import { effectConfig } from './api';
 interface RootState {
   auth: {
     townId: string;
@@ -12,7 +13,8 @@ interface RootState {
 
 const reducer = combineReducers({
   modulesByTownId: townModulesReducer
-})
+});
+
 
 // Allow redux-dev-tools in development
 const composeEnhancers =
@@ -22,5 +24,8 @@ const composeEnhancers =
 
 export const store = createStore(
   reducer,
-  composeEnhancers(offline(offlineConfig))
+  composeEnhancers(offline({
+    ...offlineConfig,
+    effect: (effectConfig as any)
+  }))
 );

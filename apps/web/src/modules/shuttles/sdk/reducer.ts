@@ -13,7 +13,7 @@ const INITIAL_STATE: ShuttleStoreState = {
     '2020-11-08': {
       id: '1',
       townId: 'townXYZ',
-      timestamp: 1,
+      timestamp: '2020-11-08',
       schedules: [],
       stops: [],
       routes: [],

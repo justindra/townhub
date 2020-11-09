@@ -1,11 +1,18 @@
 import { DailyData } from "@townhub-libs/core";
+import { BaseApiParameters } from "../../base";
 
 export class ShuttlesAPI {
-  getDailyData(): DailyData {
+  getDailyData({
+    townId,
+    timestamp
+  }: BaseApiParameters<{
+    timestamp: number
+  }>): DailyData {
+    // Go call the api here
     return {
       id: '1',
-      timestamp: 1,
-      townId: 'test',
+      timestamp: '2020-11-08',
+      townId,
       stops: [],
       schedules: [],
       routes: [],

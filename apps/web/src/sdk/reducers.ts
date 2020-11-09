@@ -1,5 +1,7 @@
+import { timeStamp } from "console";
 import { Reducer } from "redux";
 import { BaseAction, ShuttleReducer, ShuttleStoreState } from "../modules";
+import { getDailyData } from "../modules/shuttles/sdk/selectors";
 
 export interface TownModulesStoreState {
   [townId: string]: {
@@ -30,3 +32,9 @@ export const townModulesReducer: Reducer<TownModulesStoreState, BaseAction> = (
     
   };
 };
+
+export const generateTownModulesSelector = (state: TownModulesStoreState, selector = getDailyData) => {
+  const townId = 'townXYZ';
+  const moduleState = state[townId];
+  return (timestamp: string) => selector(moduleState.shuttles, timestamp);
+}
