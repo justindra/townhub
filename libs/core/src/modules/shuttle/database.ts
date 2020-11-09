@@ -78,10 +78,10 @@ export class DailySchedulesDatabase extends Database<DailyData> {
 
   /**
    * Get a daily schedule based on the timestamp
-   * @param timestamp The timestamp (this should ideally be midday of that date)
+   * @param timestamp The timestamp (YYYY-MM-DD)
    * @param townId The town id to check
    */
-  async getByTimestamp(timestamp: number, townId: string = '') {
+  async getByTimestamp(timestamp: string, townId: string = '') {
     const expressions = ['#timestamp = :timestamp'];
     if (townId.length) {
       expressions.push('#townId = :townId');

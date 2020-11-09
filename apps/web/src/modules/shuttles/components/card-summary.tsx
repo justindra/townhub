@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardContent,
 } from '@material-ui/core';
-import { Button, HorizontalList } from '../../components';
+import { Button, HorizontalList } from '../../../components';
 
 const useCardSummaryStyles = makeStyles((theme) => ({
   card: {

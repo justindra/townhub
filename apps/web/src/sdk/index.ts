@@ -1,10 +1,18 @@
-import { compose, createStore } from 'redux';
+import { combineReducers, compose, createStore } from 'redux';
 import { offline } from '@redux-offline/redux-offline';
 import offlineConfig from '@redux-offline/redux-offline/lib/defaults';
+import { townModulesReducer, TownModulesStoreState } from './reducers';
+interface RootState {
+  auth: {
+    townId: string;
+    townHid: string;
+  },
+  modulesByTownId: TownModulesStoreState
+}
 
-const reducer = () => {
-  return {};
-};
+const reducer = combineReducers({
+  modulesByTownId: townModulesReducer
+})
 
 // Allow redux-dev-tools in development
 const composeEnhancers =

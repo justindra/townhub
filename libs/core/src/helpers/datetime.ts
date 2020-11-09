@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 
 export const DEFAULT_TIMEZONE = 'America/Los_Angeles';
+export const DEFAULT_DATE_FORMAT = 'y-LL-dd';
 
 /**
  * Get the whole day's timestamp range
@@ -25,4 +26,18 @@ export const getDayDateRange = (
     endOfDayValue: endOfDay.valueOf(),
     endOfDay: endOfDay,
   };
+};
+
+/**
+ * Given a timestamp and a timezone, return the date in a YYYY-MM-DD format
+ * @param timestamp The timestamp to check
+ * @param timezone The timezone to check
+ */
+export const getDate = (
+  timestamp: number,
+  timezone: string = DEFAULT_TIMEZONE
+): string => {
+  return DateTime.fromMillis(timestamp)
+    .setZone(timezone)
+    .toFormat(DEFAULT_DATE_FORMAT);
 };

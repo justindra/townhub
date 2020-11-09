@@ -8,6 +8,7 @@
 
     "strict": true,
     "esModuleInterop": true,
+    "declaration": true,
 
     // Paths to shared libraries
     "baseUrl": ".",

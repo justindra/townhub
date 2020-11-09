@@ -1,7 +1,6 @@
-import { makeStyles, rgbToHex, Slide } from '@material-ui/core';
+import { makeStyles, Slide } from '@material-ui/core';
 import React, { useState } from 'react';
-import { Button } from '../../components';
-import { HorizontalList } from '../../components/horizontal-list';
+import { Button, HorizontalList } from '../../../components';
 import { CardSummary } from './card-summary';
 import { ShuttleMap } from './map';
 

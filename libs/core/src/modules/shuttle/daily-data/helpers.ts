@@ -8,7 +8,7 @@ import {
 } from '../interfaces';
 import { DateTime } from 'luxon';
 import uniq from 'lodash.uniq';
-import { sortNumberAscending } from '../../../helpers';
+import { DEFAULT_DATE_FORMAT, sortNumberAscending } from '../../../helpers';
 
 /**
  * Get the list of Stop Ids being used in a given list of routes
@@ -115,7 +115,7 @@ export const generateStopSchedulesForDate = (
           }
           stopScheduleByStopId[stopId] = {
             ...stopDetails,
-            scheduleDate: timestamp.valueOf(),
+            scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
             schedule: {},
           };
         }

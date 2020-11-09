@@ -1,4 +1,4 @@
-import { DEFAULT_TIMEZONE, getDayDateRange } from '../../../helpers';
+import { DEFAULT_TIMEZONE, getDate, getDayDateRange } from '../../../helpers';
 import {
   DailySchedulesDatabase,
   RoutesDatabase,
@@ -31,12 +31,12 @@ export const getDailyData = async (
   const {
     startOfDayValue,
     middleOfDay,
-    middleOfDayValue,
     endOfDayValue,
   } = getDayDateRange(timestamp, timezone);
+  const dateString = getDate(timestamp, timezone);
   // Check if daily data already exists and just return that if it does
   const availableDailySchedules = await DailySchedules.getByTimestamp(
-    middleOfDayValue,
+    dateString,
     townId
   );
   if (availableDailySchedules.length) return availableDailySchedules[0];
@@ -65,7 +65,7 @@ export const getDailyData = async (
 
   const newDailySchedule = await DailySchedules.create({
     townId,
-    timestamp: middleOfDayValue,
+    timestamp: dateString,
     stops: stopSchedules,
     schedules,
     routes: routes,
