@@ -21,6 +21,7 @@ export interface Route extends BaseEntity {
   /** The town this belongs to */
   townId: string;
   name: string;
+  description?: string;
   /** The list of stops in that route */
   stopList: RouteStop[];
 }

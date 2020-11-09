@@ -10,6 +10,6 @@
   "scripts": {
     "build:dependencies": "lerna run build --scope @townhub-libs/seed --include-dependencies",
     "preseed": "yarn run build:dependencies",
-    "seed": "ts-node-script ./src/index.ts"
+    "seed": "ts-node-script ./src/fernie.ts"
   }
 }

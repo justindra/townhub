@@ -1,0 +1,75 @@
+[
+  {
+    "id": "route-1-adjusted",
+    "name": "Morning",
+    "description": "The morning route",
+    "stops": [
+      { "stop": "stop-2", "legMinutes": 0 },
+      { "stop": "stop-3", "legMinutes": 3 },
+      { "stop": "stop-4", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 4 },
+      { "stop": "stop-7", "legMinutes": 3 },
+      { "stop": "stop-8", "legMinutes": 3 },
+      { "stop": "stop-9", "legMinutes": 4 },
+      { "stop": "stop-10", "legMinutes": 3 },
+      { "stop": "stop-11", "legMinutes": 3 },
+      { "stop": "stop-1", "legMinutes": 14 }
+    ]
+  },
+  {
+    "id": "route-1",
+    "name": "Morning",
+    "description": "The morning route",
+    "stops": [
+      { "stop": "stop-1", "legMinutes": 0 },
+      { "stop": "stop-2", "legMinutes": 10 },
+      { "stop": "stop-3", "legMinutes": 3 },
+      { "stop": "stop-4", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 4 },
+      { "stop": "stop-7", "legMinutes": 3 },
+      { "stop": "stop-8", "legMinutes": 3 },
+      { "stop": "stop-9", "legMinutes": 4 },
+      { "stop": "stop-10", "legMinutes": 3 },
+      { "stop": "stop-11", "legMinutes": 3 },
+      { "stop": "stop-1", "legMinutes": 14 }
+    ]
+  },
+  {
+    "id": "route-2",
+    "name": "Afternoon",
+    "description": "The afternoon route",
+    "stops": [
+      { "stop": "stop-1", "legMinutes": 0 },
+      { "stop": "stop-2", "legMinutes": 10 },
+      { "stop": "stop-10", "legMinutes": 3 },
+      { "stop": "stop-9", "legMinutes": 2 },
+      { "stop": "stop-5", "legMinutes": 5 },
+      { "stop": "stop-7", "legMinutes": 2 },
+      { "stop": "stop-8", "legMinutes": 3 },
+      { "stop": "stop-4", "legMinutes": 2 },
+      { "stop": "stop-3", "legMinutes": 3 },
+      { "stop": "stop-11", "legMinutes": 3 },
+      { "stop": "stop-1", "legMinutes": 17 }
+    ]
+  },
+  {
+    "id": "route-3",
+    "name": "Evening",
+    "description": "The evening route",
+    "stops": [
+      { "stop": "stop-12", "legMinutes": 0 },
+      { "stop": "stop-13", "legMinutes": 3 },
+      { "stop": "stop-14", "legMinutes": 3 },
+      { "stop": "stop-15", "legMinutes": 4 },
+      { "stop": "stop-2", "legMinutes": 10 },
+      { "stop": "stop-11", "legMinutes": 2 },
+      { "stop": "stop-3", "legMinutes": 2 },
+      { "stop": "stop-16", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 5 },
+      { "stop": "stop-7", "legMinutes": 3 },
+      { "stop": "stop-8", "legMinutes": 1 },
+      { "stop": "stop-17", "legMinutes": 3 },
+      { "stop": "stop-14", "legMinutes": 11 }
+    ]
+  }
+]

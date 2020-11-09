@@ -1,0 +1,19 @@
+[
+  {
+    "routeId": "route-1-adjusted",
+    "startDate": 0,
+    "endDate": -1,
+    "startTimes": [
+      {
+        "startTimeHour": 7,
+        "startTimeMinute": 50,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        "startTimeHour": 8,
+        "startTimeMinute": 20,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      }
+    ]
+  }
+]

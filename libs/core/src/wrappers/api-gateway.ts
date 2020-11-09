@@ -4,6 +4,7 @@ import {
   APIGatewayProxyHandlerV2,
   Context,
 } from 'aws-lambda';
+import { DEFAULT_TIMEZONE } from '../helpers';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN || '',
@@ -23,6 +24,7 @@ export interface HandlerResult<TData = any> {
 
 export interface HandlerDetails<TPathParameters = any> {
   townId: string;
+  timezone: string;
   userId: string;
   pathParameters: TPathParameters;
 }
@@ -43,8 +45,10 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
 ): APIGatewayProxyHandlerV2 => {
   return async (event, context) => {
     try {
-      const townId = event.headers['town-id'] ?? 'n/a';
-      const userId = event.headers['user-id'] ?? 'public';
+      const townId =
+        event.headers['town-id'] ?? event.headers['Town-Id'] ?? 'n/a';
+      const userId =
+        event.headers['user-id'] ?? event.headers['User-Id'] ?? 'public';
 
       Sentry.setUser({ id: userId });
       Sentry.setContext('Town', { townId });
@@ -53,8 +57,10 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
         ((event.pathParameters as unknown) as TPathParameters) ??
         ({} as TPathParameters);
 
+      const timezone = DEFAULT_TIMEZONE;
+
       const result = await handler(
-        { townId, userId, pathParameters },
+        { townId, userId, pathParameters, timezone },
         event,
         context
       );
