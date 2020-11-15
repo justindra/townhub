@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   makeStyles,
   Chip,
@@ -9,6 +9,8 @@ import {
   CardContent,
 } from '@material-ui/core';
 import { Button, HorizontalList } from '../../../components';
+import { Stop, StopSchedule } from '@townhub-libs/core';
+import { DateTime } from 'luxon';
 
 const useCardSummaryStyles = makeStyles((theme) => ({
   card: {
@@ -53,27 +55,65 @@ export const NextShuttleIcon: React.FC<{ minutes: number }> = ({ minutes }) => {
   );
 };
 
-export const CardSummary: React.FC<{
-  title: string;
-  subtitle: string;
-  minutes: number;
-}> = ({ title, subtitle, minutes }) => {
-  const styles = useCardSummaryStyles();
+/** Get the next three scheduled times */
+const getNextThreeTimes = (stop: StopSchedule) => {
+  const now = DateTime.local();
+  const nowInMinutes = now.minute + 60 * now.hour;
+  const timesList = Object.values(stop.schedule)
+    // Merge into one array
+    .reduce((prev, current) => current.concat(...prev), [])
+    // Get the ones that are after now
+    // .filter((val) => val > nowInMinutes)
+    // Sort it
+    .sort()
+    // Get the top 3
+    .slice(0, 3)
+    // Format it as a string;
+    .map((val) =>
+      now
+        .startOf('day')
+        .plus({
+          hours: Math.floor(val / 60),
+          minutes: val % 60,
+        })
+        .toFormat('t')
+    );
 
+  return timesList;
+};
+
+export const CardSummary: React.FC<{
+  stop: StopSchedule | null;
+}> = ({ stop }) => {
+  const styles = useCardSummaryStyles();
+  const [nextTimes, setNextTimes] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (stop) {
+      const times = getNextThreeTimes(stop);
+      setNextTimes(times);
+    }
+  }, [stop]);
+
+  if (!stop) return null;
   return (
     <Card className={styles.card} elevation={3}>
       <CardHeader
-        title={title}
-        subheader={subtitle}
-        action={<NextShuttleIcon minutes={minutes} />}
+        title={stop.name}
+        subheader={stop.description}
+        action={<NextShuttleIcon minutes={20} />}
       />
+      {
+        nextTimes.length ? 
       <CardContent className={styles.cardContent}>
         <HorizontalList>
-          <Chip label='06:15 am' />
-          <Chip label='08:15 am' />
-          <Chip label='10:15 am' />
+          {nextTimes.map((val, index) => (
+            <Chip key={index} label={val} />
+          ))}
         </HorizontalList>
       </CardContent>
+      : null
+      }
       <CardContent className={styles.cardContent}>
         <HorizontalList>
           <Button variant='contained'>Directions</Button>

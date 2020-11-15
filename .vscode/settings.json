@@ -15,7 +15,7 @@
     "**/dist": true,
     "**/__generated__": true,
     "**/.expo": true,
-    "**/node_modules": false,
+    "**/node_modules": true,
     "**/web-build": true,
     "**/coverage": true,
   }
