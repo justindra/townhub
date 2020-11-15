@@ -2,19 +2,19 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PageRoutes } from './pages';
 import { ThemeProvider } from '@material-ui/core';
-import { LightTheme, DarkTheme } from './theme';
+import { DarkTheme } from './theme';
 
-import { TownhubApi } from './state';
-
-TownhubApi.updateTownId('1eefd261-6b35-4f2a-8e44-fffec17b2f1a');
+import { DEFAULT_CONTEXT_VALUE, TownhubProvider } from './state';
 
 function App() {
   return (
-    <ThemeProvider theme={DarkTheme}>
-      <Router>
-        <PageRoutes />
-      </Router>
-    </ThemeProvider>
+    <TownhubProvider value={DEFAULT_CONTEXT_VALUE}>
+      <ThemeProvider theme={DarkTheme}>
+        <Router>
+          <PageRoutes />
+        </Router>
+      </ThemeProvider>
+    </TownhubProvider>
   );
 }
 

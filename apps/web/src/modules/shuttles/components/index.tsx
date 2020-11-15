@@ -1,4 +1,5 @@
 import { makeStyles, Slide } from '@material-ui/core';
+import { DailyData, Route } from '@townhub-libs/core';
 import React, { useState } from 'react';
 import { Button } from '../../../components';
 import { HorizontalList } from '../../../components/horizontal-list';
@@ -37,13 +38,18 @@ const useShuttlePageStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ShuttleModule: React.FC = () => {
+export const ShuttleModule: React.FC<{
+  dailyData: DailyData
+}> = ({
+  dailyData
+}) => {
   const shuttlePageClasses = useShuttlePageStyles();
 
   const [openedStopId, setOpenedStopId] = useState<string>('');
+  const [currentRoute, setCurrentRoute] = useState<Route>(dailyData.routes[0]);
 
   const handleStopClick = (id: string) => {
-    setOpenedStopId(`${id} - asdasd`);
+    setOpenedStopId(id);
   };
 
   const handleMapClick = () => {
@@ -53,18 +59,18 @@ export const ShuttleModule: React.FC = () => {
     <div className={shuttlePageClasses.container}>
       <div className={shuttlePageClasses.map}>
         <ShuttleMap
-          stops={[]}
+          stops={currentRoute.stopList}
           onStopClick={handleStopClick}
           onMapClick={handleMapClick}
         />
       </div>
       <div className={shuttlePageClasses.routeList}>
         <HorizontalList>
-          <Button variant='contained' color='primary'>
-            Morning
+          {dailyData.routes.map(route => (
+          <Button key={route.id} variant='contained' color='primary'>
+            {route.name}
           </Button>
-          <Button variant='contained'>Afternoon</Button>
-          <Button variant='contained'>Evening</Button>
+          ))}
         </HorizontalList>
       </div>
       <Slide in={!!openedStopId} direction='up' mountOnEnter unmountOnExit>

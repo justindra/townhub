@@ -1,4 +1,4 @@
-import { getDayDateRange } from './datetime';
+import { getDate, getDayDateRange } from './datetime';
 
 describe('datetime helpers', () => {
   describe('getDayDateRange', () => {
@@ -26,4 +26,11 @@ describe('datetime helpers', () => {
       expect(endOfDayValue).toEqual(1602424799999);
     });
   });
+
+  describe('getData', () => {
+    it('should return the date correctly', () => {
+      const timestamp = 1602369473215;
+      expect(getDate(timestamp)).toEqual('2020-10-10');
+    });
+  })
 });

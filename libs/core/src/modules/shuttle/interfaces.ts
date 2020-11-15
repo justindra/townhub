@@ -26,6 +26,11 @@ export interface Route extends BaseEntity {
   stopList: RouteStop[];
 }
 
+export interface Point {
+    lng: number;
+    lat: number;
+}
+
 /** A shuttle stop location */
 export interface Stop extends BaseEntity {
   /** The town this belongs to */
@@ -33,10 +38,7 @@ export interface Stop extends BaseEntity {
   name: string;
   description?: string;
   /** The GPS Location of the stop */
-  point?: {
-    lng: number;
-    lat: number;
-  };
+  point: Point;
 }
 
 /**
@@ -82,6 +84,15 @@ export interface Schedule extends BaseEntity {
   startTimes: ScheduleStartTimes[];
 }
 
+export interface DailyDataRouteStop extends RouteStop {
+  id: string;
+  point: Point;
+}
+
+export interface DailyDataRoute extends Route {
+  stopList: DailyDataRouteStop[];
+}
+
 /** The data for a particular data */
 export interface DailyData extends BaseEntity {
   /** The date this data is related to (YYYY-MM-DD) */
@@ -93,5 +104,5 @@ export interface DailyData extends BaseEntity {
   /** The list of schedules used on that day */
   schedules: Schedule[];
   /** The list of routes used on that day */
-  routes: Route[];
+  routes: DailyDataRoute[];
 }

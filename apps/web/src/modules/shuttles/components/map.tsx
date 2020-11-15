@@ -1,18 +1,18 @@
 import React from 'react';
 import { Marker, useMap, useMapEvent } from 'react-leaflet';
 import { Map } from '../../../components';
+import { RouteStop } from '@townhub-libs/core';
 
 interface ShuttleMapProps {
-  stops: string[];
+  stops: RouteStop[];
   onStopClick?: (stopId: string) => void;
   onMapClick?: () => void;
 }
 
-const Markers = [
-  { id: '1', point: { lat: 50.982802914144614, lng: -118.17143440246583 } },
-  { id: '2', point: { lat: 50.98091164990174, lng: -118.16619873046876 } },
-  { id: '3', point: { lat: 50.99101551077011, lng: -118.16259384155275 } },
-];
+interface Marker {
+  id: string;
+  point: { lat: number; lng: number }
+}
 
 export const MapClickDetector: React.FC<{ onMapClick: () => void }> = ({
   onMapClick,
@@ -24,8 +24,9 @@ export const MapClickDetector: React.FC<{ onMapClick: () => void }> = ({
 };
 
 export const MarkerGenerator: React.FC<{
+  markers?: Marker[];
   onMarkerClick: (id: string) => void;
-}> = ({ onMarkerClick }) => {
+}> = ({ markers = [], onMarkerClick }) => {
   const map = useMap();
 
   const handleMarkerClick = (marker: {
@@ -39,7 +40,7 @@ export const MarkerGenerator: React.FC<{
   };
   return (
     <>
-      {Markers.map((val) => (
+      {markers.map((val) => (
         <Marker
           key={val.id}
           position={val.point}
@@ -53,13 +54,14 @@ export const MarkerGenerator: React.FC<{
 };
 
 export const ShuttleMap: React.FC<ShuttleMapProps> = ({
+  stops,
   onStopClick = () => {},
   onMapClick = () => {},
 }) => {
   return (
     <Map>
       <MapClickDetector onMapClick={onMapClick} />
-      <MarkerGenerator onMarkerClick={onStopClick} />
+      <MarkerGenerator onMarkerClick={onStopClick} markers={stops} />
     </Map>
   );
 };

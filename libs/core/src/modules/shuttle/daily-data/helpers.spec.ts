@@ -3,6 +3,7 @@ import {
   getScheduleStartTimesForDayOfWeek,
   generateStopSchedulesForDate,
   getStopIdsFromRouteList,
+  convertRoutesToDailyDataRoutes,
 } from './helpers';
 import {
   Route,
@@ -143,6 +144,7 @@ describe('shuttle helpers', () => {
         name: 'Stop 1',
         createdAt: 0,
         updatedAt: 0,
+        point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-2',
@@ -150,6 +152,7 @@ describe('shuttle helpers', () => {
         name: 'Stop 2',
         createdAt: 0,
         updatedAt: 0,
+        point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-3',
@@ -157,6 +160,7 @@ describe('shuttle helpers', () => {
         name: 'Stop 3',
         createdAt: 0,
         updatedAt: 0,
+        point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-4',
@@ -164,6 +168,7 @@ describe('shuttle helpers', () => {
         name: 'Stop 4',
         createdAt: 0,
         updatedAt: 0,
+        point: { lat: 0, lng: 0 },
       },
     ];
     const timestamp = DateTime.fromMillis(1602530054192).setZone(
@@ -188,6 +193,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [20, 42, 50, 72],
           },
+          point: { lat: 0, lng: 0 },
         },
         {
           id: 'stop-2',
@@ -199,6 +205,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [23, 53],
           },
+          point: { lat: 0, lng: 0 },
         },
         {
           id: 'stop-3',
@@ -210,6 +217,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [28, 58],
           },
+          point: { lat: 0, lng: 0 },
         },
         {
           id: 'stop-4',
@@ -221,6 +229,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [38, 68],
           },
+          point: { lat: 0, lng: 0 },
         },
       ];
 
@@ -267,6 +276,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [20, 42, 50, 72],
           },
+          point: { lat: 0, lng: 0 },
         },
         {
           id: 'stop-3',
@@ -278,6 +288,7 @@ describe('shuttle helpers', () => {
           schedule: {
             'route-1': [28, 58],
           },
+          point: { lat: 0, lng: 0 },
         },
       ];
 
@@ -285,6 +296,74 @@ describe('shuttle helpers', () => {
       expect(console.warn).toHaveBeenCalledTimes(4);
 
       spy.mockRestore();
+    });
+  });
+
+  describe('convertRoutesToDailyDataRoutes', () => {
+    const route: Route = {
+      createdAt: 1604903727734,
+      stopList: [
+        {
+          stopId: 'stop-1',
+          legMinutes: 0,
+        },
+        {
+          stopId: 'stop-2',
+          legMinutes: 3,
+        },
+      ],
+      name: 'Morning',
+      description: 'The morning route',
+      townId: '1eefd261-6b35-4f2a-8e44-fffec17b2f1a',
+      id: '60ec0346-8f98-4451-9571-6a9ff17430c9',
+      updatedAt: 1604903727734,
+    };
+    const stops: Stop[] = [
+      {
+        id: 'stop-1',
+        townId: 'town-1',
+        name: 'Stop 1',
+        createdAt: 0,
+        updatedAt: 0,
+        point: { lat: 0, lng: 0 },
+      },
+      {
+        id: 'stop-2',
+        townId: 'town-1',
+        name: 'Stop 2',
+        createdAt: 0,
+        updatedAt: 0,
+        point: { lat: 1, lng: 1 },
+      },
+    ];
+    it('should throw an error if a stop was not provided', () => {
+      expect(() => convertRoutesToDailyDataRoutes([route], [stops[0]])).toThrow(
+        'Please provide stop with id: stop-2'
+      );
+    });
+
+    it('should return the correct details', () => {
+      const expected = [
+        {
+          ...route,
+          stopList: [
+            {
+              id: 'stop-1',
+              stopId: 'stop-1',
+              legMinutes: 0,
+              point: { lat: 0, lng: 0 },
+            },
+            {
+              id: 'stop-2',
+              stopId: 'stop-2',
+              legMinutes: 3,
+              point: { lat: 1, lng: 1 },
+            },
+          ],
+        },
+      ];
+
+      expect(convertRoutesToDailyDataRoutes([route], stops)).toEqual(expected);
     });
   });
 });
