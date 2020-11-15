@@ -1,7 +1,8 @@
-import { makeStyles, rgbToHex, Slide } from '@material-ui/core';
+import { makeStyles, Slide } from '@material-ui/core';
+import { DailyData, Route, StopSchedule } from '@townhub-libs/core';
 import React, { useState } from 'react';
-import { Button } from '../../components';
-import { HorizontalList } from '../../components/horizontal-list';
+import { Button } from '../../../components';
+import { HorizontalList } from '../../../components/horizontal-list';
 import { CardSummary } from './card-summary';
 import { ShuttleMap } from './map';
 
@@ -37,39 +38,56 @@ const useShuttlePageStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ShuttleModule: React.FC = () => {
+export const ShuttleModule: React.FC<{
+  dailyData: DailyData;
+}> = ({ dailyData }) => {
   const shuttlePageClasses = useShuttlePageStyles();
 
   const [openedStopId, setOpenedStopId] = useState<string>('');
+  const [openedStop, setOpenedStop] = useState<StopSchedule | null>(null);
+  const [currentRoute, setCurrentRoute] = useState<Route | null>(
+    dailyData.routes[0]
+  );
 
   const handleStopClick = (id: string) => {
-    setOpenedStopId(`${id} - asdasd`);
+    setOpenedStopId(id);
+    const stop = dailyData.stops.find((val) => val.id === id);
+    setOpenedStop(stop ?? null);
   };
 
   const handleMapClick = () => {
     setOpenedStopId('');
   };
+
+  const handleRouteClick = (id: string) => {
+    const route = dailyData.routes.find((val) => val.id === id);
+    setCurrentRoute(route ?? null);
+  };
   return (
     <div className={shuttlePageClasses.container}>
       <div className={shuttlePageClasses.map}>
         <ShuttleMap
-          stops={[]}
+          stops={currentRoute?.stopList ?? []}
           onStopClick={handleStopClick}
           onMapClick={handleMapClick}
         />
       </div>
       <div className={shuttlePageClasses.routeList}>
         <HorizontalList>
-          <Button variant='contained' color='primary'>
-            Morning
-          </Button>
-          <Button variant='contained'>Afternoon</Button>
-          <Button variant='contained'>Evening</Button>
+          {dailyData.routes.map((route) => (
+            <Button
+              key={route.id}
+              variant='contained'
+              color='primary'
+              onClick={() => handleRouteClick(route.id)}>
+              {route.name}
+            </Button>
+          ))}
         </HorizontalList>
       </div>
       <Slide in={!!openedStopId} direction='up' mountOnEnter unmountOnExit>
         <div className={shuttlePageClasses.stopCard}>
-          <CardSummary title='Dose Cafe' subtitle='100 1st St' minutes={20} />
+          <CardSummary stop={openedStop as StopSchedule} />
         </div>
       </Slide>
     </div>

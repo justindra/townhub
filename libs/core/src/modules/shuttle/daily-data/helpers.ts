@@ -1,4 +1,6 @@
 import {
+  DailyDataRoute,
+  DailyDataRouteStop,
   Route,
   RouteStop,
   RouteStopDepartureTime,
@@ -9,6 +11,7 @@ import {
 import { DateTime } from 'luxon';
 import uniq from 'lodash.uniq';
 import { DEFAULT_DATE_FORMAT, sortNumberAscending } from '../../../helpers';
+import { ValidationException } from '../../../base/exceptions';
 
 /**
  * Get the list of Stop Ids being used in a given list of routes
@@ -133,4 +136,38 @@ export const generateStopSchedulesForDate = (
   });
 
   return Object.values(stopScheduleByStopId);
+};
+
+/**
+ * Convert the database routes to be a route list required for the daily data
+ * @param routes The routes to convert
+ * @param stops The list of stops used in these routes
+ */
+export const convertRoutesToDailyDataRoutes = (
+  routes: Route[],
+  stops: Stop[]
+): DailyDataRoute[] => {
+  return routes.map((route) => {
+    const stopList: DailyDataRouteStop[] = route.stopList.map(
+      (originalStop) => {
+        const hydratedStop = stops.find(
+          (val) => val.id === originalStop.stopId
+        );
+        if (!hydratedStop)
+          throw new ValidationException(
+            `Please provide stop with id: ${originalStop.stopId}`
+          );
+
+        return {
+          ...originalStop,
+          id: originalStop.stopId,
+          point: hydratedStop.point,
+        };
+      }
+    );
+    return {
+      ...route,
+      stopList,
+    };
+  });
 };

@@ -7,6 +7,7 @@ import {
 } from '../database';
 import uniq from 'lodash.uniq';
 import {
+  convertRoutesToDailyDataRoutes,
   generateStopSchedulesForDate,
   getStopIdsFromRouteList,
 } from './helpers';
@@ -31,7 +32,6 @@ export const getDailyData = async (
   const {
     startOfDayValue,
     middleOfDay,
-    middleOfDayValue,
     endOfDayValue,
   } = getDayDateRange(timestamp, timezone);
   const dateString = getDate(timestamp, timezone);
@@ -57,7 +57,8 @@ export const getDailyData = async (
   // Get all stops based on routes
   const stopIds = getStopIdsFromRouteList(routes);
   const stops = await Stops.hydrate(stopIds);
-
+  
+  const dailyDataRoutes = convertRoutesToDailyDataRoutes(routes, stops);
   const stopSchedules = generateStopSchedulesForDate(
     schedules,
     routes,
@@ -70,7 +71,7 @@ export const getDailyData = async (
     timestamp: dateString,
     stops: stopSchedules,
     schedules,
-    routes: routes,
+    routes: dailyDataRoutes,
   });
 
   return newDailySchedule;
