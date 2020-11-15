@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
+    "axios": "^0.21.0",
     "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
     "react": "^17.0.1",

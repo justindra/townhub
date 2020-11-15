@@ -1,6 +1,6 @@
 import React from 'react';
-import { Marker, useMap, useMapEvent, ZoomControl } from 'react-leaflet';
-import { Map } from '../../components';
+import { Marker, useMap, useMapEvent } from 'react-leaflet';
+import { Map } from '../../../components';
 
 interface ShuttleMapProps {
   stops: string[];
