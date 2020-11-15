@@ -9,7 +9,7 @@ import {
   CardContent,
 } from '@material-ui/core';
 import { Button, HorizontalList } from '../../../components';
-import { Stop, StopSchedule } from '@townhub-libs/core';
+import { StopSchedule } from '@townhub-libs/core';
 import { DateTime } from 'luxon';
 
 const useCardSummaryStyles = makeStyles((theme) => ({
@@ -45,12 +45,35 @@ export const NextShuttleIcon: React.FC<{
   nextShuttleMinutes: number | null;
 }> = ({ nextShuttleMinutes }) => {
   const styles = useNextShuttleIconStyles();
+  const [minutes, setMinutes] = useState<string>('');
+  
+  // Update the number of minutes to come
+  const setTheMinutes = () => {
+    if (!nextShuttleMinutes) return;
+    const nextMinutes = DateTime.local()
+        .set({
+          hour: Math.floor(nextShuttleMinutes / 60),
+          minute: nextShuttleMinutes % 60,
+        })
+        .diffNow('minutes').minutes;
+      setMinutes(nextMinutes.toString());
+  }
+  
+  // Update every 10 seconds to make sure it's pseudo-live
+  useEffect(() => {
+    const intervalId = setInterval(setTheMinutes, 10 * 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  useEffect(() => {
+    setTheMinutes();
+  }, [nextShuttleMinutes])
+
   if (!nextShuttleMinutes) return null;
 
-  const minutes = DateTime.local().set({
-    hour: Math.floor(nextShuttleMinutes / 60),
-    minute: nextShuttleMinutes % 60,
-  }).diffNow('minutes').minutes;
+
 
   return (
     <Paper className={styles.surface} variant='outlined'>
@@ -117,7 +140,13 @@ export const CardSummary: React.FC<{
       <CardHeader
         title={stop.name}
         subheader={stop.description}
-        action={<NextShuttleIcon nextShuttleMinutes={nextTimes && nextTimes.length ? nextTimes[0] : null} />}
+        action={
+          <NextShuttleIcon
+            nextShuttleMinutes={
+              nextTimes && nextTimes.length ? nextTimes[0] : null
+            }
+          />
+        }
       />
       {nextTimes.length ? (
         <CardContent className={styles.cardContent}>
