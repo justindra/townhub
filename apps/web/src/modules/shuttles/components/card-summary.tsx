@@ -41,8 +41,17 @@ const useNextShuttleIconStyles = makeStyles((theme) => ({
   },
 }));
 
-export const NextShuttleIcon: React.FC<{ minutes: number }> = ({ minutes }) => {
+export const NextShuttleIcon: React.FC<{
+  nextShuttleMinutes: number | null;
+}> = ({ nextShuttleMinutes }) => {
   const styles = useNextShuttleIconStyles();
+  if (!nextShuttleMinutes) return null;
+
+  const minutes = DateTime.local().set({
+    hour: Math.floor(nextShuttleMinutes / 60),
+    minute: nextShuttleMinutes % 60,
+  }).diffNow('minutes').minutes;
+
   return (
     <Paper className={styles.surface} variant='outlined'>
       <Typography className={styles.title} variant='body1'>
@@ -63,30 +72,30 @@ const getNextThreeTimes = (stop: StopSchedule) => {
     // Merge into one array
     .reduce((prev, current) => current.concat(...prev), [])
     // Get the ones that are after now
-    // .filter((val) => val > nowInMinutes)
+    .filter((val) => val > nowInMinutes)
     // Sort it
     .sort()
     // Get the top 3
-    .slice(0, 3)
-    // Format it as a string;
-    .map((val) =>
-      now
-        .startOf('day')
-        .plus({
-          hours: Math.floor(val / 60),
-          minutes: val % 60,
-        })
-        .toFormat('t')
-    );
+    .slice(0, 3);
 
   return timesList;
+};
+
+const convertMinutesToTimeFormat = (val: number) => {
+  return DateTime.local()
+    .startOf('day')
+    .plus({
+      hours: Math.floor(val / 60),
+      minutes: val % 60,
+    })
+    .toFormat('t');
 };
 
 export const CardSummary: React.FC<{
   stop: StopSchedule | null;
 }> = ({ stop }) => {
   const styles = useCardSummaryStyles();
-  const [nextTimes, setNextTimes] = useState<string[]>([]);
+  const [nextTimes, setNextTimes] = useState<number[]>([]);
 
   useEffect(() => {
     if (stop) {
@@ -95,28 +104,35 @@ export const CardSummary: React.FC<{
     }
   }, [stop]);
 
+  const handleOpenDirections = () => {
+    window.open(
+      `https://www.google.com/maps/dir/?api=1&destination=${stop?.point?.lat},${stop?.point?.lng}`,
+      '_blank'
+    );
+  };
+
   if (!stop) return null;
   return (
     <Card className={styles.card} elevation={3}>
       <CardHeader
         title={stop.name}
         subheader={stop.description}
-        action={<NextShuttleIcon minutes={20} />}
+        action={<NextShuttleIcon nextShuttleMinutes={nextTimes && nextTimes.length ? nextTimes[0] : null} />}
       />
-      {
-        nextTimes.length ? 
+      {nextTimes.length ? (
+        <CardContent className={styles.cardContent}>
+          <HorizontalList>
+            {nextTimes.map((val, index) => (
+              <Chip key={index} label={convertMinutesToTimeFormat(val)} />
+            ))}
+          </HorizontalList>
+        </CardContent>
+      ) : null}
       <CardContent className={styles.cardContent}>
         <HorizontalList>
-          {nextTimes.map((val, index) => (
-            <Chip key={index} label={val} />
-          ))}
-        </HorizontalList>
-      </CardContent>
-      : null
-      }
-      <CardContent className={styles.cardContent}>
-        <HorizontalList>
-          <Button variant='contained'>Directions</Button>
+          <Button variant='contained' onClick={handleOpenDirections}>
+            Directions
+          </Button>
           <Button variant='outlined'>More info</Button>
         </HorizontalList>
       </CardContent>
