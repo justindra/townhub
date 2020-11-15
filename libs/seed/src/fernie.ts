@@ -9,14 +9,16 @@ AWS.config.update({
 });
 
 import {
-  SHUTTLES_DATABASES,
-  TOWNS_DATABASE,
-  TownsDatabase,
-  StopsDatabase,
-  SchedulesDatabase,
-  RoutesDatabase,
-  Stop,
-  Route,
+  Shuttles as ShuttlesModule,
+  Towns as TownsModule
+  // SHUTTLES_DATABASES,
+  // TOWNS_DATABASE,
+  // TownsDatabase,
+  // StopsDatabase,
+  // SchedulesDatabase,
+  // RoutesDatabase,
+  // Stop,
+  // Route,
 } from '@townhub-libs/core';
 import { setTableNamesFromStack } from './helpers';
 import stopsData from './fernie/data/stops.json';
@@ -28,28 +30,28 @@ const main = async () => {
     {
       name: 'dev-townhub-infra-cdk-module-shuttle',
       databaseDetails: [
-        SHUTTLES_DATABASES.STOP,
-        SHUTTLES_DATABASES.ROUTE,
-        SHUTTLES_DATABASES.SCHEDULE,
-        SHUTTLES_DATABASES.DAILY_SCHEDULE,
+        ShuttlesModule.SHUTTLES_DATABASES.STOP,
+        ShuttlesModule.SHUTTLES_DATABASES.ROUTE,
+        ShuttlesModule.SHUTTLES_DATABASES.SCHEDULE,
+        ShuttlesModule.SHUTTLES_DATABASES.DAILY_SCHEDULE,
       ],
     },
     {
       name: 'dev-townhub-infra-cdk-module-town',
-      databaseDetails: [TOWNS_DATABASE],
+      databaseDetails: [TownsModule.TOWNS_DATABASE],
     },
   ]);
-  const Towns = new TownsDatabase();
-  const Stops = new StopsDatabase();
-  const Routes = new RoutesDatabase();
-  const Schedules = new SchedulesDatabase();
+  const Towns = new TownsModule.TownsDatabase();
+  const Stops = new ShuttlesModule.StopsDatabase();
+  const Routes = new ShuttlesModule.RoutesDatabase();
+  const Schedules = new ShuttlesModule.SchedulesDatabase();
 
   const fernie = await Towns.getByHid('fernie');
 
   const townId = fernie.id;
 
-  const createdStops: Stop[] = [];
-  const createdRoutes: Route[] = [];
+  const createdStops: ShuttlesModule.Stop[] = [];
+  const createdRoutes: ShuttlesModule.Route[] = [];
   
   const addStop = async (stop: typeof stopsData[0]) => {
     const newStop = await Stops.create({

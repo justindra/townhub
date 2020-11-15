@@ -1,2 +1,2 @@
-export * from './shuttle';
-export * from './towns';
+export * as Shuttles from './shuttle';
+export * as Towns from './towns';

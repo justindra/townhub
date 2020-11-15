@@ -8,7 +8,7 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
-import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/core';
+import { Towns as TownsModule } from '@townhub-libs/core';
 import { setTableNamesFromStack } from './helpers';
 
 /** Input the list of towns as a seed */
@@ -16,10 +16,10 @@ const main = async () => {
   await setTableNamesFromStack([
     {
       name: 'dev-townhub-infra-cdk-module-town',
-      databaseDetails: [TOWNS_DATABASE],
+      databaseDetails: [TownsModule.TOWNS_DATABASE],
     },
   ]);
-  const Towns = new TownsDatabase();
+  const Towns = new TownsModule.TownsDatabase();
 
   await Towns.create({
     hid: 'fernie',

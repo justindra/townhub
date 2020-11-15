@@ -9,9 +9,8 @@ AWS.config.update({
 });
 
 import {
-  SHUTTLES_DATABASES,
-  TOWNS_DATABASE,
-  TownsDatabase,
+  Shuttles as ShuttlesModule,
+  Towns as TownsModule
 } from '@townhub-libs/core';
 import { setTableNamesFromStack } from './helpers';
 
@@ -20,18 +19,18 @@ const main = async () => {
     {
       name: 'dev-townhub-infra-cdk-module-shuttle',
       databaseDetails: [
-        SHUTTLES_DATABASES.STOP,
-        SHUTTLES_DATABASES.ROUTE,
-        SHUTTLES_DATABASES.SCHEDULE,
-        SHUTTLES_DATABASES.DAILY_SCHEDULE,
+        ShuttlesModule.SHUTTLES_DATABASES.STOP,
+        ShuttlesModule.SHUTTLES_DATABASES.ROUTE,
+        ShuttlesModule.SHUTTLES_DATABASES.SCHEDULE,
+        ShuttlesModule.SHUTTLES_DATABASES.DAILY_SCHEDULE,
       ],
     },
     {
       name: 'dev-townhub-infra-cdk-module-town',
-      databaseDetails: [TOWNS_DATABASE],
+      databaseDetails: [TownsModule.TOWNS_DATABASE],
     },
   ]);
-  const Towns = new TownsDatabase();
+  const Towns = new TownsModule.TownsDatabase();
 
   await Towns.create({
     hid: 'fernie',
