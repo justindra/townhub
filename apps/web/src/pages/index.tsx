@@ -6,6 +6,12 @@ import { Shuttles } from '../state';
 export const PageRoutes: FC = () => {
   // TODO: Get the HID of the town from the URL and go get the details.
   // If no HID exists, forward to home page to choose Town
+  const host = window.location.hostname;
+  if (host === 'localhost') {
+    // Local dev
+  }
+  const subdomain = host.split('.')[0];
+  const townHid = 
 
   // TODO: Get the list of modules available, if only one then
   // redirect to that module
