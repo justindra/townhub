@@ -44,8 +44,8 @@ export interface Stop extends BaseEntity {
  * useful to return for info on a stop
  */
 export interface StopSchedule extends Stop {
-  /** The date the schedule is for */
-  scheduleDate: number;
+  /** The date the schedule is for (YYYY-MM-DD)*/
+  scheduleDate: string;
   schedule: {
     /**
      * The key is a route's id and the array is the times a shuttle is scheduled
@@ -84,8 +84,8 @@ export interface Schedule extends BaseEntity {
 
 /** The data for a particular data */
 export interface DailyData extends BaseEntity {
-  /** The date this data is related to, should be the 12pm on that date */
-  timestamp: number;
+  /** The date this data is related to (YYYY-MM-DD) */
+  timestamp: string;
   /** The town this data relates to */
   townId: string;
   /** The list of stops used on that day */

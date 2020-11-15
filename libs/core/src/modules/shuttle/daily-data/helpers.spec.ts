@@ -13,7 +13,7 @@ import {
   StopSchedule,
 } from '../interfaces';
 import { DateTime } from 'luxon';
-import { DEFAULT_TIMEZONE } from '../../../helpers';
+import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from '../../../helpers';
 
 describe('shuttle helpers', () => {
   describe('getStopIdsFromRouteList', () => {
@@ -184,7 +184,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 1',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [20, 42, 50, 72],
           },
@@ -195,7 +195,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 2',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [23, 53],
           },
@@ -206,7 +206,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 3',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [28, 58],
           },
@@ -217,7 +217,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 4',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [38, 68],
           },
@@ -263,7 +263,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 1',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [20, 42, 50, 72],
           },
@@ -274,7 +274,7 @@ describe('shuttle helpers', () => {
           name: 'Stop 3',
           createdAt: 0,
           updatedAt: 0,
-          scheduleDate: timestamp.valueOf(),
+          scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           schedule: {
             'route-1': [28, 58],
           },
