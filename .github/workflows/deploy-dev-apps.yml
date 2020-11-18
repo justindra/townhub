@@ -36,5 +36,5 @@ jobs:
         # https://github.com/typescript-eslint/typescript-eslint/issues/2714
         run: CI=false yarn run build:apps
       - name: Upload to S3
-        run: aws --version
+        run: aws s3 sync apps/web/build ${{ secrets.TOWNHUB_DEV_APP_BUCKET_S3_URL }} --acl public-read
 
