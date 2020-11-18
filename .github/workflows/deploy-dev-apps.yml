@@ -33,6 +33,7 @@ jobs:
         # CI is set to false here to supress warnings as errors as React is
         # complaining of unused variables even though they are all imported
         # types from typescript libraries
+        # https://github.com/typescript-eslint/typescript-eslint/issues/2714
         run: CI=false yarn run build:apps
       - name: Upload to S3
         run: aws --version
