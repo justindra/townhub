@@ -1,20 +1,20 @@
 /**
- * Get the domain name for a website host based on the stage and any subdomain
- * requirements.
+ * Get the domain name for a website host based on the stage and any given
+ * subdomain requirements.
  *
  * @param stage The stage, e.g. 'dev'
  * @param rootDomainName The rootDomain, this should correspond to a Route53 Hosted Zone
- * @param subdomain An optional subdomain to provide
+ * @param subdomains An optional list of subdomains to serve the urls on
  */
-export const getDomainName = (
+export const getDomainNameList = (
   stage: string,
   rootDomainName: string,
-  subdomain?: string
-): string => {
+  subdomains?: string[]
+): string[] => {
   const defaultDomain =
     stage === 'prod' ? `${rootDomainName}` : `${stage}.${rootDomainName}`;
 
-  if (!subdomain) return defaultDomain;
+  if (!subdomains || !subdomains.length) return [defaultDomain];
 
-  return `${subdomain}.${defaultDomain}`;
+  return subdomains.map((subdomain) => `${subdomain}.${defaultDomain}`);
 };

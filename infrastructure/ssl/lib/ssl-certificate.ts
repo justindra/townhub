@@ -31,7 +31,11 @@ export class SslCertificateStack extends Stack {
     // Create a new SSL Certificate for the Api Domain
     const sslCertificate = new Certificate(this, 'sslCertificate', {
       domainName: rootDomainName,
-      subjectAlternativeNames: [`*.${rootDomainName}`],
+      subjectAlternativeNames: [
+        `*.${rootDomainName}`,
+        // Add the dev environment to the certificate name
+        `*.dev.${rootDomainName}`,
+      ],
       validation: CertificateValidation.fromDns(hostedZone),
     });
 

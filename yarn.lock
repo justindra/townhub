@@ -2945,10 +2945,10 @@
     typescript "^3.9.7"
     yargs "^15.4.1"
 
-"@serverless-stack/cli@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@serverless-stack/cli/-/cli-0.4.1.tgz#2babd3ba4e12d0f89d62472d5e18a21975c508cb"
-  integrity sha512-Bcly3Aki9ezuZ9ekYJH37+yR7d4pXYQheoupYdigSzUL2VFlmIZDT/OwsANg4AmBtc4Wx3ixZ3s7IOW95mzIIQ==
+"@serverless-stack/cli@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@serverless-stack/cli/-/cli-0.4.3.tgz#fb439b048f29a2a8b5153b06d7e1f195b9743a6e"
+  integrity sha512-EnvxYJpjOQr7wprdPF/pvPbNgs1x9xK3ySxekc1CeRp1jqoXolTfYeRDAMVewh9Eygo4Ydh8m2wznKNFQANjVQ==
   dependencies:
     "@babel/cli" "^7.10.5"
     "@babel/core" "^7.10.5"
@@ -2956,8 +2956,8 @@
     "@babel/eslint-plugin" "^7.11.3"
     "@babel/plugin-proposal-class-properties" "^7.10.4"
     "@babel/preset-env" "^7.10.4"
-    "@serverless-stack/core" "^0.4.1"
-    "@serverless-stack/resources" "^0.4.1"
+    "@serverless-stack/core" "^0.4.3"
+    "@serverless-stack/resources" "^0.4.3"
     "@types/jest" "^26.0.7"
     "@types/node" "^14.0.27"
     "@typescript-eslint/eslint-plugin" "^3.9.1"
@@ -2974,7 +2974,7 @@
     typescript "^3.9.7"
     yargs "^15.4.1"
 
-"@serverless-stack/core@^0.4.1":
+"@serverless-stack/core@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@serverless-stack/core/-/core-0.4.3.tgz#1f9c8b0221c718250dbadd3a7081e2e8fbef28bb"
   integrity sha512-R+iUsOKMYFof+nu4O9VhZrNmiJs3ap6sxuKjXfiUwTI6Iy8wCFE5aIb3Wu0EIBmfeVe7vR4PPH9TYjh3kJ4UdA==
@@ -2990,14 +2990,7 @@
   dependencies:
     "@aws-cdk/core" "1.61.0"
 
-"@serverless-stack/resources@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@serverless-stack/resources/-/resources-0.4.1.tgz#fb5f2a4459b2139661b19e750e8af2bf214d3b41"
-  integrity sha512-oDPFeyUo3KQN/x7FuEcmIoDDJmJnXId18g/1EkdG8nCWnbGF28tAsfT95Qv6qLjxBPlgV5rKW6b6z6djJkYwKQ==
-  dependencies:
-    "@aws-cdk/core" "1.61.0"
-
-"@serverless-stack/resources@^0.4.1":
+"@serverless-stack/resources@0.4.3", "@serverless-stack/resources@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@serverless-stack/resources/-/resources-0.4.3.tgz#1a9143ccedb1e5458d6c3cd32e8be531ee27e4a6"
   integrity sha512-cYE2aTHbToj71xZyEbCMH5+5jZEHx2ebL/gA5eEC0JUnlrfCIt6K3buO4nIKvOY01hQD/kS6OLM40x6keV2F3A==

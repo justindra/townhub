@@ -17,4 +17,16 @@ export default function main(app: App): void {
 
   new ShuttlesStack(app, 'module-shuttle');
   new TownsStack(app, 'module-town');
+
+  // Setup subdomains for each town in the system
+  // TODO: Eventually, might move this into a Lambda function that adds a new
+  // subdomain every time we create a new town in the database, or have a
+  // script that polls DDB for the latest list before running this.
+  new StaticSiteStack(app, 'StaticAppPageStack', {
+    rootDomainName,
+    subdomains: [
+      'fernie',
+      'revelstoke'
+    ]
+  })
 }

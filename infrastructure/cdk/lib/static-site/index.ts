@@ -8,22 +8,22 @@ import {
 } from '@aws-cdk/aws-cloudfront';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
-import { getDomainName } from './helpers';
+import { getDomainNameList } from './helpers';
 import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
   rootDomainName: string;
   /**
-   * The subdomain to host the static site on, if different to
-   * the root domain name.
+   * The subdomains to host the static site on, if different to the root domain
+   * name. You can place multiple subdomains to point to the same bucket.
    */
-  subdomain?: string;
+  subdomains?: string[];
 }
 
 /**
  * A Stack that allows a static site to be hosted in an S3 Bucket. With
- * a CloudFront instance accessing it and a Route53 record pointing to the
+ * a CloudFront instance accessing it and Route53 record(s) pointing to the
  * instance.
  *
  */
@@ -31,16 +31,9 @@ export default class StaticSiteStack extends Stack {
   constructor(
     scope: App,
     id: string,
-    { rootDomainName, subdomain, ...props }: StaticSiteStackProps
+    { rootDomainName, subdomains, ...props }: StaticSiteStackProps
   ) {
     super(scope, id, props);
-
-    // Define the custom domain to use for the api
-    const hostingDomainName = getDomainName(
-      scope.stage,
-      rootDomainName,
-      subdomain
-    );
 
     // Find the hosted zone in Route53
     const hostedZone = HostedZone.fromLookup(this, 'HostedZone', {
@@ -61,9 +54,16 @@ export default class StaticSiteStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
+    // Define the custom domain to use for the api
+    const hostingDomainNames = getDomainNameList(
+      scope.stage,
+      rootDomainName,
+      subdomains
+    );
+
     // Create the CloudFront OAI
     const oai = new OriginAccessIdentity(this, 'OAI', {
-      comment: `OAI for ${hostingDomainName} bucket`,
+      comment: `OAI for ${scope.name} bucket`,
     });
 
     // Create and attach the access policy to the bucket only allowing
@@ -94,27 +94,30 @@ export default class StaticSiteStack extends Stack {
         ],
         aliasConfiguration: {
           acmCertRef: sslCertificateArn,
-          names: [hostingDomainName],
+          names: hostingDomainNames,
         },
       }
     );
 
-    // Create a new A Record to point to the CloudFront Distribution
-    new ARecord(this, 'ARecord', {
-      zone: hostedZone,
-      target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
-      recordName: hostingDomainName,
+    // Go through each given domain names and set the policies and domain
+    // names for each required hosting domain names
+    hostingDomainNames.forEach((hostingDomainName) => {
+
+      // Create a new A Record to point to the CloudFront Distribution
+      new ARecord(this, `${hostingDomainName}-ARecord`, {
+        zone: hostedZone,
+        target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+        recordName: hostingDomainName,
+      });
+
+      // Output different values so it can be referenced by other stacks
+      new CfnOutput(this, `${hostingDomainName}-Name`, {
+        value: hostingDomainName,
+      });
     });
 
-    // Output different values so it can be referenced by other stacks
-    new CfnOutput(this, 'WebsiteDomainName', {
-      value: hostingDomainName,
-    });
     new CfnOutput(this, 'WebsiteBucketArn', {
       value: bucket.bucketArn,
-    });
-    new CfnOutput(this, 'CertificateArn', {
-      value: sslCertificateArn,
     });
   }
 }
