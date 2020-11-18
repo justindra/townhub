@@ -43,6 +43,8 @@ jobs:
           name: services-artifact
       - name: Display structure of downloaded files
         run: ls -R
+      - name: Display structure of downloaded files
+        run: echo "test"
       # - name: Configure AWS Credentials
       #   run: yarn serverless config credentials -p aws -k ${{ secrets.AWS_ACCESS_KEY_ID }} -s ${{ secrets.AWS_SECRET_ACCESS_KEY }} -n townhub-dev -o
       # - name: Deploy to dev environment
