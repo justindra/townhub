@@ -1,5 +1,5 @@
 # Deploy different services to a dev environment
-name: Deploy to Development Environment
+name: Deploy Services to Development Environment
 
 on:
   push:

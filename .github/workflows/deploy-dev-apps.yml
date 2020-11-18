@@ -1,5 +1,5 @@
-# Deploy different services to a dev environment
-name: Deploy to Development Environment 2
+# Deploy different apps to a dev environment
+name: Deploy Apps to Development Environment
 
 on:
   push:
@@ -8,7 +8,6 @@ on:
     # paths:
       # - 'apps/**'
       # - 'libs/**'
-      # - 'services/**'
 
 jobs:
   build:
