@@ -1,11 +1,11 @@
 import { Api, TownhubApiResponse } from '../base';
-import { Town } from '@townhub-libs/core';
+import { Towns } from '@townhub-libs/core';
 
 export class TownsApi {
   constructor(private api: Api) {}
 
   async getByHid(townHid: string) {
-    const res = await this.api.get<TownhubApiResponse<Town>>(
+    const res = await this.api.get<TownhubApiResponse<Towns.Town>>(
       `/towns/hid/${townHid}`
     );
     return res.data;

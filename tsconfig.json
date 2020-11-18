@@ -5,6 +5,7 @@
     "moduleResolution": "node",
 
     "sourceMap": true,
+    "declaration": true,
 
     "strict": true,
     "esModuleInterop": true,

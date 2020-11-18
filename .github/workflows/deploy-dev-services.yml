@@ -1,17 +1,16 @@
 # Deploy different services to a dev environment
-name: Deploy to Development Environment
+name: Deploy Services to Development Environment
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'apps/**'
       - 'libs/**'
       - 'services/**'
 
 jobs:
-  build:
+  install_and_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

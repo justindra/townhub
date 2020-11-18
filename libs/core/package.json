@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "dist/index",
   "module": "dist/index.es",
+  "types": "dist/index.d.ts",
   "private": true,
   "dependencies": {
     "@sentry/node": "^5.25.0",
