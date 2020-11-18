@@ -1,6 +1,6 @@
 import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
-import { CfnOutput, RemovalPolicy } from '@aws-cdk/core';
+import { CfnOutput, Duration, RemovalPolicy } from '@aws-cdk/core';
 import { Bucket } from '@aws-cdk/aws-s3';
 import {
   CloudFrontWebDistribution,
@@ -89,7 +89,18 @@ export default class StaticSiteStack extends Stack {
               s3BucketSource: bucket,
               originAccessIdentity: oai,
             },
-            behaviors: [{ isDefaultBehavior: true }],
+            behaviors: [
+              { defaultTtl: Duration.seconds(0), pathPattern: 'index.html' },
+              { isDefaultBehavior: true },
+            ],
+          },
+        ],
+        // Re-direct all 404s to the index.html to allow for SPA routing
+        errorConfigurations: [
+          {
+            errorCode: 404,
+            responseCode: 200,
+            responsePagePath: '/index.html',
           },
         ],
         aliasConfiguration: {
@@ -102,7 +113,6 @@ export default class StaticSiteStack extends Stack {
     // Go through each given domain names and set the policies and domain
     // names for each required hosting domain names
     hostingDomainNames.forEach((hostingDomainName) => {
-
       // Create a new A Record to point to the CloudFront Distribution
       new ARecord(this, `${hostingDomainName}-ARecord`, {
         zone: hostedZone,
