@@ -5,10 +5,10 @@ on:
   push:
     branches:
       - chore-deploy-dev
-    paths:
-      - 'apps/**'
-      - 'libs/**'
-      - 'services/**'
+    # paths:
+      # - 'apps/**'
+      # - 'libs/**'
+      # - 'services/**'
 
 jobs:
   install_and_test:
