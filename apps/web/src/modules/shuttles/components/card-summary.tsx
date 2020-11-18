@@ -9,7 +9,7 @@ import {
   CardContent,
 } from '@material-ui/core';
 import { Button, HorizontalList } from '../../../components';
-import { StopSchedule } from '@townhub-libs/core';
+import { Shuttles } from '@townhub-libs/core';
 import { DateTime } from 'luxon';
 
 const useCardSummaryStyles = makeStyles((theme) => ({
@@ -88,7 +88,7 @@ export const NextShuttleIcon: React.FC<{
 };
 
 /** Get the next three scheduled times */
-const getNextThreeTimes = (stop: StopSchedule) => {
+const getNextThreeTimes = (stop: Shuttles.StopSchedule) => {
   const now = DateTime.local();
   const nowInMinutes = now.minute + 60 * now.hour;
   const timesList = Object.values(stop.schedule)
@@ -115,7 +115,7 @@ const convertMinutesToTimeFormat = (val: number) => {
 };
 
 export const CardSummary: React.FC<{
-  stop: StopSchedule | null;
+  stop: Shuttles.StopSchedule | null;
 }> = ({ stop }) => {
   const styles = useCardSummaryStyles();
   const [nextTimes, setNextTimes] = useState<number[]>([]);

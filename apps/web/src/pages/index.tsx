@@ -1,4 +1,4 @@
-import { DailyData } from '@townhub-libs/core';
+import { Shuttles } from '@townhub-libs/core';
 import React, { FC, useEffect, useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ShuttleModule } from '../modules';
@@ -7,7 +7,7 @@ import { useTownhub } from '../state';
 export const PageRoutes: FC = () => {
   const { Shuttles, Towns } = useTownhub();
 
-  const [dailyData, setDailyData] = useState<DailyData | null>(null);
+  const [dailyData, setDailyData] = useState<Shuttles.DailyData | null>(null);
   // TODO: Get the list of modules available, if only one then
   // redirect to that module
 

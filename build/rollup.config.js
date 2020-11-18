@@ -10,7 +10,10 @@ export default {
     nodeResolve({
       preferBuiltins: true,
     }),
-    typescript(),
+    typescript({
+      clean: true,
+      tsconfig: 'tsconfig.build.json'
+    }),
     commonjs(),
     json(),
   ],
