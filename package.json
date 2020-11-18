@@ -30,7 +30,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build:apps": "lerna run build --scope @townhub-apps/* --",
+    "build:apps": "lerna run build --scope @townhub-apps/* --include-dependencies --",
     "deploy:services": "lerna run deploy --scope @townhub-services/* --"
   },
   "husky": {
