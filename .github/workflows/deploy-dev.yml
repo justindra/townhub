@@ -4,14 +4,14 @@ name: Deploy to Development Environment
 on:
   push:
     branches:
-      - master
+      - chore-deploy-dev
     paths:
       - 'apps/**'
       - 'libs/**'
       - 'services/**'
 
 jobs:
-  build:
+  install_and_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,7 +24,27 @@ jobs:
       # Run install and test
       - run: yarn install
       - run: yarn test
-      - name: Configure AWS Credentials
-        run: yarn serverless config credentials -p aws -k ${{ secrets.AWS_ACCESS_KEY_ID }} -s ${{ secrets.AWS_SECRET_ACCESS_KEY }} -n townhub-dev -o
-      - name: Deploy to dev environment
-        run: yarn run deploy:services
+      - name: Upload Services Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: services-artifact
+          path: |
+            **/*
+            !apps/**/*
+            !docs/**/*
+            !infrastructure/**/*
+  deploy_services:
+    runs-on: ubuntu-latest
+    needs: install_test
+    steps:
+      - name: Download Services Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: services-artifact
+      - name: Display structure of downloaded files
+        run: ls -R
+      # - name: Configure AWS Credentials
+      #   run: yarn serverless config credentials -p aws -k ${{ secrets.AWS_ACCESS_KEY_ID }} -s ${{ secrets.AWS_SECRET_ACCESS_KEY }} -n townhub-dev -o
+      # - name: Deploy to dev environment
+      #   run: yarn run deploy:services
+
