@@ -24,8 +24,11 @@ export class TownsApi {
     try {
       const res = await this.getByHid(townHid);
       this.api.updateTownId((res as any).id);
+
+      return res;
     } catch (error) {
       console.error(error);
     }
+    return null;
   }
 }
