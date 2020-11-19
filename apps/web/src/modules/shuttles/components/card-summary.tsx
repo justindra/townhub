@@ -159,7 +159,7 @@ export const CardSummary: React.FC<{
       ) : null}
       <CardContent className={styles.cardContent}>
         <HorizontalList>
-          <Button variant='contained' onClick={handleOpenDirections}>
+          <Button variant='contained' onClick={handleOpenDirections} color='secondary'>
             Directions
           </Button>
           <Button variant='outlined'>More info</Button>
