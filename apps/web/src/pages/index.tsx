@@ -17,7 +17,7 @@ const usePageLayoutStyles = makeStyles((theme) => ({
     background: theme.palette.background.default,
   },
   main: {
-    height: `calc(100vh - ${theme.spacing(8)}px)`,
+    height: `calc(var(--vh, 1vh) * 100 - ${theme.spacing(8)}px)`,
     borderTopLeftRadius: theme.spacing(2),
     borderTopRightRadius: theme.spacing(2),
     overflow: 'hidden',
@@ -55,7 +55,7 @@ export const PageRoutes: FC = () => {
   if (!dailyData || !town) return <LoadingPage />;
 
   return (
-    <Paper className={pageLayoutClasses.appContainer}>
+    <Paper className={pageLayoutClasses.appContainer} square>
       <AppBar position='static' color='transparent' elevation={0}>
         <Toolbar>
           <Typography variant='h6'>{town.name}</Typography>
