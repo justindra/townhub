@@ -6,8 +6,7 @@ export class ShuttlesApi {
 
   async getDailyData(timestamp: number = new Date().valueOf()) {
     const res = await this.api.get<TownhubApiResponse<Shuttles.DailyData>>(
-      // `/shuttles/daily/${timestamp}`
-      `/shuttles/daily/${1606501200000}`
+      `/shuttles/daily/${timestamp}`
     );
     return res.data;
   }
