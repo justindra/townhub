@@ -8,6 +8,7 @@ import {
 import uniq from 'lodash.uniq';
 import {
   convertRoutesToDailyDataRoutes,
+  filterStartTimesByDayOfWeek,
   generateStopSchedulesForDate,
   getStopIdsFromRouteList,
 } from './helpers';
@@ -29,11 +30,10 @@ export const getDailyData = async (
   const Stops = new StopsDatabase();
 
   // Get the date ranges
-  const {
-    startOfDayValue,
-    middleOfDay,
-    endOfDayValue,
-  } = getDayDateRange(timestamp, timezone);
+  const { startOfDayValue, middleOfDay, endOfDayValue } = getDayDateRange(
+    timestamp,
+    timezone
+  );
   const dateString = getDate(timestamp, timezone);
 
   // Check if daily data already exists and just return that if it does
@@ -44,11 +44,13 @@ export const getDailyData = async (
   if (availableDailySchedules.length) return availableDailySchedules[0];
 
   // Get all schedules for today
-  const schedules = await Schedules.getByTimestamp(
-    startOfDayValue,
-    endOfDayValue,
-    townId
-  );
+  const schedules = (
+    await Schedules.getByTimestamp(startOfDayValue, endOfDayValue, townId)
+  ).filter((schedule) => {
+    return schedule.startTimes.filter(
+      filterStartTimesByDayOfWeek(middleOfDay.weekday)
+    ).length;
+  });
 
   // Get all routes based on the schedule
   const routeIds = uniq(schedules.map((schedule) => schedule.routeId));
@@ -57,7 +59,7 @@ export const getDailyData = async (
   // Get all stops based on routes
   const stopIds = getStopIdsFromRouteList(routes);
   const stops = await Stops.hydrate(stopIds);
-  
+
   const dailyDataRoutes = convertRoutesToDailyDataRoutes(routes, stops);
   const stopSchedules = generateStopSchedulesForDate(
     schedules,
