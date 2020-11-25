@@ -128,6 +128,8 @@ describe('shuttle helpers', () => {
     const routes: Route[] = [
       {
         id: 'route-1',
+        name: 'Route 1',
+        description: 'route 1 description',
         stopList: [
           { stopId: 'stop-1', legMinutes: 0 },
           { stopId: 'stop-2', legMinutes: 3 },
@@ -190,9 +192,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [20, 42, 50, 72],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [20, 42, 50, 72],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
         {
@@ -202,9 +209,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [23, 53],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [23, 53],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
         {
@@ -214,9 +226,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [28, 58],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [28, 58],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
         {
@@ -226,9 +243,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [38, 68],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [38, 68],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
       ];
@@ -273,9 +295,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [20, 42, 50, 72],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [20, 42, 50, 72],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
         {
@@ -285,9 +312,14 @@ describe('shuttle helpers', () => {
           createdAt: 0,
           updatedAt: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-          schedule: {
-            'route-1': [28, 58],
-          },
+          routes: [
+            {
+              id: 'route-1',
+              name: 'Route 1',
+              description: 'route 1 description',
+              schedule: [28, 58],
+            },
+          ],
           point: { lat: 0, lng: 0 },
         },
       ];

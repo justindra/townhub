@@ -48,13 +48,17 @@ export interface Stop extends BaseEntity {
 export interface StopSchedule extends Stop {
   /** The date the schedule is for (YYYY-MM-DD)*/
   scheduleDate: string;
-  schedule: {
+  routes: {
+    // These are copied from the route details for the frontend to use
+    id: string;
+    name: string;
+    description?: string;
     /**
-     * The key is a route's id and the array is the times a shuttle is scheduled
-     * to stop here for a given route in minutes from midnight.
+     * The array is the times a shuttle is scheduled to stop here for a given
+     * route in minutes from midnight.
      */
-    [routeId: string]: number[];
-  };
+    schedule: number[];
+  }[]
 }
 
 export interface ScheduleStartTimes {

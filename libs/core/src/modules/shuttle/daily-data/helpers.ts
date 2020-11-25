@@ -119,18 +119,34 @@ export const generateStopSchedulesForDate = (
           stopScheduleByStopId[stopId] = {
             ...stopDetails,
             scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
-            schedule: {},
+            routes: [],
           };
+        }
+
+        // Find the idx of that route in the list
+        let routeIdx = stopScheduleByStopId[stopId].routes.findIndex(
+          (val) => val.id === route.id
+        );
+
+        // If the route doesn't currently exist in the array then add it in
+        if (routeIdx === -1) {
+          const length = stopScheduleByStopId[stopId].routes.push({
+            id: route.id,
+            name: route.name,
+            description: route.description,
+            schedule: [],
+          });
+          routeIdx = length - 1;
         }
 
         // Add the new time and sort it by ascending
         const newSchedule = [
-          ...(stopScheduleByStopId[stopId].schedule[route.id] ?? []),
+          ...(stopScheduleByStopId[stopId].routes[routeIdx].schedule),
           departureTimeMinutes,
         ].sort(sortNumberAscending);
 
         // Assign it back in
-        stopScheduleByStopId[stopId].schedule[route.id] = newSchedule;
+        stopScheduleByStopId[stopId].routes[routeIdx].schedule = newSchedule;
       });
     });
   });
