@@ -1,0 +1,170 @@
+[
+  {
+    "id": "stop-1",
+    "name": "Big Eddy Depot",
+    "point": {
+      "lat": 50.999697827387294,
+      "lng": -118.22945583662299
+    }
+  },
+  {
+    "id": "stop-2",
+    "name": "Coast Hillcrest Hotel",
+    "point": {
+      "lng": -118.16298209299363,
+      "lat": 50.99536151484263
+    }
+  },
+  {
+    "id": "stop-3",
+    "name": "Ramada Inn/Marriott",
+    "point": {
+      "lat": 51.00988400054205,
+      "lng": -118.21073733932106
+    }
+  },
+  {
+    "id": "stop-4",
+    "name": "Stoke Hotel",
+    "point": {
+      "lat": 51.00828349729954,
+      "lng": -118.21884288794051
+    }
+  },
+  {
+    "id": "stop-5",
+    "name": "Sandman / Best Western",
+    "point": {
+      "lat": 51.01026428899239,
+      "lng": -118.21800724376543
+    }
+  },
+  {
+    "id": "stop-6",
+    "name": "Starbucks",
+    "point": {
+      "lat": 51.00850209382668,
+      "lng": -118.21602008609544
+    }
+  },
+  {
+    "id": "stop-7",
+    "name": "Esso",
+    "point": {
+      "lat": 51.00559693938952,
+      "lng": -118.20485399753868
+    }
+  },
+  {
+    "id": "stop-8",
+    "name": "Le Marche",
+    "point": {
+      "lat": 51.00254226749259,
+      "lng": -118.19974691493069
+    }
+  },
+  {
+    "id": "stop-9",
+    "name": "City Furniture",
+    "point": {
+      "lat": 50.99974718541502,
+      "lng": -118.1951049535709
+    }
+  },
+  {
+    "id": "stop-10",
+    "name": "Taylor Street & Fourth",
+    "point": {
+      "lat": 50.99257283617223,
+      "lng": -118.1902387991394
+    }
+  },
+  {
+    "id": "stop-11",
+    "name": "Southside Market",
+    "point": {
+      "lat": 50.99088824377131,
+      "lng": -118.18650831493098
+    }
+  },
+  {
+    "id": "stop-12",
+    "name": "Journey's Perch",
+    "point": {
+      "lat": 50.98103918173877,
+      "lng": -118.18361172842619
+    }
+  },
+  {
+    "id": "stop-13",
+    "name": "Nichol & Beruschi",
+    "point": {
+      "lat": 50.97584931432342,
+      "lng": -118.18253650180068
+    }
+  },
+  {
+    "id": "stop-14",
+    "name": "Nichol & Hay",
+    "point": {
+      "lat": 50.97583925681867,
+      "lng": -118.1698775257247
+    }
+  },
+  {
+    "id": "stop-15",
+    "name": "Revelstoke Mountain Resort",
+    "point": {
+      "lat": 50.95905869742267,
+      "lng": -118.16306430956887
+    }
+  },
+  {
+    "id": "stop-16",
+    "name": "Poppi's Hostel",
+    "point": {
+      "lat": 50.99702402591582,
+      "lng": -118.19256627260079
+    }
+  },
+  {
+    "id": "stop-17",
+    "name": "The Grizz",
+    "point": {
+      "lat": 50.99888794110696,
+      "lng": -118.1976265014358
+    }
+  },
+  {
+    "id": "stop-18",
+    "name": "Third & Charles",
+    "point": {
+      "lat": 51.003383885314825,
+      "lng": -118.2064098545632
+    }
+  },
+  {
+    "id": "stop-19",
+    "name": "Douglas & Hanson",
+    "point": {
+      "lat": 51.00520202321301,
+      "lng": -118.2116447328912
+    }
+  },
+  {
+    "id": "stop-20",
+    "name": "Wright & Second",
+    "point": {
+      "lat": 51.00756708035018,
+      "lng": -118.2123638240531
+    }
+  },
+  {
+    "id": "stop-21",
+    "name": "Nordic Ski Club",
+    "point": {
+      "lat": 50.94418456422642,
+      "lng": -118.22303118293834
+    }
+  }
+]

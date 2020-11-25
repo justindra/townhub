@@ -17,7 +17,7 @@ export class TownsApi {
    */
   async setTownIdFromUrl() {
     const host = window.location.hostname;
-    let townHid = 'fernie';
+    let townHid = 'revelstoke';
     if (host !== 'localhost') {
       townHid = host.split('.')[0];
     }

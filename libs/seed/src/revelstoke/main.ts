@@ -12,10 +12,12 @@ import {
   Shuttles as ShuttlesModule,
   Towns as TownsModule
 } from '@townhub-libs/core';
-import { setTableNamesFromStack } from './helpers';
-import stopsData from './fernie/data/stops.json';
-import routesData from './fernie/data/routes.json';
-import schedulesData from './fernie/data/schedules.json';
+import { setTableNamesFromStack } from '../helpers';
+import stopsData from './data/stops.json';
+import routesData from './data/routes.json';
+import schedulesInboundData from './data/schedules-inbound.json';
+import schedulesOutboundData from './data/schedules-outbound.json';
+import schedulesNordicData from './data/schedules-nordic.json';
 
 const main = async () => {
   await setTableNamesFromStack([
@@ -38,9 +40,9 @@ const main = async () => {
   const Routes = new ShuttlesModule.RoutesDatabase();
   const Schedules = new ShuttlesModule.SchedulesDatabase();
 
-  const fernie = await Towns.getByHid('fernie');
+  const town = await Towns.getByHid('revelstoke');
 
-  const townId = fernie.id;
+  const townId = town.id;
 
   const createdStops: ShuttlesModule.Stop[] = [];
   const createdRoutes: ShuttlesModule.Route[] = [];
@@ -49,7 +51,6 @@ const main = async () => {
     const newStop = await Stops.create({
       name: stop.name,
       townId,
-      description: stop.description,
       point: stop.point
     });
     createdStops.push(newStop);
@@ -89,7 +90,7 @@ const main = async () => {
 
   await Promise.all(routesData.map(addRoute));
 
-  const addSchedule = async (schedule: typeof schedulesData[0]) => {
+  const addSchedule = async (schedule: typeof schedulesOutboundData[0]) => {
     const route = findRoute(schedule.routeId);
     await Schedules.create({
       townId,
@@ -103,7 +104,9 @@ const main = async () => {
     })
   }
 
-  await Promise.all(schedulesData.map(addSchedule));
+  await Promise.all(schedulesInboundData.map(addSchedule));
+  await Promise.all(schedulesOutboundData.map(addSchedule));
+  await Promise.all(schedulesNordicData.map(addSchedule));
 
 };
 
