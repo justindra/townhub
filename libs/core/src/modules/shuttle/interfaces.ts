@@ -27,8 +27,8 @@ export interface Route extends BaseEntity {
 }
 
 export interface Point {
-    lng: number;
-    lat: number;
+  lng: number;
+  lat: number;
 }
 
 /** A shuttle stop location */
@@ -41,6 +41,18 @@ export interface Stop extends BaseEntity {
   point: Point;
 }
 
+export interface StopScheduleRoute {
+  // These are copied from the route details for the frontend to use
+  id: string;
+  name: string;
+  description?: string;
+  /**
+   * The array is the times a shuttle is scheduled to stop here for a given
+   * route in minutes from midnight.
+   */
+  schedule: number[];
+}
+
 /**
  * The stop details with the schedule it has for a particular day,
  * useful to return for info on a stop
@@ -48,13 +60,7 @@ export interface Stop extends BaseEntity {
 export interface StopSchedule extends Stop {
   /** The date the schedule is for (YYYY-MM-DD)*/
   scheduleDate: string;
-  schedule: {
-    /**
-     * The key is a route's id and the array is the times a shuttle is scheduled
-     * to stop here for a given route in minutes from midnight.
-     */
-    [routeId: string]: number[];
-  };
+  routes: StopScheduleRoute[];
 }
 
 export interface ScheduleStartTimes {
