@@ -99,7 +99,7 @@ export const CardSummary: React.FC<{
                     primary={route.name}
                     secondary={
                       <>
-                        <Typography variant='body2' color='inherit'>
+                        <Typography variant='body2'  component='span' color='inherit'>
                           {route.description}
                         </Typography>
                         {route.schedule

@@ -1,0 +1,41 @@
+[
+  {
+    "routeId": "nordic-inbound",
+    "startDate": 1606464000000,
+    "endDate": 1617692400000,
+    "startTimes": [
+      {
+        "startTimeHour": 10,
+        "startTimeMinute": 37,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 13,
+        "startTimeMinute": 2,
+        "daysInOperation": [6, 7]
+      }
+    ]
+  },
+  {
+    "routeId": "nordic-outbound",
+    "startDate": 1606464000000,
+    "endDate": 1617692400000,
+    "startTimes": [
+      {
+        "startTimeHour": 11,
+        "startTimeMinute": 5,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 13,
+        "startTimeMinute": 30,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 15,
+        "startTimeMinute": 0,
+        "daysInOperation": [6, 7]
+      }
+    ]
+  }
+]

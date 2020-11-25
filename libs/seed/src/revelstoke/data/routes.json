@@ -1,0 +1,111 @@
+[
+  {
+    "id": "rmr-inbound",
+    "name": "RMR Inbound",
+    "description": "Heading to RMR",
+    "stops": [
+      { "stop": "stop-1", "legMinutes": 0 },
+      { "stop": "stop-2", "legMinutes": 5 },
+      { "stop": "stop-3", "legMinutes": 5 },
+      { "stop": "stop-4", "legMinutes": 4 },
+      { "stop": "stop-5", "legMinutes": 1 },
+      { "stop": "stop-6", "legMinutes": 2 },
+      { "stop": "stop-7", "legMinutes": 3 },
+      { "stop": "stop-8", "legMinutes": 2 },
+      { "stop": "stop-9", "legMinutes": 2 },
+      { "stop": "stop-10", "legMinutes": 2 },
+      { "stop": "stop-11", "legMinutes": 1 },
+      { "stop": "stop-12", "legMinutes": 2 },
+      { "stop": "stop-13", "legMinutes": 2 },
+      { "stop": "stop-14", "legMinutes": 2 },
+      { "stop": "stop-15", "legMinutes": 4 }
+    ]
+  },
+  {
+    "id": "rmr-inbound-without-stop-1",
+    "name": "RMR Inbound",
+    "description": "Heading to RMR",
+    "stops": [
+      { "stop": "stop-2", "legMinutes": 0 },
+      { "stop": "stop-3", "legMinutes": 5 },
+      { "stop": "stop-4", "legMinutes": 4 },
+      { "stop": "stop-5", "legMinutes": 1 },
+      { "stop": "stop-6", "legMinutes": 2 },
+      { "stop": "stop-7", "legMinutes": 3 },
+      { "stop": "stop-8", "legMinutes": 2 },
+      { "stop": "stop-9", "legMinutes": 2 },
+      { "stop": "stop-10", "legMinutes": 2 },
+      { "stop": "stop-11", "legMinutes": 1 },
+      { "stop": "stop-12", "legMinutes": 2 },
+      { "stop": "stop-13", "legMinutes": 2 },
+      { "stop": "stop-14", "legMinutes": 2 },
+      { "stop": "stop-15", "legMinutes": 4 }
+    ]
+  },
+  {
+    "id": "rmr-outbound",
+    "name": "RMR Outbound",
+    "description": "Heading from RMR",
+    "stops": [
+      { "stop": "stop-15", "legMinutes": 0 },
+      { "stop": "stop-14", "legMinutes": 2 },
+      { "stop": "stop-13", "legMinutes": 4 },
+      { "stop": "stop-12", "legMinutes": 1 },
+      { "stop": "stop-11", "legMinutes": 2 },
+      { "stop": "stop-10", "legMinutes": 1 },
+      { "stop": "stop-16", "legMinutes": 1 },
+      { "stop": "stop-17", "legMinutes": 1 },
+      { "stop": "stop-18", "legMinutes": 2 },
+      { "stop": "stop-19", "legMinutes": 1 },
+      { "stop": "stop-20", "legMinutes": 1 },
+      { "stop": "stop-4", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 1 },
+      { "stop": "stop-3", "legMinutes": 2 },
+      { "stop": "stop-2", "legMinutes": 5 },
+      { "stop": "stop-1", "legMinutes": 7 }
+    ]
+  },
+  {
+    "id": "rmr-outbound-without-stop-1",
+    "name": "RMR Outbound",
+    "description": "Heading from RMR",
+    "stops": [
+      { "stop": "stop-15", "legMinutes": 0 },
+      { "stop": "stop-14", "legMinutes": 2 },
+      { "stop": "stop-13", "legMinutes": 4 },
+      { "stop": "stop-12", "legMinutes": 1 },
+      { "stop": "stop-11", "legMinutes": 2 },
+      { "stop": "stop-10", "legMinutes": 1 },
+      { "stop": "stop-16", "legMinutes": 1 },
+      { "stop": "stop-17", "legMinutes": 1 },
+      { "stop": "stop-18", "legMinutes": 2 },
+      { "stop": "stop-19", "legMinutes": 1 },
+      { "stop": "stop-20", "legMinutes": 1 },
+      { "stop": "stop-4", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 1 },
+      { "stop": "stop-3", "legMinutes": 2 },
+      { "stop": "stop-2", "legMinutes": 5 }
+    ]
+  },
+  {
+    "id": "nordic-inbound",
+    "name": "Nordic Inbound",
+    "description": "Heading to Nordic Ski Club",
+    "stops": [
+      { "stop": "stop-2", "legMinutes": 0 },
+      { "stop": "stop-1", "legMinutes": 7 },
+      { "stop": "stop-21", "legMinutes": 8 }
+    ]
+  },
+  {
+    "id": "nordic-outbound",
+    "name": "Nordic Outbound",
+    "description": "Heading from Nordic Ski Club",
+    "stops": [
+      { "stop": "stop-21", "legMinutes": 0 },
+      { "stop": "stop-1", "legMinutes": 8 },
+      { "stop": "stop-3", "legMinutes": 7 },
+      { "stop": "stop-2", "legMinutes": 5 }
+    ]
+  }
+]

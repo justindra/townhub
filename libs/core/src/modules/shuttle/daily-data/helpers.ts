@@ -5,6 +5,7 @@ import {
   RouteStop,
   RouteStopDepartureTime,
   Schedule,
+  ScheduleStartTimes,
   Stop,
   StopSchedule,
 } from '../interfaces';
@@ -26,6 +27,15 @@ export const getStopIdsFromRouteList = (routes: Route[]): string[] => {
 };
 
 /**
+ * A filter function generator to filter the start times
+ * based on the given day of the week
+ * @param dayOfWeek
+ */
+export const filterStartTimesByDayOfWeek = (dayOfWeek: number) => (
+  val: ScheduleStartTimes
+) => val.daysInOperation.includes(dayOfWeek);
+
+/**
  * Get the scheduled start times for a particular day of the week based on a
  * given schedule
  * @param schedule The schedule to use
@@ -37,7 +47,7 @@ export const getScheduleStartTimesForDayOfWeek = (
 ) => {
   const startTimes = schedule.startTimes
     // Filter the start times by the actual day of the week we need
-    .filter((val) => val.daysInOperation.includes(dayOfWeek))
+    .filter(filterStartTimesByDayOfWeek(dayOfWeek))
     // Return just the start time
     .map((val) => val.startTimeMinutes)
     // Sort it from earliest to latest
@@ -141,7 +151,7 @@ export const generateStopSchedulesForDate = (
 
         // Add the new time and sort it by ascending
         const newSchedule = [
-          ...(stopScheduleByStopId[stopId].routes[routeIdx].schedule),
+          ...stopScheduleByStopId[stopId].routes[routeIdx].schedule,
           departureTimeMinutes,
         ].sort(sortNumberAscending);
 
