@@ -101,7 +101,7 @@ export const CardSummary: React.FC<{
                       <>
                         <Typography variant='body2'  component='span' color='inherit'>
                           {route.description}
-                        </Typography>
+                        </Typography><br />
                         {route.schedule
                           .map(convertMinutesToTimeFormat)
                           .join(' | ')}

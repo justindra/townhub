@@ -10,6 +10,7 @@ import {
   StopSchedule,
 } from '../interfaces';
 import { DateTime } from 'luxon';
+import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
 import { DEFAULT_DATE_FORMAT, sortNumberAscending } from '../../../helpers';
 import { ValidationException } from '../../../base/exceptions';
@@ -48,12 +49,13 @@ export const getScheduleStartTimesForDayOfWeek = (
   const startTimes = schedule.startTimes
     // Filter the start times by the actual day of the week we need
     .filter(filterStartTimesByDayOfWeek(dayOfWeek))
-    // Return just the start time
-    .map((val) => val.startTimeMinutes)
     // Sort it from earliest to latest
-    .sort(sortNumberAscending);
+    .sort((a, b) => sortNumberAscending(a.startTimeMinutes, b.startTimeMinutes));
 
-  return uniq(startTimes);
+  // TODO: This currently does not take into account what happens when the same
+  // startTime but with different hiddenStops or different daysInOperation
+  // occurs in theory that should never exist, but its something that can happen
+  return uniqBy(startTimes, 'startTimeMinutes');
 };
 
 /**
@@ -64,7 +66,8 @@ export const getScheduleStartTimesForDayOfWeek = (
  */
 export const getDepartureTimesFromStopList = (
   startTime: number,
-  stopList: RouteStop[]
+  stopList: RouteStop[],
+  hiddenStops: string[] = []
 ): RouteStopDepartureTime[] => {
   // Initialize the departure times array
   const departureTimes: RouteStopDepartureTime[] = [];
@@ -72,13 +75,29 @@ export const getDepartureTimesFromStopList = (
   // Initialize the time
   let time = startTime;
   // For each stop, we add the leg time and then add it to the array list
-  for (const routeStop of stopList) {
+  for (const [index, routeStop] of stopList.entries()) {
+    if (hiddenStops.includes(routeStop.stopId)) {
+      // Get the next route stop
+      const nextRouteStop = stopList[index + 1];
+      // If this is the first stop in the list, then remove the nextStops
+      // minutes, to zero it back in.
+      if (index === 0) {
+        time -= nextRouteStop.legMinutes;
+      } else {
+        time += routeStop.legMinutes;
+      }
+      continue;
+    }
     time += routeStop.legMinutes;
     departureTimes.push({
       stopId: routeStop.stopId,
       departureTimeMinutes: time,
     });
   }
+
+  // Remove the last stop from the list as that should never have a departure
+  // time as its the last stop
+  departureTimes.pop();
 
   return departureTimes;
 };
@@ -114,8 +133,9 @@ export const generateStopSchedulesForDate = (
     startTimesToUse.forEach((startTime) => {
       // Get departure time function
       const departureTimes = getDepartureTimesFromStopList(
-        startTime,
-        route.stopList
+        startTime.startTimeMinutes,
+        route.stopList,
+        startTime.hiddenStops
       );
 
       // Update the stopScheduleByStopId object

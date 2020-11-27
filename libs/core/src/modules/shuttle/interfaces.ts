@@ -75,6 +75,13 @@ export interface ScheduleStartTimes {
    * https://moment.github.io/luxon/docs/class/src/datetime.js~DateTime.html#instance-get-weekday
    * */
   daysInOperation: number[];
+  /**
+   * List of any stops in the route to be hidden, basically means that the bus
+   * will not stop at these particular stops for this particular start time.
+   * 
+   * Allows us to use the same routes and adjust it simply by hiding stops.
+   */
+  hiddenStops: string[];
 }
 
 export interface Schedule extends BaseEntity {
