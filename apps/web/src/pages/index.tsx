@@ -1,5 +1,7 @@
 import {
   AppBar,
+  Button,
+  IconButton,
   makeStyles,
   Paper,
   Toolbar,
@@ -7,10 +9,12 @@ import {
 } from '@material-ui/core';
 import { Shuttles, Towns } from '@townhub-libs/core';
 import React, { FC, useEffect, useState } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { LoadingPage } from '../components';
 import { ShuttleModule } from '../modules';
 import { useTownhub } from '../state';
+import { AboutPage } from './about';
+import InfoIcon from '@material-ui/icons/Info';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
@@ -23,6 +27,9 @@ const usePageLayoutStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     position: 'relative',
   },
+  title: {
+    flexGrow: 1
+  }
 }));
 
 export const PageRoutes: FC = () => {
@@ -58,13 +65,19 @@ export const PageRoutes: FC = () => {
     <Paper className={pageLayoutClasses.appContainer} square>
       <AppBar position='static' color='transparent' elevation={0}>
         <Toolbar>
-          <Typography variant='h6'>{town.name}</Typography>
+          <Typography variant='h6' className={pageLayoutClasses.title}>{town.name}</Typography>
+          <IconButton color="inherit" component={Link} to='/about'>
+            <InfoIcon />
+            </IconButton>
         </Toolbar>
       </AppBar>
       <Paper className={pageLayoutClasses.main} elevation={3} square>
         <Switch>
           <Route path='/shuttles'>
             <ShuttleModule dailyData={dailyData} />
+          </Route>
+          <Route path='/about' >
+            <AboutPage townName={town.name}/>
           </Route>
           <Route path='*'>
             <Redirect to='/shuttles' />
