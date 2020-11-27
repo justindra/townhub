@@ -12,7 +12,7 @@ export const getNextThreeTimes = (stop: Shuttles.StopSchedule) => {
     // Get the ones that are after now
     .filter((val) => val > nowInMinutes)
     // Sort it
-    .sort()
+    .sort((a, b) => a - b)
     // Get the top 3
     .slice(0, 3);
 
