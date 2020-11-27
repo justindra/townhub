@@ -44,7 +44,9 @@ export const ShuttleModule: React.FC<{
   const shuttlePageClasses = useShuttlePageStyles();
 
   const [openedStopId, setOpenedStopId] = useState<string>('');
-  const [openedStop, setOpenedStop] = useState<Shuttles.StopSchedule | null>(null);
+  const [openedStop, setOpenedStop] = useState<Shuttles.StopSchedule | null>(
+    null
+  );
   const [currentRoute, setCurrentRoute] = useState<Shuttles.Route | null>(
     dailyData.routes[0]
   );
@@ -78,7 +80,7 @@ export const ShuttleModule: React.FC<{
             <Button
               key={route.id}
               variant='contained'
-              color='primary'
+              color={route.id === currentRoute?.id ? 'primary' : 'default'}
               onClick={() => handleRouteClick(route.id)}>
               {route.name}
             </Button>
