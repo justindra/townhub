@@ -22,7 +22,7 @@ import schedulesNordicData from './data/schedules-nordic.json';
 const main = async () => {
   await setTableNamesFromStack([
     {
-      name: 'dev-townhub-infra-cdk-module-shuttle',
+      name: 'prod-townhub-infra-cdk-module-shuttle',
       databaseDetails: [
         ShuttlesModule.SHUTTLES_DATABASES.STOP,
         ShuttlesModule.SHUTTLES_DATABASES.ROUTE,
@@ -31,7 +31,7 @@ const main = async () => {
       ],
     },
     {
-      name: 'dev-townhub-infra-cdk-module-town',
+      name: 'prod-townhub-infra-cdk-module-town',
       databaseDetails: [TownsModule.TOWNS_DATABASE],
     },
   ]);

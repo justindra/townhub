@@ -1,7 +1,8 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+Deployed
+* [Fernie](https://fernie.townhub.ca)
+* [Revelstoke](https://revelstoke.townhub.ca)
 ## Available Scripts
 
 In the project directory, you can run:
