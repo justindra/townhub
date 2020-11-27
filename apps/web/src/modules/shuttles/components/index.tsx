@@ -1,10 +1,11 @@
 import { makeStyles, Slide } from '@material-ui/core';
 import { Shuttles } from '@townhub-libs/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../../../components';
 import { HorizontalList } from '../../../components/horizontal-list';
 import { CardSummary } from './card-summary';
 import { ShuttleMap } from './map';
+import ReactGA from 'react-ga';
 
 const useShuttlePageStyles = makeStyles((theme) => ({
   container: {
@@ -51,10 +52,19 @@ export const ShuttleModule: React.FC<{
     dailyData.routes[0]
   );
 
+  useEffect(() => {
+    ReactGA.pageview('/shuttles');
+  }, [])
+
   const handleStopClick = (id: string) => {
     setOpenedStopId(id);
     const stop = dailyData.stops.find((val) => val.id === id);
     setOpenedStop(stop ?? null);
+    ReactGA.event({
+      category: 'stop',
+      action: 'clicked',
+      label: stop?.name
+    });
   };
 
   const handleMapClick = () => {
@@ -65,6 +75,11 @@ export const ShuttleModule: React.FC<{
     const route = dailyData.routes.find((val) => val.id === id);
     setCurrentRoute(route ?? null);
     setOpenedStopId('');
+    ReactGA.event({
+      category: 'route',
+      action: 'clicked',
+      label: route?.name
+    });
   };
   return (
     <div className={shuttlePageClasses.container}>

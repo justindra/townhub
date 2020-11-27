@@ -1,31 +1,35 @@
+import React, { useEffect } from 'react';
 import { Typography, Link } from '@material-ui/core';
-import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import ReactGA from 'react-ga';
 
 export const AboutPage: React.FC<{
   townName: string;
-}> = ({
-  townName
-}) => {
+}> = ({ townName }) => {
+  // Google Analytics PageView
+  useEffect(() => {
+    ReactGA.pageview('/about');
+  }, []);
   return (
     <div
       style={{
         padding: 16,
         maxHeight: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
       }}>
       <RouterLink to='/shuttles'>
-        <Link variant='body2' color='textPrimary' paragraph>
+        <Link variant='body2' color='textPrimary' paragraph component='span'>
           Back to Shuttles
         </Link>
       </RouterLink>
-      <div style={{
-        flex: 1,
-        overflowY: 'auto',
-        paddingTop: 16
-      }}>
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          paddingTop: 16,
+        }}>
         <Typography variant='h6' gutterBottom>
           About Townhub
         </Typography>
@@ -43,16 +47,19 @@ export const AboutPage: React.FC<{
           .
         </Typography>
         <Typography variant='caption' paragraph align='center'>
-        <Link color='inherit' href='https://github.com/justindra/townhub' target='_blank'>
-          Made with{' '}
-          <FavoriteIcon
-            fontSize='small'
-            color='error'
-            style={{ marginBottom: '-0.25em' }}
-          />{' '}
-          for {townName}</Link>
+          <Link
+            color='inherit'
+            href='https://github.com/justindra/townhub'
+            target='_blank'>
+            Made with{' '}
+            <FavoriteIcon
+              fontSize='small'
+              color='error'
+              style={{ marginBottom: '-0.25em' }}
+            />{' '}
+            for {townName}
+          </Link>
         </Typography>
-
       </div>
     </div>
   );

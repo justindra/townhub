@@ -15,6 +15,7 @@ import { ShuttleModule } from '../modules';
 import { useTownhub } from '../state';
 import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
+import ReactGA from 'react-ga';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
@@ -28,8 +29,8 @@ const usePageLayoutStyles = makeStyles((theme) => ({
     position: 'relative',
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 export const PageRoutes: FC = () => {
@@ -50,6 +51,7 @@ export const PageRoutes: FC = () => {
       if (active) {
         setTown(town);
         setDailyData(daily);
+        ReactGA.set({ town: town?.hid });
       }
     })();
 
@@ -65,10 +67,12 @@ export const PageRoutes: FC = () => {
     <Paper className={pageLayoutClasses.appContainer} square>
       <AppBar position='static' color='transparent' elevation={0}>
         <Toolbar>
-          <Typography variant='h6' className={pageLayoutClasses.title}>{town.name}</Typography>
-          <IconButton color="inherit" component={Link} to='/about'>
+          <Typography variant='h6' className={pageLayoutClasses.title}>
+            {town.name}
+          </Typography>
+          <IconButton color='inherit' component={Link} to='/about'>
             <InfoIcon />
-            </IconButton>
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Paper className={pageLayoutClasses.main} elevation={3} square>
@@ -76,8 +80,8 @@ export const PageRoutes: FC = () => {
           <Route path='/shuttles'>
             <ShuttleModule dailyData={dailyData} />
           </Route>
-          <Route path='/about' >
-            <AboutPage townName={town.name}/>
+          <Route path='/about'>
+            <AboutPage townName={town.name} />
           </Route>
           <Route path='*'>
             <Redirect to='/shuttles' />

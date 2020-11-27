@@ -15,6 +15,7 @@ jobs:
     env:
       REACT_APP_TOWNHUB_API_ENDPOINT: ${{ secrets.TOWNHUB_PROD_API_ENDPOINT }}
       REACT_APP_MAP_BOX_API_KEY: ${{ secrets.MAP_BOX_API_KEY }}
+      REACT_APP_GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12
