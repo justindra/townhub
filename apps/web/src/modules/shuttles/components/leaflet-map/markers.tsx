@@ -16,7 +16,7 @@ export const MarkerGenerator: React.FC<{
   useEffect(() => {
     // If a set of markers was provided, zoom to contain all the markers
     if (markers && markers.length) {
-      map.fitBounds(markers.map(val => [val.point.lat, val.point.lng]));
+      map.fitBounds(markers.map(val => [val.point.lat, val.point.lng]), { padding: [15, 15]});
     } else {
       centreOnCurrentGeoLocation();
     }
