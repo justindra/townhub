@@ -1,0 +1,29 @@
+# Deploy different services to a prod environment
+name: Deploy Services to Production Environment
+
+on:
+  push:
+    branches:
+      - production
+    paths:
+      - 'libs/**'
+      - 'services/**'
+
+jobs:
+  install_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      # Cache Yarn packages to reduce install time
+      - uses: c-hive/gha-yarn-cache@v1
+      # Run install and test
+      - run: yarn install
+      - run: yarn test
+      - name: Configure AWS Credentials
+        run: yarn serverless config credentials -p aws -k ${{ secrets.AWS_ACCESS_KEY_ID }} -s ${{ secrets.AWS_SECRET_ACCESS_KEY }} -n townhub-prod -o
+      - name: Deploy to dev environment
+        run: yarn run deploy:services --stage prod
