@@ -64,6 +64,7 @@ export const ShuttleModule: React.FC<{
   const handleRouteClick = (id: string) => {
     const route = dailyData.routes.find((val) => val.id === id);
     setCurrentRoute(route ?? null);
+    setOpenedStopId('');
   };
   return (
     <div className={shuttlePageClasses.container}>
