@@ -35,7 +35,7 @@ export const NextShuttleIcon: React.FC<{
         minute: nextShuttleMinutes % 60,
       })
       .diffNow('minutes').minutes;
-    setMinutes(nextMinutes.toString());
+    setMinutes(Math.round(nextMinutes).toString());
   };
 
   // Update every 10 seconds to make sure it's pseudo-live
@@ -50,7 +50,8 @@ export const NextShuttleIcon: React.FC<{
     setTheMinutes();
   }, [nextShuttleMinutes]);
 
-  if (!nextShuttleMinutes) return null;
+  // Hide when its more than an hour away, and if its not defined or 0
+  if (!nextShuttleMinutes || nextShuttleMinutes > 60) return null;
 
   return (
     <Paper className={styles.surface} variant='outlined'>
