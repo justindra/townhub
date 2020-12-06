@@ -6,14 +6,14 @@ const useLoadingPageStyles = makeStyles((theme) => ({
     background: theme.palette.background.paper,
     width: '100%',
     height: '100vh',
-    position: 'relative'
+    position: 'relative',
   },
   loader: {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%'
-  }
+    transform: 'translate(-50%, -50%)',
+  },
 }));
 
 export const LoadingPage: React.FC = () => {

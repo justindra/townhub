@@ -1,9 +1,9 @@
 import React from 'react';
 import { LeafletMap, MapClickDetector, MarkerGenerator } from './leaflet-map';
-import { Shuttles } from '@townhub-libs/core';
+import { RouteStop } from '@townhub-libs/shuttles';
 
 interface ShuttleMapProps {
-  stops: Shuttles.RouteStop[];
+  stops: RouteStop[];
   onStopClick?: (stopId: string) => void;
   onMapClick?: () => void;
 }

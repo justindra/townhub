@@ -12,8 +12,11 @@ import {
 import { DateTime } from 'luxon';
 import uniqBy from 'lodash.uniqby';
 import uniq from 'lodash.uniq';
-import { DEFAULT_DATE_FORMAT, sortNumberAscending } from '../../../helpers';
-import { ValidationException } from '../../../base/exceptions';
+import {
+  DEFAULT_DATE_FORMAT,
+  sortNumberAscending,
+  ValidationException,
+} from '@townhub-libs/core';
 
 /**
  * Get the list of Stop Ids being used in a given list of routes
@@ -50,7 +53,9 @@ export const getScheduleStartTimesForDayOfWeek = (
     // Filter the start times by the actual day of the week we need
     .filter(filterStartTimesByDayOfWeek(dayOfWeek))
     // Sort it from earliest to latest
-    .sort((a, b) => sortNumberAscending(a.startTimeMinutes, b.startTimeMinutes));
+    .sort((a, b) =>
+      sortNumberAscending(a.startTimeMinutes, b.startTimeMinutes)
+    );
 
   // TODO: This currently does not take into account what happens when the same
   // startTime but with different hiddenStops or different daysInOperation

@@ -28,7 +28,6 @@ export const getDayDateRange = (
   };
 };
 
-
 /**
  * Given a timestamp and a timezone, return the date in a YYYY-MM-DD format
  * @param timestamp The timestamp to check

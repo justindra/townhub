@@ -8,10 +8,15 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
+import { Towns as TownsModule } from '@townhub-libs/core';
 import {
-  Shuttles as ShuttlesModule,
-  Towns as TownsModule
-} from '@townhub-libs/core';
+  SHUTTLES_DATABASES,
+  StopsDatabase,
+  RoutesDatabase,
+  SchedulesDatabase,
+  Stop,
+  Route,
+} from '@townhub-libs/shuttles';
 import { setTableNamesFromStack } from './helpers';
 import stopsData from './fernie/data/stops.json';
 import routesData from './fernie/data/routes.json';
@@ -22,10 +27,10 @@ const main = async () => {
     {
       name: 'dev-townhub-infra-cdk-module-shuttle',
       databaseDetails: [
-        ShuttlesModule.SHUTTLES_DATABASES.STOP,
-        ShuttlesModule.SHUTTLES_DATABASES.ROUTE,
-        ShuttlesModule.SHUTTLES_DATABASES.SCHEDULE,
-        ShuttlesModule.SHUTTLES_DATABASES.DAILY_SCHEDULE,
+        SHUTTLES_DATABASES.STOP,
+        SHUTTLES_DATABASES.ROUTE,
+        SHUTTLES_DATABASES.SCHEDULE,
+        SHUTTLES_DATABASES.DAILY_SCHEDULE,
       ],
     },
     {
@@ -34,58 +39,60 @@ const main = async () => {
     },
   ]);
   const Towns = new TownsModule.TownsDatabase();
-  const Stops = new ShuttlesModule.StopsDatabase();
-  const Routes = new ShuttlesModule.RoutesDatabase();
-  const Schedules = new ShuttlesModule.SchedulesDatabase();
+  const Stops = new StopsDatabase();
+  const Routes = new RoutesDatabase();
+  const Schedules = new SchedulesDatabase();
 
   const fernie = await Towns.getByHid('fernie');
 
   const townId = fernie.id;
 
-  const createdStops: ShuttlesModule.Stop[] = [];
-  const createdRoutes: ShuttlesModule.Route[] = [];
-  
+  const createdStops: Stop[] = [];
+  const createdRoutes: Route[] = [];
+
   const addStop = async (stop: typeof stopsData[0]) => {
     const newStop = await Stops.create({
       name: stop.name,
       townId,
       description: stop.description,
-      point: stop.point
+      point: stop.point,
     });
     createdStops.push(newStop);
-  }
+  };
 
   await Promise.all(stopsData.map(addStop));
 
   const findStop = (oldStopId: string) => {
-    const stopData = stopsData.find(val => val.id === oldStopId);
-    return createdStops.find(val => val.name === stopData?.name);
-  }
+    const stopData = stopsData.find((val) => val.id === oldStopId);
+    return createdStops.find((val) => val.name === stopData?.name);
+  };
 
   const findRoute = (oldRouteId: string) => {
-    const routeData = routesData.find(val => val.id === oldRouteId);
-    return createdRoutes.find(val => (val.name === routeData?.name) &&
-    (val.stopList.length === routeData?.stops.length));
-  }
-  
-  const addRoute = async(route: typeof routesData[0]) => {
+    const routeData = routesData.find((val) => val.id === oldRouteId);
+    return createdRoutes.find(
+      (val) =>
+        val.name === routeData?.name &&
+        val.stopList.length === routeData?.stops.length
+    );
+  };
 
-    const stopList = route.stops.map(val => {
+  const addRoute = async (route: typeof routesData[0]) => {
+    const stopList = route.stops.map((val) => {
       const actualStop = findStop(val.stop);
       return {
         stopId: actualStop?.id ?? val.stop,
-        legMinutes: val.legMinutes
-      }
-    })
+        legMinutes: val.legMinutes,
+      };
+    });
     const newRoute = await Routes.create({
       townId,
       name: route.name,
       description: route.description,
-      stopList
-    })
+      stopList,
+    });
 
     createdRoutes.push(newRoute);
-  }
+  };
 
   await Promise.all(routesData.map(addRoute));
 
@@ -96,15 +103,14 @@ const main = async () => {
       routeId: route?.id ?? '',
       startDate: schedule.startDate,
       endDate: schedule.endDate,
-      startTimes: schedule.startTimes.map(val => ({
+      startTimes: schedule.startTimes.map((val) => ({
         daysInOperation: val.daysInOperation,
-        startTimeMinutes: val.startTimeHour * 60 + val.startTimeMinute
-      }))
-    })
-  }
+        startTimeMinutes: val.startTimeHour * 60 + val.startTimeMinute,
+      })),
+    });
+  };
 
   await Promise.all(schedulesData.map(addSchedule));
-
 };
 
 main();

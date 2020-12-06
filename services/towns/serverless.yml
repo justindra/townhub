@@ -19,7 +19,7 @@ custom:
   cors: ${file(../shared/cors.yml)}
   towns: ${file(../shared/modules/towns.yml)}
   rollup:
-    config: ../../build/rollup.config.js
+    config: ../../build/rollup.config.deploy.js
     installCommand: yarn add
 
 plugins:

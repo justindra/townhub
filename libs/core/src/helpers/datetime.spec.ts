@@ -32,5 +32,5 @@ describe('datetime helpers', () => {
       const timestamp = 1602369473215;
       expect(getDate(timestamp)).toEqual('2020-10-10');
     });
-  })
+  });
 });

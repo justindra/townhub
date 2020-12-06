@@ -1,4 +1,4 @@
-import { Database } from '../../base/database';
+import { Database } from '@townhub-libs/core';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
 
 export const SHUTTLES_DATABASES = {

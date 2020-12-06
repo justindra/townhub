@@ -8,8 +8,8 @@ export const Towns = new TownsApi(TownhubApi);
 
 export const DEFAULT_CONTEXT_VALUE = {
   Shuttles,
-  Towns
-}
+  Towns,
+};
 
 const TownhubContext = React.createContext(DEFAULT_CONTEXT_VALUE);
 

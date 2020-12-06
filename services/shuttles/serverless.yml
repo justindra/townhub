@@ -25,7 +25,7 @@ custom:
   cors: ${file(../shared/cors.yml)}
   shuttles: ${file(../shared/modules/shuttles.yml)}
   rollup:
-    config: ../../build/rollup.config.js
+    config: ../../build/rollup.config.deploy.js
     installCommand: yarn add
 
 plugins:

@@ -1,8 +1,10 @@
 # Getting Started with Create React App
 
 Deployed
-* [Fernie](https://fernie.townhub.ca)
-* [Revelstoke](https://revelstoke.townhub.ca)
+
+- [Fernie](https://fernie.townhub.ca)
+- [Revelstoke](https://revelstoke.townhub.ca)
+
 ## Available Scripts
 
 In the project directory, you can run:
