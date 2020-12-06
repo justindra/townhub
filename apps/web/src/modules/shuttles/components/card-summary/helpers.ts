@@ -1,4 +1,4 @@
-import { StopSchedule } from "@townhub-libs/shuttles";
+import { StopSchedule } from '@townhub-libs/shuttles';
 import { DateTime } from 'luxon';
 
 /** Get the next three scheduled times */
@@ -6,7 +6,7 @@ export const getNextThreeTimes = (stop: StopSchedule) => {
   const now = DateTime.local();
   const nowInMinutes = now.minute + 60 * now.hour;
   const timesList = stop.routes
-    .map(val => val.schedule)
+    .map((val) => val.schedule)
     // Merge into one array
     .reduce((prev, current) => current.concat(...prev), [])
     // Get the ones that are after now

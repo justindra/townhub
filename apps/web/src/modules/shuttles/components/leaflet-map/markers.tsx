@@ -7,11 +7,11 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   icon: {
-      backgroundImage: `url(${iconUrl})`,
-      textAlign: 'center',
-      paddingTop: 3.5
-  }
-}))
+    backgroundImage: `url(${iconUrl})`,
+    textAlign: 'center',
+    paddingTop: 3.5,
+  },
+}));
 
 interface Marker {
   id: string;
@@ -63,8 +63,8 @@ export const MarkerGenerator: React.FC<{
             iconSize: [25, 38],
             iconAnchor: [10, 44],
             popupAnchor: [3, -40],
-            html: (index + 1).toString()
-        })}
+            html: (index + 1).toString(),
+          })}
           eventHandlers={{
             click: () => handleMarkerClick(val),
           }}

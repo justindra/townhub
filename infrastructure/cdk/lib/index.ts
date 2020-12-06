@@ -24,9 +24,6 @@ export default function main(app: App): void {
   // script that polls DDB for the latest list before running this.
   new StaticSiteStack(app, 'StaticAppPageStack', {
     rootDomainName,
-    subdomains: [
-      'fernie',
-      'revelstoke'
-    ]
-  })
+    subdomains: ['fernie', 'revelstoke'],
+  });
 }

@@ -45,16 +45,14 @@ export const ShuttleModule: React.FC<{
   const shuttlePageClasses = useShuttlePageStyles();
 
   const [openedStopId, setOpenedStopId] = useState<string>('');
-  const [openedStop, setOpenedStop] = useState<StopSchedule | null>(
-    null
-  );
+  const [openedStop, setOpenedStop] = useState<StopSchedule | null>(null);
   const [currentRoute, setCurrentRoute] = useState<Route | null>(
     dailyData.routes[0]
   );
 
   useEffect(() => {
     ReactGA.pageview('/shuttles');
-  }, [])
+  }, []);
 
   const handleStopClick = (id: string) => {
     setOpenedStopId(id);
@@ -63,7 +61,7 @@ export const ShuttleModule: React.FC<{
     ReactGA.event({
       category: 'stop',
       action: 'clicked',
-      label: stop?.name
+      label: stop?.name,
     });
   };
 
@@ -78,7 +76,7 @@ export const ShuttleModule: React.FC<{
     ReactGA.event({
       category: 'route',
       action: 'clicked',
-      label: route?.name
+      label: route?.name,
     });
   };
   return (

@@ -1,7 +1,8 @@
 import {
   NotFoundException,
   ValidationException,
-  Database, DatabaseCreateInput
+  Database,
+  DatabaseCreateInput,
 } from '@townhub-libs/core';
 import { Town } from './interfaces';
 

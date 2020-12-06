@@ -26,7 +26,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "/node_modules/","/build/"
+      "/node_modules/",
+      "/build/"
     ]
   }
 }

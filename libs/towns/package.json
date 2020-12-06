@@ -8,8 +8,7 @@
   "dependencies": {
     "@townhub-libs/core": "^0.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "test": "jest"

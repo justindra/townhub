@@ -17,7 +17,8 @@ import { DateTime } from 'luxon';
 import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from '@townhub-libs/core';
 
 // To make sure things are sorted for the results
-const sortById = (a: StopSchedule, b: StopSchedule) => ('' + a.id).localeCompare(b.id);
+const sortById = (a: StopSchedule, b: StopSchedule) =>
+  ('' + a.id).localeCompare(b.id);
 
 describe('shuttle helpers', () => {
   describe('getStopIdsFromRouteList', () => {
@@ -90,7 +91,7 @@ describe('shuttle helpers', () => {
     it('should return a unique set if there are multiple similar start times', () => {
       const result = getScheduleStartTimesForDayOfWeek(schedule, 5);
       const expected = [
-        { startTimeMinutes: 5, daysInOperation: [2,5], hiddenStops: [] },
+        { startTimeMinutes: 5, daysInOperation: [2, 5], hiddenStops: [] },
         { startTimeMinutes: 10, daysInOperation: [1, 3, 5], hiddenStops: [] },
         { startTimeMinutes: 20, daysInOperation: [1, 4, 5], hiddenStops: [] },
       ];
@@ -159,7 +160,11 @@ describe('shuttle helpers', () => {
       {
         routeId: 'route-1',
         startTimes: [
-          { startTimeMinutes: 20, daysInOperation: [1, 3, 4], hiddenStops: ['stop-1'] },
+          {
+            startTimeMinutes: 20,
+            daysInOperation: [1, 3, 4],
+            hiddenStops: ['stop-1'],
+          },
           { startTimeMinutes: 50, daysInOperation: [1, 3, 4] },
           { startTimeMinutes: 80, daysInOperation: [2, 3, 4] },
         ],
