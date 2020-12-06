@@ -8,7 +8,7 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
-import { Towns as TownsModule } from '@townhub-libs/core';
+import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/towns';
 import {
   SHUTTLES_DATABASES,
   StopsDatabase,
@@ -35,10 +35,10 @@ const main = async () => {
     },
     {
       name: 'dev-townhub-infra-cdk-module-town',
-      databaseDetails: [TownsModule.TOWNS_DATABASE],
+      databaseDetails: [TOWNS_DATABASE],
     },
   ]);
-  const Towns = new TownsModule.TownsDatabase();
+  const Towns = new TownsDatabase();
   const Stops = new StopsDatabase();
   const Routes = new RoutesDatabase();
   const Schedules = new SchedulesDatabase();
