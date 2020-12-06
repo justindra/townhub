@@ -1,11 +1,11 @@
 import { Api, TownhubApiResponse } from '../base';
-import { Shuttles } from '@townhub-libs/core';
+import { DailyData } from '@townhub-libs/shuttles';
 
 export class ShuttlesApi {
   constructor(private api: Api) {}
 
   async getDailyData(timestamp: number = new Date().valueOf()) {
-    const res = await this.api.get<TownhubApiResponse<Shuttles.DailyData>>(
+    const res = await this.api.get<TownhubApiResponse<DailyData>>(
       `/shuttles/daily/${timestamp}`
     );
     return res.data;

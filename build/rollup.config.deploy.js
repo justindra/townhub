@@ -5,9 +5,7 @@ import json from '@rollup/plugin-json';
 
 export default {
   // Set modules as external to suppress warnings from Rollup
-  external: (id) => {
-    return ['crypyo', 'aws-sdk'].includes(id) || id.includes('@townhub');
-  },
+  external: ['crypto', 'aws-sdk'],
   plugins: [
     nodeResolve({
       preferBuiltins: true,

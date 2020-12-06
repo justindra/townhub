@@ -1,8 +1,8 @@
 import {
   NotFoundException,
   ValidationException,
-} from '@townhub-libs/core/base/exceptions';
-import { Database, DatabaseCreateInput } from '../../base/database';
+  Database, DatabaseCreateInput
+} from '@townhub-libs/core';
 import { Town } from './interfaces';
 
 export const TOWNS_DATABASE = {

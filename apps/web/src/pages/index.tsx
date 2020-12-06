@@ -7,7 +7,8 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { Shuttles, Towns } from '@townhub-libs/core';
+import { Towns } from '@townhub-libs/core';
+import { DailyData } from '@townhub-libs/shuttles';
 import React, { FC, useEffect, useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { LoadingPage } from '../components';
@@ -39,7 +40,7 @@ export const PageRoutes: FC = () => {
   const { Shuttles, Towns } = useTownhub();
 
   const [town, setTown] = useState<Towns.Town | null>(null);
-  const [dailyData, setDailyData] = useState<Shuttles.DailyData | null>(null);
+  const [dailyData, setDailyData] = useState<DailyData | null>(null);
 
   useEffect(() => {
     let active = true;

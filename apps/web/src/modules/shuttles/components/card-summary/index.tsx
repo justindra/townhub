@@ -14,7 +14,7 @@ import {
   Collapse,
 } from '@material-ui/core';
 import { Button, HorizontalList } from '../../../../components';
-import { Shuttles } from '@townhub-libs/core';
+import { StopSchedule } from '@townhub-libs/shuttles';
 import { NextShuttleIcon } from './next-shuttle-icon';
 import { getNextThreeTimes, convertMinutesToTimeFormat } from './helpers';
 
@@ -30,7 +30,7 @@ const useCardSummaryStyles = makeStyles((theme) => ({
 }));
 
 export const CardSummary: React.FC<{
-  stop: Shuttles.StopSchedule | null;
+  stop: StopSchedule | null;
 }> = ({ stop }) => {
   const styles = useCardSummaryStyles();
   const [nextTimes, setNextTimes] = useState<number[]>([]);
@@ -92,25 +92,29 @@ export const CardSummary: React.FC<{
       <Collapse in={showMoreInfo}>
         <>
           <Divider />
-            <List dense>
-              {stop.routes.map((route) => (
-                <ListItem key={route.id}>
-                  <ListItemText
-                    primary={route.name}
-                    secondary={
-                      <>
-                        <Typography variant='body2'  component='span' color='inherit'>
-                          {route.description}
-                        </Typography><br />
-                        {route.schedule
-                          .map(convertMinutesToTimeFormat)
-                          .join(' | ')}
-                      </>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
+          <List dense>
+            {stop.routes.map((route) => (
+              <ListItem key={route.id}>
+                <ListItemText
+                  primary={route.name}
+                  secondary={
+                    <>
+                      <Typography
+                        variant='body2'
+                        component='span'
+                        color='inherit'>
+                        {route.description}
+                      </Typography>
+                      <br />
+                      {route.schedule
+                        .map(convertMinutesToTimeFormat)
+                        .join(' | ')}
+                    </>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
         </>
       </Collapse>
     </Card>

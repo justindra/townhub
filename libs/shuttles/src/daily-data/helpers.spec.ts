@@ -14,7 +14,7 @@ import {
   StopSchedule,
 } from '../interfaces';
 import { DateTime } from 'luxon';
-import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from '../../../helpers';
+import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from '@townhub-libs/core';
 
 // To make sure things are sorted for the results
 const sortById = (a: StopSchedule, b: StopSchedule) => ('' + a.id).localeCompare(b.id);

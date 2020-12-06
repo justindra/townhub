@@ -1,5 +1,5 @@
 import { makeStyles, Slide } from '@material-ui/core';
-import { Shuttles } from '@townhub-libs/core';
+import { DailyData, StopSchedule, Route } from '@townhub-libs/shuttles';
 import React, { useEffect, useState } from 'react';
 import { Button } from '../../../components';
 import { HorizontalList } from '../../../components/horizontal-list';
@@ -40,15 +40,15 @@ const useShuttlePageStyles = makeStyles((theme) => ({
 }));
 
 export const ShuttleModule: React.FC<{
-  dailyData: Shuttles.DailyData;
+  dailyData: DailyData;
 }> = ({ dailyData }) => {
   const shuttlePageClasses = useShuttlePageStyles();
 
   const [openedStopId, setOpenedStopId] = useState<string>('');
-  const [openedStop, setOpenedStop] = useState<Shuttles.StopSchedule | null>(
+  const [openedStop, setOpenedStop] = useState<StopSchedule | null>(
     null
   );
-  const [currentRoute, setCurrentRoute] = useState<Shuttles.Route | null>(
+  const [currentRoute, setCurrentRoute] = useState<Route | null>(
     dailyData.routes[0]
   );
 
@@ -105,7 +105,7 @@ export const ShuttleModule: React.FC<{
       </div>
       <Slide in={!!openedStopId} direction='up' mountOnEnter unmountOnExit>
         <div className={shuttlePageClasses.stopCard}>
-          <CardSummary stop={openedStop as Shuttles.StopSchedule} />
+          <CardSummary stop={openedStop as StopSchedule} />
         </div>
       </Slide>
     </div>

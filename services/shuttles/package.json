@@ -5,7 +5,8 @@
   "main": "dist/index",
   "devDependencies": {},
   "dependencies": {
-    "@townhub-libs/core": "^0.0.0"
+    "@townhub-libs/core": "^0.0.0",
+    "@townhub-libs/shuttles": "^0.0.0"
   },
   "scripts": {
     "build:dependencies": "lerna run build --scope @townhub-services/shuttles --include-dependencies",
