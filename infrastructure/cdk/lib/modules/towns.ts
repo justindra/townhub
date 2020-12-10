@@ -1,5 +1,5 @@
 import { App, Stack, StackProps } from '@serverless-stack/resources';
-import { TownhubTable } from '../resources/table';
+import { TownhubTable } from '../resources';
 
 /**
  * A Stack containing all the static infrastructure for the towns feature

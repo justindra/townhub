@@ -1,7 +1,7 @@
 import { App } from '@serverless-stack/resources';
 import ApiGatewayStack from './api-gateway';
 import StaticSiteStack from './static-site';
-import { ShuttlesStack, TownsStack, VendorsStack } from './modules';
+import { FilesStack, ShuttlesStack, TownsStack, VendorsStack } from './modules';
 
 export default function main(app: App): void {
   const rootDomainName = 'townhub.ca';
@@ -17,6 +17,10 @@ export default function main(app: App): void {
   new ShuttlesStack(app, 'module-shuttle');
   new TownsStack(app, 'module-town');
   new VendorsStack(app, 'module-vendor');
+  new FilesStack(app, 'module-file', {
+    rootDomainName,
+    subdomains: ['files'],
+  });
 
   // Setup subdomains for each town in the system
   // TODO: Eventually, might move this into a Lambda function that adds a new
@@ -24,6 +28,7 @@ export default function main(app: App): void {
   // script that polls DDB for the latest list before running this.
   new StaticSiteStack(app, 'StaticAppPageStack', {
     rootDomainName,
-    subdomains: ['fernie', 'revelstoke'],
+    subdomains: []
+    // subdomains: ['fernie', 'revelstoke'],
   });
 }
