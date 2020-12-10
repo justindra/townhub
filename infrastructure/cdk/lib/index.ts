@@ -1,8 +1,7 @@
 import { App } from '@serverless-stack/resources';
 import ApiGatewayStack from './api-gateway';
 import StaticSiteStack from './static-site';
-import ShuttlesStack from './modules/shuttles';
-import TownsStack from './modules/towns';
+import { ShuttlesStack, TownsStack, VendorsStack } from './modules';
 
 export default function main(app: App): void {
   const rootDomainName = 'townhub.ca';
@@ -17,6 +16,7 @@ export default function main(app: App): void {
 
   new ShuttlesStack(app, 'module-shuttle');
   new TownsStack(app, 'module-town');
+  new VendorsStack(app, 'module-vendor');
 
   // Setup subdomains for each town in the system
   // TODO: Eventually, might move this into a Lambda function that adds a new

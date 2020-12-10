@@ -10,7 +10,7 @@ import { TownhubTable } from '../resources/table';
  * @output SchedulesTableName, SchedulesTableArn
  * @output DailySchedulesTableName, DailySchedulesTableArn
  */
-export default class ShuttlesStack extends Stack {
+export class ShuttlesStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props);
 
