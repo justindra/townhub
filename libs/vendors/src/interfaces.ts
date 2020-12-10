@@ -15,6 +15,8 @@ export interface VendorLink {
 }
 
 export interface Vendor extends BaseEntity {
+  /** The id of the town this vendor belongs to */
+  townId: string;
   /** Name of the vendor */
   name: string;
   /** A description of the vendor */
