@@ -10,6 +10,7 @@
   "scripts": {
     "build:dependencies": "lerna run build --scope @townhub-libs/seed --include-dependencies",
     "preseed": "yarn run build:dependencies",
+    "files": "ts-node-script ./src/files.ts",
     "seed": "ts-node-script ./src/revelstoke/main.ts"
   }
 }

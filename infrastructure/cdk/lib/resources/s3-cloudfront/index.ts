@@ -148,6 +148,10 @@ export class S3Cloudfront {
     new CfnOutput(scope, `${id}BucketArn`, {
       value: bucket.bucketArn,
     });
+    
+    new CfnOutput(scope, `${id}BucketName`, {
+      value: bucket.bucketName,
+    });
 
     return { bucket };
   }

@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/node';
 import { UserRole } from '@townhub-libs/auth';
 import {
+  APIGatewayProxyResult,
   APIGatewayProxyWithLambdaAuthorizerEvent,
   APIGatewayProxyWithLambdaAuthorizerHandler,
   Context,
@@ -48,7 +49,8 @@ export type HandlerFunction<TDataResult = any, TPathParameters = any> = (
  * @param handler
  */
 export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
-  handler: HandlerFunction<TDataResult, TPathParameters>
+  handler: HandlerFunction<TDataResult, TPathParameters>,
+  directReturn: boolean = false
 ): APIGatewayProxyWithLambdaAuthorizerHandler<AuthorizerContext> => {
   return async (event, context) => {
     try {
@@ -73,6 +75,8 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
         event,
         context
       );
+      if (directReturn) return (result as unknown) as APIGatewayProxyResult;
+
       return {
         statusCode: result.statusCode || 200,
         body: JSON.stringify({

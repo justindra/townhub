@@ -1,0 +1,41 @@
+infraStack: ${self:provider.stage}-townhub-infra-cdk-module-file
+buckets:
+  files:
+    name: ${cf:${self:custom.files.infraStack}.FilesBucketName}
+    arn: ${cf:${self:custom.files.infraStack}.FilesBucketArn}
+tables:
+  files:
+    name: ${cf:${self:custom.files.infraStack}.FilesTableName}
+    arn: ${cf:${self:custom.files.infraStack}.FilesTableArn}
+bucketIamRoles:
+  filesBucket:
+    Effect: Allow
+    Action:
+      - s3:ListItems
+      - s3:GetObject
+      - s3:PutObject
+    Resource:
+      - ${self:custom.files.buckets.files.arn}
+      # Also allow all items in that bucket
+      - Fn::Join:
+          - ''
+          - - ${self:custom.files.buckets.files.arn}
+            - '/*'
+tableIamRoles:
+  filesTable:
+    Effect: Allow
+    Action:
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:BatchGetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    Resource:
+      - ${self:custom.files.tables.files.arn}
+      # Also allow all indexes in that table
+      - Fn::Join:
+          - ''
+          - - ${self:custom.files.tables.files.arn}
+            - '/index/*'
