@@ -38,6 +38,12 @@ export interface S3CloudfrontProps {
    * status codes.
    */
   errorConfigurations?: CfnDistribution.CustomErrorResponseProperty[];
+  /**
+   * Exclude the generation of A Records. Added this in so I can just toggle
+   * a flag when CloudFormation whinges about A Records that already exists
+   * instead of just updating them.
+   */
+  excludeARecords?: boolean;
 }
 
 /**
@@ -55,6 +61,7 @@ export class S3Cloudfront {
       removalPolicy = RemovalPolicy.DESTROY,
       behaviors = [{ isDefaultBehavior: true }],
       errorConfigurations,
+      excludeARecords = false
     }: S3CloudfrontProps
   ) {
     // Find the hosted zone in Route53
@@ -120,21 +127,23 @@ export class S3Cloudfront {
       }
     );
 
-    // Go through each given domain names and set the policies and domain
-    // names for each required hosting domain names
-    hostingDomainNames.forEach((hostingDomainName) => {
-      // Create a new A Record to point to the CloudFront Distribution
-      new ARecord(scope, `${hostingDomainName}ARecord`, {
-        zone: hostedZone,
-        target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
-        recordName: hostingDomainName,
+    if (!excludeARecords) {
+      // Go through each given domain names and set the policies and domain
+      // names for each required hosting domain names
+      hostingDomainNames.forEach((hostingDomainName) => {
+        // Create a new A Record to point to the CloudFront Distribution
+        new ARecord(scope, `${hostingDomainName}ARecord`, {
+          zone: hostedZone,
+          target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
+          recordName: hostingDomainName,
+        });
+  
+        // Output different values so it can be referenced by other stacks
+        new CfnOutput(scope, `${hostingDomainName}Name`, {
+          value: hostingDomainName,
+        });
       });
-
-      // Output different values so it can be referenced by other stacks
-      new CfnOutput(scope, `${hostingDomainName}Name`, {
-        value: hostingDomainName,
-      });
-    });
+    }
 
     new CfnOutput(scope, `${id}BucketArn`, {
       value: bucket.bucketArn,

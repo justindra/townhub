@@ -10,6 +10,7 @@ export interface StaticSiteStackProps extends StackProps {
    * name. You can place multiple subdomains to point to the same bucket.
    */
   subdomains?: string[];
+  excludeARecords?: boolean;
 }
 
 /**
@@ -21,7 +22,7 @@ export default class StaticSiteStack extends Stack {
   constructor(
     scope: App,
     id: string,
-    { rootDomainName, subdomains, ...props }: StaticSiteStackProps
+    { rootDomainName, subdomains, excludeARecords, ...props }: StaticSiteStackProps
   ) {
     super(scope, id, props);
 
@@ -40,6 +41,7 @@ export default class StaticSiteStack extends Stack {
           responsePagePath: '/index.html',
         },
       ],
+      excludeARecords
     });
   }
 }
