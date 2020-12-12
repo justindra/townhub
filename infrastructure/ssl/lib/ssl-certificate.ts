@@ -13,6 +13,10 @@ export type SslCertificateStackProps = StackProps & {
 /**
  * A stack that generates an SSL Certificate. This is mainly needed as
  * Cloudfront requires the Certificate to exist in the `us-east-1` region.
+ * 
+ * @todo We should update this with the DnsValidationCertificate Construct
+ * as it basically handles this use case and is exactly what we need.
+ * https://docs.aws.amazon.com/cdk/api/latest/docs/@aws-cdk_aws-certificatemanager.DnsValidatedCertificate.html
  */
 export class SslCertificateStack extends Stack {
   public certificateArn: string;
