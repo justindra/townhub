@@ -30,12 +30,6 @@ plugins:
   - serverless-apigwy-binary
 
 functions:
-  cfThumbnail:
-    handler: src/thumbnail.cfMain
-    events:
-      - cloudFront:
-          eventType: origin-response
-          origin: s3://${self:custom.files.buckets.files.name}.s3.amazonaws.com
   thumbnail:
     handler: src/thumbnail.main
     events:

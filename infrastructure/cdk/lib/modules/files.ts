@@ -14,6 +14,11 @@ export interface FilesStackProps extends StackProps {
  * @output FilesTableName, FilesTableArn
  * @output FilesBucketArn
  * @output ${subdomain}Name
+ *
+ * @todo We can probably update this to use 'Lambda@Edge' and Cloudfront's
+ * experimental feature of EdgeFunction Construct once the CDK version has been updated
+ * https://docs.aws.amazon.com/cdk/api/latest/docs/aws-cloudfront-readme.html#lambdaedge
+ * https://github.com/serverless-stack/serverless-stack/issues/13
  */
 export class FilesStack extends Stack {
   constructor(

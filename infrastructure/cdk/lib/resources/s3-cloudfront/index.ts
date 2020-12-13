@@ -1,6 +1,6 @@
 import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
 import { CfnOutput, Construct, RemovalPolicy } from '@aws-cdk/core';
-import { Bucket } from '@aws-cdk/aws-s3';
+import { Bucket, RoutingRule } from '@aws-cdk/aws-s3';
 import {
   Behavior,
   CfnDistribution,
@@ -61,7 +61,7 @@ export class S3Cloudfront {
       removalPolicy = RemovalPolicy.DESTROY,
       behaviors = [{ isDefaultBehavior: true }],
       errorConfigurations,
-      excludeARecords = false
+      excludeARecords = false,
     }: S3CloudfrontProps
   ) {
     // Find the hosted zone in Route53
@@ -137,7 +137,7 @@ export class S3Cloudfront {
           target: RecordTarget.fromAlias(new CloudFrontTarget(distribution)),
           recordName: hostingDomainName,
         });
-  
+
         // Output different values so it can be referenced by other stacks
         new CfnOutput(scope, `${hostingDomainName}Name`, {
           value: hostingDomainName,
@@ -148,7 +148,7 @@ export class S3Cloudfront {
     new CfnOutput(scope, `${id}BucketArn`, {
       value: bucket.bucketArn,
     });
-    
+
     new CfnOutput(scope, `${id}BucketName`, {
       value: bucket.bucketName,
     });

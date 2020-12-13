@@ -28,6 +28,7 @@ export const generateThumbnail = async (
       Bucket: bucket,
       Key: `${fileId}/${width}/${height}/${filename}`,
       Body: resizedImage,
+      ContentType: object.ContentType,
     })
     .promise();
 
