@@ -40,7 +40,7 @@ export const VendorsModule: React.FC = () => {
         <CardHeader
         classes={cardHeaderClasses}
         avatar={
-          <Avatar src={vendor.logo} variant="rounded">RA</Avatar>
+          <Avatar src={`${vendor.logo}?id=${vendor.id}`} variant="rounded">RA</Avatar>
         }
         title={vendor.name}
         subheader={vendor.description}

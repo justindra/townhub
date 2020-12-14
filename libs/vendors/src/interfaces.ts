@@ -14,6 +14,22 @@ export interface VendorLink {
   type: VendorLinkType;
 }
 
+export interface VendorOpeningHours {
+   /**
+   * The day of the week this opening hours is in use, starting with Monday as 1
+   * and ending with Sunday as 7
+   * e.g. for Monday, Wednesday and Friday - [1, 3, 5]
+   *
+   * These numbers are based on Luxon's specs
+   * https://moment.github.io/luxon/docs/class/src/datetime.js~DateTime.html#instance-get-weekday
+   * */
+  dayOfWeek: number;
+  startHours: number;
+  startMinutes: number;
+  endHours: number;
+  endMinutes: number;
+}
+
 export interface Vendor extends BaseEntity {
   /** The id of the town this vendor belongs to */
   townId: string;
@@ -31,4 +47,8 @@ export interface Vendor extends BaseEntity {
   email: string;
   /** A phone number to contact them on */
   phone: string;
+  /** A vendor's physical address */
+  address: string;
+  /** A list of their opening hours */
+  openingHours: VendorOpeningHours[];
 }
