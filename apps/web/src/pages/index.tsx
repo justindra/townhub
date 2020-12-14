@@ -59,6 +59,7 @@ export const PageRoutes: FC = () => {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Show the loading state when we are still loading the data set

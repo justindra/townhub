@@ -68,6 +68,7 @@ export const ShuttleModule: React.FC = () => {
     return () => {
       active = false;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!dailyData) return <LoadingPage />;

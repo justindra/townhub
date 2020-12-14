@@ -35,6 +35,7 @@ export const MarkerGenerator: React.FC<{
     } else {
       centreOnCurrentGeoLocation();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markers]);
 
   const centreOnCurrentGeoLocation = async () => {
