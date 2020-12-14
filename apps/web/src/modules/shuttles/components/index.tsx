@@ -1,11 +1,12 @@
 import { makeStyles, Slide } from '@material-ui/core';
 import { DailyData, StopSchedule, Route } from '@townhub-libs/shuttles';
 import React, { useEffect, useState } from 'react';
-import { Button } from '../../../components';
+import { Button, LoadingPage } from '../../../components';
 import { HorizontalList } from '../../../components/horizontal-list';
 import { CardSummary } from './card-summary';
 import { ShuttleMap } from './map';
 import ReactGA from 'react-ga';
+import { useTownhub } from '../../../state';
 
 const useShuttlePageStyles = makeStyles((theme) => ({
   container: {
@@ -40,20 +41,36 @@ const useShuttlePageStyles = makeStyles((theme) => ({
   },
 }));
 
-export const ShuttleModule: React.FC<{
-  dailyData: DailyData;
-}> = ({ dailyData }) => {
+export const ShuttleModule: React.FC = () => {
   const shuttlePageClasses = useShuttlePageStyles();
 
+  const { Shuttles } = useTownhub();
+
+  const [dailyData, setDailyData] = useState<DailyData | null>(null);
   const [openedStopId, setOpenedStopId] = useState<string>('');
   const [openedStop, setOpenedStop] = useState<StopSchedule | null>(null);
-  const [currentRoute, setCurrentRoute] = useState<Route | null>(
-    dailyData.routes[0]
-  );
+  const [currentRoute, setCurrentRoute] = useState<Route | null>(null);
 
   useEffect(() => {
+    // TODO: Update this via the router
     ReactGA.pageview('/shuttles');
+
+    let active = true;
+    (async () => {
+      // Go get the daily data for the shuttles
+      const daily = await Shuttles.getDailyData();
+      if (active) {
+        setDailyData(daily);
+        setCurrentRoute(daily.routes[0]);
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
   }, []);
+
+  if (!dailyData) return <LoadingPage />;
 
   const handleStopClick = (id: string) => {
     setOpenedStopId(id);

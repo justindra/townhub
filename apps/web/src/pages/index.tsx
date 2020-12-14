@@ -7,11 +7,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Town } from '@townhub-libs/towns';
-import { DailyData } from '@townhub-libs/shuttles';
 import React, { FC, useEffect, useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { LoadingPage } from '../components';
-import { ShuttleModule } from '../modules';
+import { ShuttleModule, VendorsModule } from '../modules';
 import { useTownhub } from '../state';
 import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
@@ -42,21 +41,17 @@ const usePageLayoutStyles = makeStyles((theme) => ({
 export const PageRoutes: FC = () => {
   const pageLayoutClasses = usePageLayoutStyles();
 
-  const { Shuttles, Towns } = useTownhub();
+  const { Towns } = useTownhub();
 
   const [town, setTown] = useState<Town | null>(null);
-  const [dailyData, setDailyData] = useState<DailyData | null>(null);
 
   useEffect(() => {
     let active = true;
     (async () => {
       // Set the town id from the URL
       const town = await Towns.setTownIdFromUrl();
-      // Go get the daily data for the shuttles
-      const daily = await Shuttles.getDailyData();
       if (active) {
         setTown(town);
-        setDailyData(daily);
         ReactGA.set({ town: town?.hid });
       }
     })();
@@ -67,7 +62,7 @@ export const PageRoutes: FC = () => {
   }, []);
 
   // Show the loading state when we are still loading the data set
-  if (!dailyData || !town) return <LoadingPage />;
+  if (!town) return <LoadingPage />;
 
   return (
     <Paper className={pageLayoutClasses.appContainer} square>
@@ -83,9 +78,8 @@ export const PageRoutes: FC = () => {
       </AppBar>
       <Paper className={pageLayoutClasses.main} elevation={3} square>
         <Switch>
-          <Route path='/shuttles'>
-            <ShuttleModule dailyData={dailyData} />
-          </Route>
+          <Route path='/shuttles' component={ShuttleModule} />
+          <Route path='/vendors' component={VendorsModule} />
           <Route path='/about'>
             <AboutPage townName={town.name} />
           </Route>
@@ -93,6 +87,7 @@ export const PageRoutes: FC = () => {
             <AdminRoot />
           </Route>
           <Route path='*'>
+            {/* TODO: Have a home page to go to that shows both modules */}
             <Redirect to='/shuttles' />
           </Route>
         </Switch>
