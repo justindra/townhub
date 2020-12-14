@@ -1,5 +1,10 @@
 import React, { useContext } from 'react';
-import { Api, ShuttlesApi, TownsApi, VendorsApi } from '../modules';
+// TODO: Not sure why, but Webpack complains here and won't let us use the
+// export from modules
+import { ShuttlesApi } from '../modules/shuttles';
+import { TownsApi } from '../modules/towns';
+import { VendorsApi } from '../modules/vendors';
+import { Api } from '../modules';
 
 export const TownhubApi = new Api();
 

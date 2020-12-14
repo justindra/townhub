@@ -9,6 +9,8 @@
     "@material-ui/icons": "^4.9.1",
     "@townhub-libs/core": "^0.0.0",
     "@townhub-libs/shuttles": "^0.0.0",
+    "@townhub-libs/towns": "^0.0.0",
+    "@townhub-libs/vendors": "^0.0.0",
     "axios": "^0.21.0",
     "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
@@ -35,6 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:dependencies": "lerna run build --scope @townhub-apps/web --include-dependencies",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
