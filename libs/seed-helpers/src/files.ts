@@ -18,7 +18,6 @@ import { generateThumbnail } from '@townhub-libs/files';
 
 const main = async () => {
   await generateThumbnail(
-    'dev-townhub-infra-cdk-module-filesbucket16450113-1m9t8yeyxrjnr',
     'attachmentId',
     '118070047_907393979745883_8677776173942787241_n.jpg',
     200,

@@ -8,9 +8,14 @@
   "dependencies": {
     "@townhub-libs/core": "^0.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@townhub-libs/seed-helpers": "^0.0.0",
+    "@types/faker": "^5.1.5",
+    "faker": "^5.1.0"
+  },
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
-    "test": "jest"
+    "test": "jest",
+    "seed": "ts-node-script ./seed/index.ts"
   }
 }

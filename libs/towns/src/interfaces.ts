@@ -2,7 +2,9 @@ import { BaseEntity } from '@townhub-libs/core';
 
 interface ModuleSetting {
   /** The name of the module */
-  name: 'shuttles';
+  name: 'shuttles' | 'vendors';
+  /** Description of the module instance */
+  description: string;
 }
 
 export interface Town extends BaseEntity {

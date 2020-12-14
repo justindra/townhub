@@ -20,6 +20,8 @@
       "@townhub-libs/core/*": ["libs/core/src/*"],
       "@townhub-libs/files": ["libs/files/src"],
       "@townhub-libs/files/*": ["libs/files/src/*"],
+      "@townhub-libs/seed-helpers": ["libs/seed-helpers/src"],
+      "@townhub-libs/seed-helpers/*": ["libs/seed-helpers/src/*"],
       "@townhub-libs/shuttles": ["libs/shuttles/src"],
       "@townhub-libs/shuttles/*": ["libs/shuttles/src/*"],
       "@townhub-libs/towns": ["libs/towns/src"],
