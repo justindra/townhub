@@ -38,6 +38,13 @@ const usePageLayoutStyles = makeStyles((theme) => ({
   },
 }));
 
+const getModuleComponent = (type: string) => {
+  if (type === 'shuttles') return ShuttleModule;
+  if (type === 'vendors') return VendorsModule;
+  // TODO: Create a Not found component that we can return here
+  return () => <div>Not Found</div>;
+};
+
 export const PageRoutes: FC = () => {
   const pageLayoutClasses = usePageLayoutStyles();
 
@@ -79,8 +86,16 @@ export const PageRoutes: FC = () => {
       </AppBar>
       <Paper className={pageLayoutClasses.main} elevation={3} square>
         <Switch>
-          <Route path='/shuttles' component={ShuttleModule} />
-          <Route path='/vendors' component={VendorsModule} />
+          {town.modules.map((module) => {
+            const ModuleComponent = getModuleComponent(module.type);
+            return (
+              <Route
+                key={module.slug}
+                path={`/${module.slug || module.type}`}
+                component={ModuleComponent}
+              />
+            );
+          })}
           <Route path='/about'>
             <AboutPage townName={town.name} />
           </Route>

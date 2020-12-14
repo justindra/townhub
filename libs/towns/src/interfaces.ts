@@ -5,6 +5,8 @@ interface ModuleSetting {
   name: string;
   /** The type of the module */
   type: 'shuttles' | 'vendors';
+  /** A slug to use in the frontend. This should be unique for the whole module array */
+  slug: string;
   /** Description of the module instance */
   description: string;
   /** The icon to use to show in the app, it should be a font-awesome icon */
