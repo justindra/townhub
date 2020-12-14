@@ -3,36 +3,46 @@ import sharp from 'sharp';
 
 const s3 = new S3();
 
+const FILES_BUCKET_NAME = process.env.FILES_BUCKET_NAME ?? '';
+
+/**
+ * Generate a new thumnail for a particular file in the Files Bucket
+ * @param fileId The id of the file to generate thumbnail for
+ * @param filename The name of the file
+ * @param width The width of the thumbnail
+ * @param height The height of the thumbnail
+ */
 export const generateThumbnail = async (
-  bucket: string,
   fileId: string,
   filename: string,
   width: number,
   height: number
 ) => {
-  const object = await s3
+  // Get the original file from S3
+  const currentObject = await s3
     .getObject({
-      Bucket: bucket,
+      Bucket: FILES_BUCKET_NAME,
       Key: `${fileId}/${filename}`,
     })
     .promise();
 
-  const image = object.Body as Buffer;
+  const currentImage = currentObject.Body as Buffer;
 
-  const resizedImage = await sharp(image)
+  // Resize that image
+  const resizedImage = await sharp(currentImage)
     .resize(width, height, { fit: 'inside' })
     .toBuffer();
 
-  const uploaded = await s3
+  // Save the thumbnail back into S3
+  await s3
     .putObject({
-      Bucket: bucket,
+      Bucket: FILES_BUCKET_NAME,
       Key: `${fileId}/${width}/${height}/${filename}`,
       Body: resizedImage,
-      ContentType: object.ContentType,
+      ContentType: currentObject.ContentType,
     })
     .promise();
 
-  console.log('done', uploaded);
-
-  return { resizedImage, contentType: object.ContentType };
+  // Return the results
+  return { resizedImage, contentType: currentObject.ContentType };
 };

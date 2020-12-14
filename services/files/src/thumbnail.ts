@@ -9,7 +9,6 @@ export const main = ApiGatewayWrapper<
   { fileId: string; filename: string; width: string; height: string }
 >(async ({ pathParameters: { fileId, filename, width, height } }) => {
   const { resizedImage, contentType } = await generateThumbnail(
-    process.env.FILES_BUCKET_NAME ?? '',
     fileId,
     filename,
     parseInt(width),
