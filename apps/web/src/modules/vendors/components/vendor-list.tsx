@@ -11,13 +11,27 @@ import {
 import { useHistory } from 'react-router-dom';
 
 const useCardHeaderStyles = makeStyles((theme) => ({
+  root: {
+    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
+  },
   content: {
     overflow: 'hidden',
   },
 }));
 
+const useAvatarStyles = makeStyles((theme) => ({
+  root: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
+  rounded: {
+    borderRadius: theme.spacing(1)
+  }
+}))
+
 export const VendorList: React.FC<{ vendors: Vendor[], parentUrl: string }> = ({ vendors, parentUrl }) => {
   const cardHeaderClasses = useCardHeaderStyles();
+  const avatarClasses = useAvatarStyles();
 
   const history = useHistory();
 
@@ -37,7 +51,9 @@ export const VendorList: React.FC<{ vendors: Vendor[], parentUrl: string }> = ({
                   avatar={
                     <Avatar
                       src={`${vendor.logo}?id=${vendor.id}`}
-                      variant='rounded'>
+                      variant='rounded'
+                      classes={avatarClasses}
+                      >
                       RA
                     </Avatar>
                   }

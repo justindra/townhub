@@ -43,7 +43,7 @@ export const VendorsModule: React.FC = () => {
   return (
     <div
       style={{
-        padding: 16,
+        padding: `16px 0`,
         height: '100%',
         overflowY: 'auto',
       }}>
