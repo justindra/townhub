@@ -20,25 +20,28 @@ export interface VendorLink {
 export const VENDOR_CATEGORIES = {
   ARTISAN: {
     name: 'artisan' as const,
-    label: 'Artisan',
-    description: 'A local artisan',
+    label: 'Artisans',
+    description: 'Local artist, makers and designers creating a one-of-a-kind piece.',
+    icon: ['far', 'hammer-war']
   },
-  STOREFRONT: {
-    name: 'storefront' as const,
+  STORE: {
+    name: 'store' as const,
     label: 'Stores',
-    description: '',
+    description: 'Local stores with a physical location where people can come in.',
+    icon: ['fas', 'store-alt']
   },
-  FOOD_BEVERAGE: {
-    name: 'food_beverage' as const,
-    label: 'Food and beverage',
-    description: '',
+  FOOD_DRINKS: {
+    name: 'food_drinks' as const,
+    label: 'Food and drinks',
+    description: 'Local restaurants, cafes and bars to feed your hunger and quench your thirst.',
+    icons: ['fas', 'utensils-alt']
   },
 };
 
 export type VendorCategory =
   | typeof VENDOR_CATEGORIES.ARTISAN.name
-  | typeof VENDOR_CATEGORIES.FOOD_BEVERAGE.name
-  | typeof VENDOR_CATEGORIES.STOREFRONT.name;
+  | typeof VENDOR_CATEGORIES.FOOD_DRINKS.name
+  | typeof VENDOR_CATEGORIES.STORE.name;
 
 export interface VendorOpeningHours {
   /**
