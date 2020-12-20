@@ -21,7 +21,7 @@ export const VENDOR_CATEGORIES = {
   ARTISAN: {
     name: 'artisan' as const,
     label: 'Artisans',
-    description: 'Local artist, makers and designers creating a one-of-a-kind piece.',
+    description: 'Local artists, makers and designers creating one-of-a-kind pieces.',
     icon: ['far', 'hammer-war']
   },
   STORE: {
