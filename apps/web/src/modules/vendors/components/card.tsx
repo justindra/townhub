@@ -32,7 +32,7 @@ const useAvatarStyles = makeStyles((theme) => ({
 const useTabsStyles = makeStyles((theme) => ({
   root: {
     position: 'sticky',
-    top: -theme.spacing(2),
+    top: 0,
     left: 0,
     right: 0,
     background: theme.palette.background.paper,
