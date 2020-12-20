@@ -1,12 +1,15 @@
 import { BaseEntity } from '@townhub-libs/core';
 
 export const LINK_TYPES = {
-  website: 'website' as const,
-  facebook: 'facebook' as const,
-  instagram: 'instagram' as const,
-}
+  WEBSITE: 'website' as const,
+  FACEBOOK: 'facebook' as const,
+  INSTAGRAM: 'instagram' as const,
+};
 
-export type VendorLinkType = typeof LINK_TYPES.website | typeof LINK_TYPES.facebook | typeof LINK_TYPES.instagram
+export type VendorLinkType =
+  | typeof LINK_TYPES.WEBSITE
+  | typeof LINK_TYPES.FACEBOOK
+  | typeof LINK_TYPES.INSTAGRAM;
 
 export interface VendorLink {
   name: string;
@@ -14,8 +17,31 @@ export interface VendorLink {
   type: VendorLinkType;
 }
 
+export const VENDOR_CATEGORIES = {
+  ARTISAN: {
+    name: 'artisan' as const,
+    label: 'Artisan',
+    description: 'A local artisan',
+  },
+  STOREFRONT: {
+    name: 'storefront' as const,
+    label: 'Stores',
+    description: '',
+  },
+  FOOD_BEVERAGE: {
+    name: 'food_beverage' as const,
+    label: 'Food and beverage',
+    description: '',
+  },
+};
+
+export type VendorCategory =
+  | typeof VENDOR_CATEGORIES.ARTISAN.name
+  | typeof VENDOR_CATEGORIES.FOOD_BEVERAGE.name
+  | typeof VENDOR_CATEGORIES.STOREFRONT.name;
+
 export interface VendorOpeningHours {
-   /**
+  /**
    * The day of the week this opening hours is in use, starting with Monday as 1
    * and ending with Sunday as 7
    * e.g. for Monday, Wednesday and Friday - [1, 3, 5]
@@ -37,6 +63,8 @@ export interface Vendor extends BaseEntity {
   name: string;
   /** A description of the vendor */
   description: string;
+  /** The categories the vendor falls under */
+  categories: VendorCategory[];
   /** The logo for the vendor */
   logo?: string;
   /** Links to other web resources we can link to */
