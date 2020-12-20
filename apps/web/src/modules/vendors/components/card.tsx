@@ -4,6 +4,11 @@ import {
   CardHeader,
   GridList,
   GridListTile,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  ListSubheader,
   makeStyles,
   Tab,
   Tabs,
@@ -30,7 +35,8 @@ const useTabsStyles = makeStyles((theme) => ({
     top: -theme.spacing(2),
     left: 0,
     right: 0,
-    background: theme.palette.background.paper
+    background: theme.palette.background.paper,
+    zIndex: theme.zIndex.appBar
   }
 }))
 
@@ -64,18 +70,61 @@ export const VendorCard: React.FC<{ vendors: Vendor[] }> = ({ vendors }) => {
         <Tab label="Contact"  />
         <Tab label="Hours" />
       </Tabs>
+      {/* Overview */}
       <CardContent>
         <Typography variant='body1'>{currentVendor.description}</Typography>
+        <GridList cellHeight={160} cols={3} spacing={16}>
+          {currentVendor.images.map((tile, index) => (
+            <GridListTile key={index} cols={(index + 1) % 4}>
+              <img src={`${tile}?id=${index}`} alt={tile} />
+            </GridListTile>
+          ))}
+        </GridList>
       </CardContent>
-      <GridList cellHeight={160} cols={3} spacing={16} style={{
-        padding: 16
-      }}>
-        {currentVendor.images.map((tile, index) => (
-          <GridListTile key={index} cols={(index + 1) % 4}>
-            <img src={`${tile}?id=${index}`} alt={tile} />
-          </GridListTile>
-        ))}
-      </GridList>
+      {/* Contact */}
+      <CardContent>
+        <List>
+        <ListSubheader>Local</ListSubheader>
+        <ListItem>
+            <ListItemAvatar>
+              <Avatar>PH</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='+250-123-1234' />
+          </ListItem>
+        <ListItem>
+            <ListItemAvatar>
+              <Avatar>AD</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='123 some street, revelstoke' />
+          </ListItem>
+        <ListSubheader>Online</ListSubheader>
+        <ListItem>
+            <ListItemAvatar>
+              <Avatar>EM</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='hello@hello.com' />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>WE</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='hello.com' />
+          </ListItem>
+        <ListSubheader>Social Media</ListSubheader>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>FB</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='/facebook' />
+          </ListItem>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar>IG</Avatar>
+            </ListItemAvatar>
+            <ListItemText primary='@something' />
+          </ListItem>
+        </List>
+      </CardContent>
     </>
   );
 };
