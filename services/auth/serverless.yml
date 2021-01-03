@@ -1,0 +1,38 @@
+###############################################################################
+# Custom Authorizer                                                           #
+#-----------------------------------------------------------------------------#
+# This contains the Custom Authorizer that can be shared across all services  #
+# and endpoints. It allows our users to Authenticate using Auth0              #
+###############################################################################
+service: townhub-services-auth
+
+provider:
+  name: aws
+  runtime: ${file(../shared/provider.yml):runtime}
+  region: ${file(../shared/provider.yml):region}
+  profile: ${file(../shared/provider.yml):profile}
+  stage: ${file(../shared/provider.yml):stage}
+  apiGateway: ${file(../shared/api-gateway.yml)}
+
+package:
+  individually: true
+
+custom:
+  rollup:
+    config: ../../build/rollup.config.deploy.js
+    installCommand: yarn add
+
+plugins:
+  - serverless-rollup-plugin
+
+functions:
+  tokenAuthorizer:
+    handler: src/token-authorizer.main
+    environment: 
+      AUTH0_JWKS_URI: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/jwks-uri}
+      AUTH0_AUDIENCE: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/audience}
+      AUTH0_ISSUER: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/issuer}
+resources:
+  Outputs:
+    TokenAuthorizerArn:
+      Value: !GetAtt [TokenAuthorizerLambdaFunction, Arn]

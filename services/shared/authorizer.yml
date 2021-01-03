@@ -1,0 +1,1 @@
+arn: ${cf:townhub-services-auth-${self:provider.stage}.TokenAuthorizerArn}
