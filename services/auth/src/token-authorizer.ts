@@ -15,6 +15,6 @@ export const main = async (
     }
   } catch (err) {
     console.log('err', err);
+    return Promise.reject((err as Error).message);
   }
-  return Promise.reject('Unauthorized');
 };
