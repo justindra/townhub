@@ -1,0 +1,19 @@
+{
+  "name": "@townhub-services/auth",
+  "private": true,
+  "version": "0.0.0",
+  "main": "dist/index",
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.12.1"
+  },
+  "scripts": {
+    "build:dependencies": "lerna run build --scope @townhub-services/auth --include-dependencies",
+    "predeploy": "yarn run build:dependencies",
+    "deploy": "serverless deploy",
+    "remove": "serverless remove"
+  }
+}

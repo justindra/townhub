@@ -13,8 +13,9 @@ package:
 
 custom:
   cors: ${file(../shared/cors.yml)}
+  authorizer: ${file(../shared/authorizer.yml)}
   rollup:
-    config: ../../build/rollup.config.js
+    config: ../../build/rollup.config.deploy.js
     installCommand: yarn add
 
 plugins:
@@ -25,13 +26,22 @@ functions:
     handler: src/handler.hello
     events:
       - http:
-          path: hello
+          path: test/hello
           method: get
           cors: ${self:custom.cors}
   another:
     handler: src/another.main
     events:
       - http:
-          path: another
+          path: test/another
           method: get
           cors: ${self:custom.cors}
+
+  testAuthorizer:
+    handler: src/another.main
+    events:
+      - http:
+          path: test/auth
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: ${self:custom.authorizer}
