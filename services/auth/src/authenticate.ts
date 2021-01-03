@@ -45,13 +45,24 @@ export const getSigningKey = async (kid: string) => {
 /**
  * The decoded token should have these details in the payload
  */
-export interface DecodedToken {
+export interface DecodedTokenPayload {
   sub: string;
   aud: string;
   iat: number;
   exp: number;
   azp: string;
   gty: string;
+}
+
+interface DecodedTokenHeader {
+  alg: 'RS256';
+  typ: 'JWT';
+  kid: string;
+}
+
+interface DecodedToken {
+  header: DecodedTokenHeader;
+  payload: DecodedTokenPayload;
 }
 
 /**
@@ -73,13 +84,13 @@ export const verifyToken = (token: string, signingKey: string) => {
  */
 export const authenticate = async (
   event: APIGatewayTokenAuthorizerEvent
-): Promise<DecodedToken> => {
+): Promise<DecodedTokenPayload> => {
   const token = getToken(event);
 
-  const decoded = decode(token, { complete: true });
-  if (!decoded || !(decoded as any).header || !(decoded as any).header.kid) {
+  const decoded = decode(token, { complete: true }) as DecodedToken;
+  if (!decoded || !decoded.header || !decoded.header.kid) {
     throw new Error('Invalid Token');
   }
-  const signingKey = await getSigningKey((decoded as any).header.kid);
-  return verifyToken(token, signingKey) as DecodedToken;
+  const signingKey = await getSigningKey(decoded.header.kid);
+  return verifyToken(token, signingKey) as DecodedTokenPayload;
 };
