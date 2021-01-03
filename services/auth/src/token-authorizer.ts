@@ -1,4 +1,4 @@
-import { APIGatewayTokenAuthorizerEvent, Context } from 'aws-lambda';
+import { APIGatewayTokenAuthorizerEvent } from 'aws-lambda';
 import { authenticate } from './authenticate';
 import { generatePolicyDocument } from './policy';
 
