@@ -7,6 +7,7 @@ export const main = async (
 ) => {
   try {
     const decodedToken = await authenticate(event);
+    console.log(decodedToken);
     return {
       principalId: decodedToken.sub,
       policyDocument: generatePolicyDocument('Allow', event.methodArn),
