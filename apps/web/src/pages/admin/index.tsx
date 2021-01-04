@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { Auth0Provider, useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
+import { Route, RouteProps, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 
 const AdminProfile: React.FC = () => {
-  const { user, logout, getAccessTokenSilently, getAccessTokenWithPopup, getIdTokenClaims } = useAuth0();
+  const { user, logout, getIdTokenClaims } = useAuth0();
 
   const [userMetadata, setUserMetadata] = useState(null);
+  
   useEffect(() => {
     const getUserMetadata = async () => {
       const domain = 'townhub.us.auth0.com';
@@ -39,32 +41,31 @@ const AdminProfile: React.FC = () => {
   );
 };
 
-const AdminHome: React.FC = () => {
-  const { isAuthenticated, isLoading, loginWithRedirect, error } = useAuth0();
-
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
-  return isAuthenticated ? (
-    <AdminProfile />
-  ) : (
-    <div>
-      {error}
-      <button onClick={() => loginWithRedirect()}>
-        Log In
-      </button>
-    </div>
-  );
-};
+const ProtectedRoute: React.FC<RouteProps> = ({ component, ...args }) => (
+  <Route component={component && withAuthenticationRequired(component)} {...args} />
+);
 
 export const AdminRoot: React.FC = () => {
+  const history = useHistory();
+  const { path } = useRouteMatch();
+
+
+  const onRedirectCallback = (appState: any) => {
+    // Use the router's history module to replace the url
+    history.replace(appState?.returnTo || `${path}/login`);
+  };
+
   return (
     <Auth0Provider
       domain='townhub.us.auth0.com'
       clientId='TmumMEJoU1ZVKd9D0Rpf5lyLvW0QCxuh'
       redirectUri={window.location.href}
-      useRefreshTokens={true}>
-      <AdminHome />
+      useRefreshTokens={true}
+      onRedirectCallback={onRedirectCallback}
+      >
+        <Switch>
+          <ProtectedRoute path={path} exact component={AdminProfile} />
+        </Switch>
     </Auth0Provider>
   );
 };
