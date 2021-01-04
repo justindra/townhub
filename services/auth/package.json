@@ -7,6 +7,7 @@
     "@types/jsonwebtoken": "^8.5.0"
   },
   "dependencies": {
+    "@townhub-libs/auth": "^0.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.12.1"
   },

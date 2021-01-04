@@ -7,7 +7,7 @@ import { PolicyDocument } from 'aws-lambda';
  * @param resource The resource to call
  */
 export const generatePolicyDocument = (
-  effect: 'Allow' | 'Deny',
+  allow: boolean,
   resource: string
 ): PolicyDocument => {
   return {
@@ -15,7 +15,7 @@ export const generatePolicyDocument = (
     Statement: [
       {
         Action: 'execute-api:Invoke', // default action
-        Effect: effect,
+        Effect: allow ? 'Allow' : 'Deny',
         Resource: resource,
       },
     ],
