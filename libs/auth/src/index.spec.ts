@@ -10,6 +10,7 @@ describe('Auth helpers', () => {
         'vendors:create:all',
         'vendors:update:own',
         'vendors:delete:own',
+        'test/auth:read:all'
       ]);
     });
   });

@@ -14,5 +14,5 @@ export type Ownership = 'all' | 'own';
 export const generatePermission = (
   namespace: Namespace,
   action: Action,
-  ownership: Ownership = 'all'
+  ownership: Ownership = 'own'
 ) => `${namespace}:${action}:${ownership}`;

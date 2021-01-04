@@ -1,10 +1,10 @@
 import { generatePermission, ROLES, VENDORS } from './base';
 
 export const VENDORS_AVAILABLE_PERMISSIONS = {
-  create: generatePermission(VENDORS, 'create'),
-  read: generatePermission(VENDORS, 'read'),
-  update: generatePermission(VENDORS, 'update', 'own'),
-  delete: generatePermission(VENDORS, 'delete', 'own'),
+  create: generatePermission(VENDORS, 'create', 'all'),
+  read: generatePermission(VENDORS, 'read', 'all'),
+  update: generatePermission(VENDORS, 'update'),
+  delete: generatePermission(VENDORS, 'delete'),
 };
 
 export const VENDORS_PERMISSIONS = {

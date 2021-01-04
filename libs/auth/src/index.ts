@@ -1,7 +1,7 @@
 import uniq from 'lodash.uniq';
 import { Action, Namespace, UserRole } from './base';
 import { VENDORS_PERMISSIONS } from './vendors';
-import { TESTS_PERMISSIONS } from './test';
+import { TESTS_PERMISSIONS } from './test-service';
 
 /**
  * Get the full list of permissions given a set of roles
