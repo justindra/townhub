@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Button,
   IconButton,
   makeStyles,
   Paper,
@@ -17,6 +16,7 @@ import { useTownhub } from '../state';
 import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
 import ReactGA from 'react-ga';
+import { AdminRoot } from './admin';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
@@ -88,6 +88,9 @@ export const PageRoutes: FC = () => {
           </Route>
           <Route path='/about'>
             <AboutPage townName={town.name} />
+          </Route>
+          <Route path='/admin'>
+            <AdminRoot />
           </Route>
           <Route path='*'>
             <Redirect to='/shuttles' />
