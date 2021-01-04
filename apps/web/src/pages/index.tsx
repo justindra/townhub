@@ -20,10 +20,15 @@ import ReactGA from 'react-ga';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
+    position: 'fixed',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     background: theme.palette.background.default,
   },
   main: {
-    height: `calc(var(--vh, 1vh) * 100 - ${theme.spacing(8)}px)`,
+    height: `calc(100% - ${theme.spacing(7)}px)`,
     borderTopLeftRadius: theme.spacing(2),
     borderTopRightRadius: theme.spacing(2),
     overflow: 'hidden',
