@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Button,
   IconButton,
   makeStyles,
   Paper,
@@ -90,7 +89,6 @@ export const PageRoutes: FC = () => {
           <Route path='/about'>
             <AboutPage townName={town.name} />
           </Route>
-          {/* TODO: Setup code-splitting on route */}
           <Route path='/admin'>
             <AdminRoot />
           </Route>
