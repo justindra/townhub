@@ -22,11 +22,16 @@ const useCardSummaryStyles = makeStyles((theme) => ({
   card: {
     maxWidth: `calc(100vw - ${theme.spacing(4)}px)`,
     width: theme.spacing(50),
+    display: 'flex',
+    flexDirection: 'column'
   },
   cardContent: {
     paddingHorizontal: 0,
     paddingVertical: theme.spacing(0.5),
   },
+  routeTimetable: {
+    overflow: 'auto'
+  }
 }));
 
 export const CardSummary: React.FC<{
@@ -89,7 +94,7 @@ export const CardSummary: React.FC<{
           </Button>
         </HorizontalList>
       </CardContent>
-      <Collapse in={showMoreInfo}>
+      <Collapse in={showMoreInfo} className={styles.routeTimetable}>
         <>
           <Divider />
           <List dense>

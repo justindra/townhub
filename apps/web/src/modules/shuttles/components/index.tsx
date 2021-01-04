@@ -30,10 +30,11 @@ const useShuttlePageStyles = makeStyles((theme) => ({
   },
   stopCard: {
     position: 'absolute',
-    bottom: theme.spacing(3),
+    bottom: theme.spacing(2),
     left: 0,
     right: 0,
     zIndex: 5,
+    maxHeight: `calc(100% - ${theme.spacing(4)}px)`,
     display: 'flex',
     justifyContent: 'center',
   },
