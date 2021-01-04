@@ -18,6 +18,7 @@
     "**/node_modules": true,
     "**/web-build": true,
     "**/coverage": true,
-    "**/.serverless": true
+    "**/.serverless": true,
+    "**/.webpackCache": true
   }
 }
