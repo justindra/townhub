@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  AppState,
   Auth0Provider,
   useAuth0,
   withAuthenticationRequired,
@@ -70,7 +71,7 @@ const AdminRoot: React.FC = () => {
   const history = useHistory();
   const { path } = useRouteMatch();
 
-  const onRedirectCallback = (appState: any) => {
+  const onRedirectCallback = (appState: AppState) => {
     // Use the router's history module to replace the url
     history.replace(appState?.returnTo || `${path}/login`);
   };
