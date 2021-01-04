@@ -12,7 +12,6 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router-dom';
-import loadable from "@loadable/component";
 import { LoadingPage } from '../../components';
 
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN || '';
