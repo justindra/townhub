@@ -1,6 +1,7 @@
 import { APIGatewayTokenAuthorizerEvent } from 'aws-lambda';
 import jwksClient from 'jwks-rsa';
 import { decode, verify } from 'jsonwebtoken';
+import { UserRole } from '@townhub-libs/auth';
 
 // Initialize JWKS Client
 const Client = jwksClient({
@@ -46,6 +47,7 @@ export const getSigningKey = async (kid: string) => {
  * The decoded token should have these details in the payload
  */
 export interface DecodedTokenPayload {
+  'https://townhub.ca/profile': { roles: UserRole[] },
   sub: string;
   aud: string;
   iat: number;
@@ -71,7 +73,6 @@ interface DecodedToken {
  * @param signingKey The signing key to use to check it
  */
 export const verifyToken = (token: string, signingKey: string) => {
-  // TODO: change to use async, and convert to promises
   return verify(token, signingKey, {
     audience: process.env.AUTH0_AUDIENCE || '',
     issuer: process.env.AUTH0_ISSUER || '',

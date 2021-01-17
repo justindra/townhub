@@ -1,5 +1,9 @@
 import { Stack, StackProps, App } from '@serverless-stack/resources';
-import { RestApi } from '@aws-cdk/aws-apigateway';
+import {
+  RestApi,
+  GatewayResponse,
+  ResponseType,
+} from '@aws-cdk/aws-apigateway';
 import {
   Certificate,
   CertificateValidation,
@@ -58,6 +62,42 @@ export default class ApiGatewayStack extends Stack {
       },
       deployOptions: {
         stageName: scope.stage,
+      },
+    });
+
+    // Expired Token Gateway Response
+    new GatewayResponse(this, 'ExpiredTokenGatewayResponse', {
+      restApi: api,
+      type: ResponseType.EXPIRED_TOKEN,
+      statusCode: '401',
+      templates: {
+        'application/json': JSON.stringify({
+          message: 'Provided token is expired',
+        }),
+      },
+    });
+
+    // Unauthenticated Gateway Response
+    new GatewayResponse(this, 'UnauthenticatedGatewayResponse', {
+      restApi: api,
+      type: ResponseType.UNAUTHORIZED,
+      statusCode: '401',
+      templates: {
+        'application/json': JSON.stringify({
+          message: '$context.error.message',
+        }),
+      },
+    });
+
+    // Unauthorized Gateway Response
+    new GatewayResponse(this, 'UnauthorizedGatewayResponse', {
+      restApi: api,
+      type: ResponseType.ACCESS_DENIED,
+      statusCode: '403',
+      templates: {
+        'application/json': JSON.stringify({
+          message: '$context.authorizer.errorMessage',
+        }),
       },
     });
 

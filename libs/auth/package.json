@@ -1,0 +1,16 @@
+{
+  "name": "@townhub-libs/auth",
+  "version": "0.0.0",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "test": "jest"
+  }
+}
