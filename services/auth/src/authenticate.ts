@@ -73,7 +73,6 @@ interface DecodedToken {
  * @param signingKey The signing key to use to check it
  */
 export const verifyToken = (token: string, signingKey: string) => {
-  // TODO: change to use async, and convert to promises
   return verify(token, signingKey, {
     audience: process.env.AUTH0_AUDIENCE || '',
     issuer: process.env.AUTH0_ISSUER || '',

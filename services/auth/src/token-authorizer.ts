@@ -29,25 +29,46 @@ export const main = async (event: APIGatewayTokenAuthorizerEvent) => {
     const arnBreakdown = breakdownMethodArn(event.methodArn);
 
     const decodedToken = await authenticate(event);
-    const roles = decodedToken['https://townhub.ca/profile'].roles;
 
+    const userId = decodedToken.sub;
+
+    const roles = decodedToken['https://townhub.ca/profile'].roles;
     const permissionList = filterPermissionsForAction(
       getPermissionsForRoles(roles),
       arnBreakdown.namespace
     );
-  
+
+    // If there are enough permissions to acces this endpoint
+    if (permissionList.length > 0) {
+      return {
+        principalId: userId,
+        policyDocument: generatePolicyDocument(true, event.methodArn),
+        // Pass the list of permissions as context to the function handler
+        context: { userId, permissions: JSON.stringify(permissionList) },
+      };
+    }
+
+    // Otherwise we reject it
     return {
-      principalId: decodedToken.sub,
-      policyDocument: generatePolicyDocument(
-        permissionList.length > 0,
-        event.methodArn
-      ),
+      policyDocument: generatePolicyDocument(false, event.methodArn),
       // Pass the list of permissions as context to the function handler
-      // TODO: pass the userId, etc.
-      context: { permissions: JSON.stringify(permissionList) },
+      context: { errorMessage: 'User does not have enough permissions' },
     };
   } catch (err) {
     console.log('err', err);
-    return Promise.reject((err as Error).message);
+    // Error codes from https://www.npmjs.com/package/jsonwebtoken#errors--codes
+    if (err.name === 'TokenExpiredError') {
+      return {
+        policyDocument: generatePolicyDocument(false, event.methodArn),
+        context: { errorMessage: 'Provided token is expired' },
+      };
+    }
+    if (err.name === 'JsonWebTokenError') {
+      return {
+        policyDocument: generatePolicyDocument(false, event.methodArn),
+        context: { errorMessage: err.message },
+      };
+    }
+    throw new Error('Unauthorized');
   }
 };
