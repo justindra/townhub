@@ -1,7 +1,8 @@
 import * as Sentry from '@sentry/node';
+import { UserRole } from '@townhub-libs/auth/base';
 import {
-  APIGatewayProxyEventV2,
-  APIGatewayProxyHandlerV2,
+  APIGatewayProxyWithLambdaAuthorizerEvent,
+  APIGatewayProxyWithLambdaAuthorizerHandler,
   Context,
 } from 'aws-lambda';
 import { DEFAULT_TIMEZONE } from '../helpers';
@@ -27,11 +28,17 @@ export interface HandlerDetails<TPathParameters = any> {
   timezone: string;
   userId: string;
   pathParameters: TPathParameters;
+  permissions: UserRole[];
 }
+
+export type AuthorizerContext = {
+  userId: string;
+  permissions: string;
+};
 
 export type HandlerFunction<TDataResult = any, TPathParameters = any> = (
   details: HandlerDetails<TPathParameters>,
-  event: APIGatewayProxyEventV2,
+  event: APIGatewayProxyWithLambdaAuthorizerEvent<AuthorizerContext>,
   context: Context
 ) => HandlerResult<TDataResult> | Promise<HandlerResult<TDataResult>>;
 
@@ -42,13 +49,15 @@ export type HandlerFunction<TDataResult = any, TPathParameters = any> = (
  */
 export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
   handler: HandlerFunction<TDataResult, TPathParameters>
-): APIGatewayProxyHandlerV2 => {
+): APIGatewayProxyWithLambdaAuthorizerHandler<AuthorizerContext> => {
   return async (event, context) => {
     try {
       const townId =
         event.headers['town-id'] ?? event.headers['Town-Id'] ?? 'n/a';
-      const userId =
-        event.headers['user-id'] ?? event.headers['User-Id'] ?? 'public';
+      const userId = event.requestContext.authorizer?.userId ?? 'public';
+      const permissions: UserRole[] = JSON.parse(
+        event.requestContext.authorizer?.permissions ?? '[]'
+      );
 
       Sentry.setUser({ id: userId });
       Sentry.setContext('Town', { townId });
@@ -60,7 +69,7 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
       const timezone = DEFAULT_TIMEZONE;
 
       const result = await handler(
-        { townId, userId, pathParameters, timezone },
+        { townId, userId, pathParameters, timezone, permissions },
         event,
         context
       );
