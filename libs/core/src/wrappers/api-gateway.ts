@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/node';
-import { UserRole } from '@townhub-libs/auth/base';
+import { UserRole } from '@townhub-libs/auth';
 import {
   APIGatewayProxyWithLambdaAuthorizerEvent,
   APIGatewayProxyWithLambdaAuthorizerHandler,
