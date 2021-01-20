@@ -17,8 +17,8 @@ export const main = ApiGatewayWrapper<
 
   return {
     statusCode: 200,
-    headers: { 'Content-Type': contentType },
+    headers: { 'Content-Type': contentType as string },
     body: resizedImage.toString('base64'),
     isBase64Encoded: true,
-  } as any;
-}, true);
+  };
+});

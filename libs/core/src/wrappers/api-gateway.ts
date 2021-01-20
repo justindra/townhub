@@ -18,11 +18,20 @@ const DEFAULT_HEADERS = {
   'Access-Control-Allow-Credentials': true,
 };
 
-export interface HandlerResult<TData = any> {
+interface DataResult<TData = any> {
   message: string;
   data: TData;
   statusCode?: number;
 }
+
+interface RawResult {
+  statusCode?: number;
+  body: APIGatewayProxyResult['body'];
+  headers: APIGatewayProxyResult['headers'];
+  isBase64Encoded: boolean;
+}
+
+export type HandlerResult<TData = any> = DataResult<TData> | RawResult;
 
 export interface HandlerDetails<TPathParameters = any> {
   townId: string;
@@ -49,8 +58,7 @@ export type HandlerFunction<TDataResult = any, TPathParameters = any> = (
  * @param handler
  */
 export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
-  handler: HandlerFunction<TDataResult, TPathParameters>,
-  directReturn: boolean = false
+  handler: HandlerFunction<TDataResult, TPathParameters>
 ): APIGatewayProxyWithLambdaAuthorizerHandler<AuthorizerContext> => {
   return async (event, context) => {
     try {
@@ -75,13 +83,18 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
         event,
         context
       );
-      if (directReturn) return (result as unknown) as APIGatewayProxyResult;
+      if ((result as RawResult).body) {
+        return {
+          statusCode: result.statusCode || 200,
+          ...(result as RawResult),
+        };
+      }
 
       return {
         statusCode: result.statusCode || 200,
         body: JSON.stringify({
-          message: result.message,
-          data: result.data,
+          message: (result as DataResult).message,
+          data: (result as DataResult).data,
         }),
         headers: DEFAULT_HEADERS,
       };
