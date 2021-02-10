@@ -21,20 +21,23 @@ export const VENDOR_CATEGORIES = {
   ARTISAN: {
     name: 'artisan' as const,
     label: 'Artisans',
-    description: 'Local artists, makers and designers creating one-of-a-kind pieces.',
-    icon: ['far', 'hammer-war']
+    description:
+      'Local artists, makers and designers creating one-of-a-kind pieces.',
+    icon: ['far', 'hammer-war'],
   },
   STORE: {
     name: 'store' as const,
     label: 'Stores',
-    description: 'Local stores with a physical location where people can come in.',
-    icon: ['fas', 'store-alt']
+    description:
+      'Local stores with a physical location where people can come in.',
+    icon: ['fas', 'store-alt'],
   },
   FOOD_DRINKS: {
     name: 'food_drinks' as const,
     label: 'Food and drinks',
-    description: 'Local restaurants, cafes and bars to feed your hunger and quench your thirst.',
-    icons: ['fas', 'utensils-alt']
+    description:
+      'Local restaurants, cafes and bars to feed your hunger and quench your thirst.',
+    icons: ['fas', 'utensils-alt'],
   },
 };
 
