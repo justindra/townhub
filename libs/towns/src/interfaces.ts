@@ -1,4 +1,4 @@
-import { BaseEntity } from '@townhub-libs/core';
+import { BaseEntity } from '@townhub-libs/models';
 
 interface ModuleSetting {
   /** The name to show it to people */

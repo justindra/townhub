@@ -26,7 +26,6 @@ export const VendorsModule: React.FC = () => {
 
   const { path, url } = useRouteMatch();
 
-
   useEffect(() => {
     let active = true;
     (async () => {
@@ -49,10 +48,14 @@ export const VendorsModule: React.FC = () => {
       <Switch>
         <Route exact path={path}>
           <VendorList vendors={vendorList} parentUrl={url} />
-          </Route>
-        <Route path={`${path}/:vendorId`} >
-          <VendorCard vendors={vendorList}/>
-          </Route>
+        </Route>
+        <Route path={`${path}/categories/:categoryName`}>
+          {/* TODO: Category page */}
+          <span>A list of vendors in a specific category</span>
+        </Route>
+        <Route path={`${path}/:vendorId`}>
+          <VendorCard vendors={vendorList} />
+        </Route>
       </Switch>
     </div>
   );

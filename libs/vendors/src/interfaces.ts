@@ -1,4 +1,4 @@
-import { BaseEntity } from '@townhub-libs/core';
+import { BaseEntity } from '@townhub-libs/models';
 
 export const LINK_TYPES = {
   WEBSITE: 'website' as const,
@@ -23,7 +23,8 @@ export const VENDOR_CATEGORIES = {
     label: 'Artisans',
     description:
       'Local artists, makers and designers creating one-of-a-kind pieces.',
-    icon: ['far', 'hammer-war'],
+    icon: ['fas', 'hammer'],
+    color: 'red',
   },
   STORE: {
     name: 'store' as const,
@@ -31,13 +32,15 @@ export const VENDOR_CATEGORIES = {
     description:
       'Local stores with a physical location where people can come in.',
     icon: ['fas', 'store-alt'],
+    color: 'green',
   },
   FOOD_DRINKS: {
     name: 'food_drinks' as const,
     label: 'Food and drinks',
     description:
       'Local restaurants, cafes and bars to feed your hunger and quench your thirst.',
-    icons: ['fas', 'utensils-alt'],
+    icon: ['fas', 'utensils'],
+    color: 'orange',
   },
 };
 

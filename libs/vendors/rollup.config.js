@@ -1,16 +1,4 @@
-import config from '../../build/rollup.config';
+import { generateConfigFromPackageJson } from '../../build/rollup.config';
+import packageDetails from './package.json';
 
-export default {
-  ...config,
-  input: 'src/index.ts',
-  output: [
-    {
-      file: 'dist/index.es.js',
-      format: 'es',
-    },
-    {
-      file: 'dist/index.js',
-      format: 'commonjs',
-    },
-  ],
-};
+export default generateConfigFromPackageJson(packageDetails);

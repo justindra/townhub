@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ReactGA from 'react-ga';
+// Import Icons
+import './icons';
 
 if (process.env.REACT_APP_GOOGLE_ANALYTICS_ID) {
   ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_ID);

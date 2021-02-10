@@ -16,6 +16,8 @@ import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
 import ReactGA from 'react-ga';
 import { AdminRoot } from './admin';
+import { HomePage } from './home';
+import { VENDOR_CATEGORIES } from '@townhub-libs/vendors/web';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
@@ -86,6 +88,17 @@ export const PageRoutes: FC = () => {
       </AppBar>
       <Paper className={pageLayoutClasses.main} elevation={3} square>
         <Switch>
+          {[
+            VENDOR_CATEGORIES.ARTISAN,
+            VENDOR_CATEGORIES.FOOD_DRINKS,
+            VENDOR_CATEGORIES.STORE,
+          ].map((vendor) => (
+            <Route
+              key={vendor.name}
+              path={`/${vendor.name}`}
+              component={VendorsModule}
+            />
+          ))}
           {town.modules.map((module) => {
             const ModuleComponent = getModuleComponent(module.type);
             return (
@@ -102,10 +115,7 @@ export const PageRoutes: FC = () => {
           <Route path='/admin'>
             <AdminRoot />
           </Route>
-          <Route path='*'>
-            {/* TODO: Have a home page to go to that shows both modules */}
-            <Redirect to='/shuttles' />
-          </Route>
+          <Route path='*' component={HomePage} />
         </Switch>
       </Paper>
     </Paper>

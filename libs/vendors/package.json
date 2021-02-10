@@ -4,6 +4,10 @@
   "main": "dist/index",
   "module": "dist/index.es",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index",
+    "./web": "./dist/web"
+  },
   "private": true,
   "dependencies": {
     "@townhub-libs/core": "^0.0.0"
