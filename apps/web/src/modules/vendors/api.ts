@@ -1,7 +1,7 @@
 import { Api, TownhubApiResponse } from '../base';
 import { Vendor } from '@townhub-libs/vendors';
 
-const VENDORS_ENDPOINT = 'vendors';
+export const VENDORS_ENDPOINT = 'vendors';
 
 export class VendorsApi {
   constructor(private api: Api) {}

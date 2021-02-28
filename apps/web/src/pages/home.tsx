@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { VENDOR_CATEGORIES } from '@townhub-libs/vendors/web';
+import { VENDORS_ENDPOINT } from '../modules';
 
 interface LinkItemProps {
   title: string;
@@ -60,7 +61,7 @@ const VendorItems: LinkItemProps[] = [
 ].map((val) => ({
   title: val.label,
   icon: val.icon as FontAwesomeIconProps['icon'],
-  href: `/${val.name}`,
+  href: `/${VENDORS_ENDPOINT}/${val.name}`,
   color: val.color,
 }));
 

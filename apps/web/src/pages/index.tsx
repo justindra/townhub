@@ -8,12 +8,21 @@ import {
 } from '@material-ui/core';
 import { Town } from '@townhub-libs/towns';
 import React, { FC, useEffect, useState } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  Redirect,
+  Link,
+  useRouteMatch,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import { LoadingPage } from '../components';
-import { ShuttleModule, VendorsModule } from '../modules';
+import { ShuttleModule, VendorsModule, VENDORS_ENDPOINT } from '../modules';
 import { useTownhub } from '../state';
 import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ReactGA from 'react-ga';
 import { AdminRoot } from './admin';
 import { HomePage } from './home';
@@ -48,11 +57,15 @@ const getModuleComponent = (type: string) => {
 };
 
 export const PageRoutes: FC = () => {
+  const location = useLocation();
+  const history = useHistory();
+
   const pageLayoutClasses = usePageLayoutStyles();
 
   const { Towns } = useTownhub();
 
   const [town, setTown] = useState<Town | null>(null);
+  // const [showBackButton, setShowBackButton] = useState<boolean>(false);
 
   useEffect(() => {
     let active = true;
@@ -71,13 +84,24 @@ export const PageRoutes: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
   // Show the loading state when we are still loading the data set
   if (!town) return <LoadingPage />;
+
+  const showBackButton = location.pathname !== '/';
 
   return (
     <Paper className={pageLayoutClasses.appContainer} square>
       <AppBar position='static' color='transparent' elevation={0}>
         <Toolbar>
+          {showBackButton && (
+            <IconButton color='inherit' onClick={handleGoBack}>
+              <ArrowBackIcon />
+            </IconButton>
+          )}
           <Typography variant='h6' className={pageLayoutClasses.title}>
             {town.name}
           </Typography>
@@ -92,10 +116,10 @@ export const PageRoutes: FC = () => {
             VENDOR_CATEGORIES.ARTISAN,
             VENDOR_CATEGORIES.FOOD_DRINKS,
             VENDOR_CATEGORIES.STORE,
-          ].map((vendor) => (
+          ].map((vendorCategory) => (
             <Route
-              key={vendor.name}
-              path={`/${vendor.name}`}
+              key={vendorCategory.name}
+              path={`/${VENDORS_ENDPOINT}/:category`}
               component={VendorsModule}
             />
           ))}
