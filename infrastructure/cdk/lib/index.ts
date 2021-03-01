@@ -1,7 +1,13 @@
 import { App } from '@serverless-stack/resources';
 import ApiGatewayStack from './api-gateway';
 import StaticSiteStack from './static-site';
-import { FilesStack, ShuttlesStack, TownsStack, VendorsStack } from './modules';
+import {
+  FilesStack,
+  ShuttlesStack,
+  TownsStack,
+  UsersStack,
+  VendorsStack,
+} from './modules';
 
 export default function main(app: App): void {
   const rootDomainName = 'townhub.ca';
@@ -16,6 +22,7 @@ export default function main(app: App): void {
 
   new ShuttlesStack(app, 'module-shuttle');
   new TownsStack(app, 'module-town');
+  new UsersStack(app, 'module-users');
   new VendorsStack(app, 'module-vendor');
   new FilesStack(app, 'module-file', {
     rootDomainName,
