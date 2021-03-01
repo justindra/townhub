@@ -34,7 +34,7 @@ export const PageRoutes: FC = () => {
   return (
     <Switch>
       <Route path='/admin'>
-        <AdminRoot />
+        <AdminRoot town={town} />
       </Route>
       <Route path='*'>
         <PublicRoot town={town} />

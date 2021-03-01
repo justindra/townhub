@@ -16,12 +16,24 @@ export type TownhubApiResponse<TData = any> = {
 
 export class Api {
   private api: AxiosInstance;
+  private townId: string = '';
+  private jwt: string = '';
 
   constructor() {
     this.api = axios.create({
       baseURL: API_ENDPOINT,
       timeout: API_TIMEOUT,
       headers: defaultHeaders,
+    });
+
+    this.api.interceptors.request.use(async (config) => {
+      if (this.townId) {
+        config.headers['Town-Id'] = this.townId;
+      }
+      if (this.jwt) {
+        config.headers['Authorization'] = `Bearer ${this.jwt}`;
+      }
+      return config;
     });
   }
 
@@ -30,10 +42,16 @@ export class Api {
    * @param townId The new town id to use
    */
   updateTownId(townId: string) {
-    this.api.interceptors.request.use(async (config) => {
-      config.headers['Town-Id'] = townId;
-      return config;
-    });
+    this.townId = townId;
+  }
+
+  /**
+   * Update the jwt for all calls, this should allow for authenticated
+   * calls for the admin portal side
+   * @param jwt The new jwt to use
+   */
+  updateJWT(jwt: string) {
+    this.jwt = jwt;
   }
 
   async get<TResponse = TownhubApiResponse>(url: string) {

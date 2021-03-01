@@ -32,6 +32,9 @@ export const main = async (event: APIGatewayTokenAuthorizerEvent) => {
 
     const userId = decodedToken.sub;
 
+    // TODO: Update so that we get the userId based on the sub and then return
+    // that userId
+
     const roles = decodedToken['https://townhub.ca/profile'].roles;
     const permissionList = filterPermissionsForAction(
       getPermissionsForRoles(roles),

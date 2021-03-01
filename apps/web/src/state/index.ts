@@ -15,7 +15,11 @@ export const Vendors = new VendorsApi(TownhubApi);
 export const DEFAULT_CONTEXT_VALUE = {
   Shuttles,
   Towns,
-  Vendors
+  Vendors,
+  updateJWT: TownhubApi.updateJWT.bind(TownhubApi),
+  testAuth: async () => {
+    return TownhubApi.get('test/auth');
+  },
 };
 
 const TownhubContext = React.createContext(DEFAULT_CONTEXT_VALUE);
