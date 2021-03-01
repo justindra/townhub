@@ -16469,6 +16469,13 @@ serverless-apigwy-binary@^1.0.0:
   dependencies:
     bluebird "^3.5.0"
 
+serverless-iam-roles-per-function@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/serverless-iam-roles-per-function/-/serverless-iam-roles-per-function-3.1.0.tgz#3bd87011234641f4e4883b1a8aeecb8610ac71c5"
+  integrity sha512-/kNfT169FOOrYtkN6WV3fU9Nt0E2pku/1Vio1My82iKnbUQ9Bx35PSOvdRS32e7mLVwbdwZ5ecMKG1lpsuQLoA==
+  dependencies:
+    lodash "^4.17.20"
+
 serverless-rollup-plugin@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/serverless-rollup-plugin/-/serverless-rollup-plugin-2.1.0.tgz#02faf1222eae59a2433fd54dda50b4b5a3019906"

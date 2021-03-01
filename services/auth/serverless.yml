@@ -18,20 +18,25 @@ package:
   individually: true
 
 custom:
+  users: ${file(../shared/modules/users.yml)}
   rollup:
     config: ../../build/rollup.config.deploy.js
     installCommand: yarn add
 
 plugins:
   - serverless-rollup-plugin
+  - serverless-iam-roles-per-function
 
 functions:
   tokenAuthorizer:
     handler: src/token-authorizer.main
-    environment: 
+    environment:
       AUTH0_JWKS_URI: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/jwks-uri}
       AUTH0_AUDIENCE: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/audience}
       AUTH0_ISSUER: ${ssm:/townhub/${opt:stage, 'dev'}/auth0/issuer}
+      USERS_DATABASE_NAME: ${self:custom.users.tables.users.name}
+    iamRoleStatements:
+      - ${self:custom.users.tableIamRoles.usersTable}
 resources:
   Outputs:
     TokenAuthorizerArn:

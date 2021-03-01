@@ -4,6 +4,7 @@ import {
   getPermissionsForRoles,
   Namespace,
 } from '@townhub-libs/auth';
+import { getUserBySub } from '@townhub-libs/users';
 import { authenticate } from './authenticate';
 import { generatePolicyDocument } from './policy';
 
@@ -30,10 +31,10 @@ export const main = async (event: APIGatewayTokenAuthorizerEvent) => {
 
     const decodedToken = await authenticate(event);
 
-    const userId = decodedToken.sub;
+    const sub = decodedToken.sub;
 
-    // TODO: Update so that we get the userId based on the sub and then return
-    // that userId
+    // Go get the user based on the given sub
+    const user = await getUserBySub(sub);
 
     const roles = decodedToken['https://townhub.ca/profile'].roles;
     const permissionList = filterPermissionsForAction(
@@ -44,10 +45,13 @@ export const main = async (event: APIGatewayTokenAuthorizerEvent) => {
     // If there are enough permissions to acces this endpoint
     if (permissionList.length > 0) {
       return {
-        principalId: userId,
+        principalId: user.id,
         policyDocument: generatePolicyDocument(true, event.methodArn),
         // Pass the list of permissions as context to the function handler
-        context: { userId, permissions: JSON.stringify(permissionList) },
+        context: {
+          userId: user.id,
+          permissions: JSON.stringify(permissionList),
+        },
       };
     }
 

@@ -28,6 +28,8 @@
       "@townhub-libs/shuttles/*": ["libs/shuttles/src/*"],
       "@townhub-libs/towns": ["libs/towns/src"],
       "@townhub-libs/towns/*": ["libs/towns/src/*"],
+      "@townhub-libs/users": ["libs/users/src"],
+      "@townhub-libs/users/*": ["libs/users/src/*"],
       "@townhub-libs/vendors": ["libs/vendors/src"],
       "@townhub-libs/vendors/*": ["libs/vendors/src/*"]
     }
