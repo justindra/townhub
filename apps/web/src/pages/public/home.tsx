@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { VENDOR_CATEGORIES } from '@townhub-libs/vendors/web';
-import { VENDORS_ENDPOINT } from '../modules';
+import { VENDORS_ENDPOINT } from '../../modules';
 
 interface LinkItemProps {
   title: string;
