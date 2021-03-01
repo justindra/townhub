@@ -33,3 +33,10 @@ functions:
           path: vendors
           method: get
           cors: ${self:custom.cors}
+  listByCategory:
+    handler: src/list-by-category.main
+    events:
+      - http:
+          path: vendors/categories/{category}
+          method: get
+          cors: ${self:custom.cors}

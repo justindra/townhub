@@ -16,8 +16,9 @@ AWS.config.update({
 
 import { setTableNamesFromStack } from '@townhub-libs/seed-helpers';
 import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/towns';
-import { VendorsDatabase, VENDORS_DATABASE } from '../src';
-import { company, image, phone, internet, lorem } from 'faker';
+import { VendorsDatabase, VENDORS_DATABASE, VENDOR_CATEGORIES } from '../src';
+import { company, image, phone, internet, lorem, address } from 'faker';
+import { sampleSize } from 'lodash';
 
 const main = async () => {
   await setTableNamesFromStack([
@@ -41,11 +42,25 @@ const main = async () => {
 
   const VendorsClient = new VendorsDatabase();
 
+  const AvailableVendorCategories = [
+    VENDOR_CATEGORIES.ARTISAN.name,
+    VENDOR_CATEGORIES.FOOD_DRINKS.name,
+    VENDOR_CATEGORIES.STORE.name,
+  ];
+
+  const getRandomVendorCategory = () => {
+    return sampleSize(
+      AvailableVendorCategories,
+      Math.max(Math.floor(Math.random() * AvailableVendorCategories.length), 1)
+    );
+  };
+
   for (let i = 0; i < 10; i++) {
     await VendorsClient.create({
       townId: town.id,
       name: company.companyName(),
       description: lorem.paragraph(),
+      categories: getRandomVendorCategory(),
       logo: image.imageUrl(128, 128),
       links: [
         { type: 'facebook', url: internet.url(), name: 'Facebook' },
@@ -55,6 +70,8 @@ const main = async () => {
       images: [image.imageUrl(), image.imageUrl(), image.imageUrl()],
       phone: phone.phoneNumber(),
       email: internet.email(),
+      address: address.streetAddress(),
+      openingHours: [],
     });
   }
 };

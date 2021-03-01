@@ -1,6 +1,4 @@
-import {
-  Database,
-} from '@townhub-libs/core';
+import { Database } from '@townhub-libs/core';
 import { Vendor } from './interfaces';
 
 export const VENDORS_DATABASE = {
@@ -15,7 +13,7 @@ export class VendorsDatabase extends Database<Vendor> {
 
   /**
    * Lists the vendors by a town
-   * @param townId 
+   * @param townId
    */
   async listByTown(townId: string) {
     return this.query({

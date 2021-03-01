@@ -12,4 +12,11 @@ export class VendorsApi {
     );
     return res.data;
   }
+
+  async listByCategory(category: string) {
+    const res = await this.api.get<TownhubApiResponse<Vendor[]>>(
+      `${VENDORS_ENDPOINT}/categories/${category}`
+    );
+    return res.data;
+  }
 }
