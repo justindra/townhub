@@ -84,6 +84,8 @@ export interface VendorOpeningHours {
 export interface Vendor extends BaseEntity {
   /** The id of the town this vendor belongs to */
   townId: string;
+  /** The id of the user this vendor belongs to */
+  userId: string;
   /** Name of the vendor */
   name: string;
   /** A description of the vendor */

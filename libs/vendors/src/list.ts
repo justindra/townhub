@@ -34,3 +34,20 @@ export const listByCategory = async (townId: string, category: string) => {
     },
   });
 };
+
+/**
+ * List all the towns that are owned by a particular user
+ * @param userId The id of the user to list
+ */
+export const listByUserId = async (userId: string) => {
+  const VendorsClient = new VendorsDatabase();
+  return VendorsClient.query({
+    FilterExpression: '#userId = :userId',
+    ExpressionAttributeNames: {
+      '#userId': 'userId',
+    },
+    ExpressionAttributeValues: {
+      ':userId': userId,
+    },
+  });
+};

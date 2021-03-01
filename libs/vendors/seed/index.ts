@@ -60,6 +60,7 @@ const main = async () => {
   for (let i = 0; i < 10; i++) {
     await VendorsClient.create({
       townId: town.id,
+      userId: 'unknown',
       name: company.companyName(),
       description: lorem.paragraph(),
       categories: getRandomVendorCategory(),

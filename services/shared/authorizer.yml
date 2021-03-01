@@ -1,1 +1,2 @@
-arn: ${cf:townhub-services-auth-${self:provider.stage}.TokenAuthorizerArn}
+type: CUSTOM
+authorizerId: ${cf:townhub-services-auth-${self:provider.stage}.Auth0AuthorizerId}

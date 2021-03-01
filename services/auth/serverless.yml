@@ -37,7 +37,30 @@ functions:
       USERS_DATABASE_NAME: ${self:custom.users.tables.users.name}
     iamRoleStatements:
       - ${self:custom.users.tableIamRoles.usersTable}
+
 resources:
+  Resources:
+    # Create the API Gateway Authorizer so it can be shared
+    Auth0Authorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: Auth0Authorizer
+        IdentitySource: method.request.header.Authorization
+        RestApiId: ${self:provider.apiGateway.restApiId}
+        Type: TOKEN
+        AuthorizerUri: !Join
+          - ''
+          - - 'arn:'
+            - !Ref AWS::Partition
+            - ':apigateway:'
+            - !Ref 'AWS::Region'
+            - ':lambda:path/2015-03-31/functions/'
+            - !GetAtt [TokenAuthorizerLambdaFunction, Arn]
+            - '/invocations'
   Outputs:
-    TokenAuthorizerArn:
-      Value: !GetAtt [TokenAuthorizerLambdaFunction, Arn]
+    # Now Output it so that it can be used by other services
+    Auth0AuthorizerId:
+      Value:
+        Ref: Auth0Authorizer
+      Export:
+        Name: Auth0Authorizer-${self:provider.stage}

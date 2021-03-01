@@ -17,6 +17,7 @@ package:
 
 custom:
   cors: ${file(../shared/cors.yml)}
+  authorizer: ${file(../shared/authorizer.yml)}
   vendors: ${file(../shared/modules/vendors.yml)}
   rollup:
     config: ../../build/rollup.config.deploy.js
@@ -40,3 +41,11 @@ functions:
           path: vendors/categories/{category}
           method: get
           cors: ${self:custom.cors}
+  listByUser:
+    handler: src/list-by-user-id.main
+    events:
+      - http:
+          path: vendors/users
+          method: get
+          cors: ${self:custom.cors}
+          authorizer: ${self:custom.authorizer}
