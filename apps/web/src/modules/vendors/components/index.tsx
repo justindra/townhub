@@ -4,6 +4,7 @@ import { Vendor } from '@townhub-libs/vendors';
 import { Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { VendorList } from './vendor-list';
 import { VendorCard } from './card';
+import { LoadingPage } from '../../../components';
 
 type RouteParams = {
   category?: string;
@@ -11,6 +12,7 @@ type RouteParams = {
 
 export const VendorsModule: React.FC = () => {
   const { Vendors } = useTownhub();
+  const [loading, setLoading] = useState<boolean>(false);
   const [vendorList, setVendorList] = useState<Vendor[]>([]);
 
   const { path, url } = useRouteMatch();
@@ -20,15 +22,22 @@ export const VendorsModule: React.FC = () => {
   useEffect(() => {
     let active = true;
     (async () => {
+      setLoading(true);
       const res = await Vendors.listByCategory(category);
       if (active) {
         setVendorList(res);
+        setLoading(false);
       }
     })();
     return () => {
       active = false;
     };
   }, []);
+
+  if (loading) return <LoadingPage />;
+
+  if (!vendorList.length)
+    return <div>No vendors found in the category: {category}</div>;
 
   return (
     <div
