@@ -17,9 +17,30 @@ export interface VendorLink {
   type: VendorLinkType;
 }
 
-export const VENDOR_CATEGORIES = {
+export const VENDOR_CATEGORY_NAMES = {
+  ARTISAN: 'artisan',
+  STORE: 'store',
+  FOOD_DRINKS: 'food_drinks',
+} as const;
+
+export type VendorCategory =
+  | typeof VENDOR_CATEGORY_NAMES.ARTISAN
+  | typeof VENDOR_CATEGORY_NAMES.FOOD_DRINKS
+  | typeof VENDOR_CATEGORY_NAMES.STORE;
+
+export type VendorCategories = {
+  [type: string]: {
+    name: VendorCategory;
+    label: string;
+    description: string;
+    icon: string | [string, string];
+    color: string;
+  };
+};
+
+export const VENDOR_CATEGORIES: VendorCategories = {
   ARTISAN: {
-    name: 'artisan' as const,
+    name: VENDOR_CATEGORY_NAMES.ARTISAN,
     label: 'Artisans',
     description:
       'Local artists, makers and designers creating one-of-a-kind pieces.',
@@ -27,7 +48,7 @@ export const VENDOR_CATEGORIES = {
     color: 'red',
   },
   STORE: {
-    name: 'store' as const,
+    name: VENDOR_CATEGORY_NAMES.STORE,
     label: 'Stores',
     description:
       'Local stores with a physical location where people can come in.',
@@ -35,7 +56,7 @@ export const VENDOR_CATEGORIES = {
     color: 'green',
   },
   FOOD_DRINKS: {
-    name: 'food_drinks' as const,
+    name: VENDOR_CATEGORY_NAMES.FOOD_DRINKS,
     label: 'Food and drinks',
     description:
       'Local restaurants, cafes and bars to feed your hunger and quench your thirst.',
@@ -43,11 +64,6 @@ export const VENDOR_CATEGORIES = {
     color: 'orange',
   },
 };
-
-export type VendorCategory =
-  | typeof VENDOR_CATEGORIES.ARTISAN.name
-  | typeof VENDOR_CATEGORIES.FOOD_DRINKS.name
-  | typeof VENDOR_CATEGORIES.STORE.name;
 
 export interface VendorOpeningHours {
   /**
