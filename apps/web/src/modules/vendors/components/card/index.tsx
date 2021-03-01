@@ -6,6 +6,7 @@ import { LoadingPage, Tabs } from '../../../../components';
 import { CategoryLabel } from '../category-label';
 import { AboutTab } from './about';
 import { ContactTab } from './contact';
+import { HoursTab } from './hours';
 
 const useAvatarStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ export const VendorCard: React.FC<{ vendors: Vendor[] }> = ({ vendors }) => {
   const { vendorId } = useParams<{ vendorId: string }>();
 
   const currentVendor = vendors.find((val) => val.id === vendorId);
+
   if (!currentVendor) return <LoadingPage />;
   return (
     <>
@@ -52,10 +54,14 @@ export const VendorCard: React.FC<{ vendors: Vendor[] }> = ({ vendors }) => {
             label: 'Contact',
             Component: () => <ContactTab {...currentVendor} />,
           },
-          {
-            label: 'Hours',
-            Component: () => <div>hours</div>,
-          },
+          ...(Boolean(currentVendor.openingHours.length)
+            ? [
+                {
+                  label: 'Hours',
+                  Component: () => <HoursTab {...currentVendor} />,
+                },
+              ]
+            : []),
         ]}
       />
     </>

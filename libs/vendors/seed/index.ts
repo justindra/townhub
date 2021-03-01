@@ -16,9 +16,14 @@ AWS.config.update({
 
 import { setTableNamesFromStack } from '@townhub-libs/seed-helpers';
 import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/towns';
-import { VendorsDatabase, VENDORS_DATABASE, VENDOR_CATEGORIES } from '../src';
+import {
+  VendorCategory,
+  VendorsDatabase,
+  VENDORS_DATABASE,
+  VENDOR_CATEGORIES,
+} from '../src';
 import { company, image, phone, internet, lorem, address } from 'faker';
-import { sampleSize } from 'lodash';
+import { sample } from 'lodash';
 
 const main = async () => {
   await setTableNamesFromStack([
@@ -49,10 +54,7 @@ const main = async () => {
   ];
 
   const getRandomVendorCategory = () => {
-    return sampleSize(
-      AvailableVendorCategories,
-      Math.max(Math.floor(Math.random() * AvailableVendorCategories.length), 1)
-    );
+    return [sample(AvailableVendorCategories)] as VendorCategory[];
   };
 
   for (let i = 0; i < 10; i++) {
@@ -71,7 +73,50 @@ const main = async () => {
       phone: phone.phoneNumber(),
       email: internet.email(),
       address: address.streetAddress(),
-      openingHours: [],
+      openingHours: [
+        {
+          dayOfWeek: 1,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+        {
+          dayOfWeek: 2,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+        {
+          dayOfWeek: 3,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+        {
+          dayOfWeek: 4,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+        {
+          dayOfWeek: 5,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+        {
+          dayOfWeek: 6,
+          startHours: 9,
+          startMinutes: 0,
+          endHours: 21,
+          endMinutes: 0,
+        },
+      ],
     });
   }
 };
