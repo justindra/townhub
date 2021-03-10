@@ -15,7 +15,7 @@ import { generatePolicyDocument } from './policy';
 const breakdownMethodArn = (methodArn: string) => {
   const [arn, stage, method, ...path] = methodArn.split('/');
   const fullPath = path.join('/');
-  const namespace = fullPath.split('/:')[0];
+  const namespace = fullPath.split('/')[0];
   return {
     arn,
     stage,

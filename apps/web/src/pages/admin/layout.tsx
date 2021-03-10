@@ -48,7 +48,7 @@ const CurrentUserAvatar: React.FC = () => {
   };
 
   const handleLogout = () => {
-    logout({ returnTo: window.location.href });
+    logout({ returnTo: window.location.origin });
     handleClose();
   };
 
@@ -74,9 +74,18 @@ const CurrentUserAvatar: React.FC = () => {
   );
 };
 
-const usePageLayoutStyles = makeStyles(() => ({
+const usePageLayoutStyles = makeStyles((theme) => ({
   title: {
     flex: 1,
+  },
+  container: {
+    display: 'flex',
+    height: '100vh',
+    flexDirection: 'column',
+  },
+  main: {
+    flex: 1,
+    padding: theme.spacing(2),
   },
 }));
 
@@ -86,7 +95,7 @@ export const AdminPageLayout: React.FC<{ town: Town }> = ({
 }) => {
   const classes = usePageLayoutStyles();
   return (
-    <div>
+    <div className={classes.container}>
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' className={classes.title}>
@@ -95,7 +104,7 @@ export const AdminPageLayout: React.FC<{ town: Town }> = ({
           <CurrentUserAvatar />
         </Toolbar>
       </AppBar>
-      {children}
+      <div className={classes.main}>{children}</div>
     </div>
   );
 };

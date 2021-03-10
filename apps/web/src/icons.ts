@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faHammer,
+  faPlus,
   faShuttleVan,
   faStoreAlt,
   faUtensils,
@@ -13,5 +14,6 @@ library.add(
   faStoreAlt,
   faUtensils,
   faFacebook,
-  faInstagram
+  faInstagram,
+  faPlus
 );

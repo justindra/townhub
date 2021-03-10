@@ -19,4 +19,11 @@ export class VendorsApi {
     );
     return res.data;
   }
+
+  async listByUserId() {
+    const res = await this.api.get<TownhubApiResponse<Vendor[]>>(
+      `${VENDORS_ENDPOINT}/users`
+    );
+    return res.data;
+  }
 }

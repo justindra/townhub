@@ -14,7 +14,7 @@ import {
 import { LoadingPage } from '../../components';
 import { AdminPageLayout } from './layout';
 import { Town } from '@townhub-libs/towns';
-import { VendorList } from './vendor-list';
+import { VendorListPage } from './vendor-list';
 
 const AUTH0_DOMAIN = process.env.REACT_APP_AUTH0_DOMAIN || '';
 const AUTH0_CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID || '';
@@ -49,7 +49,7 @@ const AdminRoot: React.FC<{ town: Town }> = ({ town }) => {
       onRedirectCallback={onRedirectCallback}>
       <AdminPageLayout town={town}>
         <Switch>
-          <ProtectedRoute path={path} exact component={VendorList} />
+          <ProtectedRoute path={path} exact component={VendorListPage} />
         </Switch>
       </AdminPageLayout>
     </Auth0Provider>
