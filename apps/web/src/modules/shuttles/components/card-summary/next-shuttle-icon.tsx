@@ -20,6 +20,17 @@ const useNextShuttleIconStyles = makeStyles((theme) => ({
   },
 }));
 
+const calculateMinutes = (nextShuttleMinutes: number | null) => {
+  if (!nextShuttleMinutes) return '';
+  const nextMinutes = DateTime.local()
+    .set({
+      hour: Math.floor(nextShuttleMinutes / 60),
+      minute: nextShuttleMinutes % 60,
+    })
+    .diffNow('minutes').minutes;
+  return Math.round(nextMinutes).toString();
+};
+
 export const NextShuttleIcon: React.FC<{
   nextShuttleMinutes: number | null;
 }> = ({ nextShuttleMinutes }) => {
@@ -40,14 +51,12 @@ export const NextShuttleIcon: React.FC<{
 
   // Update every 10 seconds to make sure it's pseudo-live
   useEffect(() => {
-    const intervalId = setInterval(setTheMinutes, 10 * 1000);
+    const intervalId = setInterval(() => {
+      setMinutes(calculateMinutes(nextShuttleMinutes));
+    }, 10 * 1000);
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
-
-  useEffect(() => {
-    setTheMinutes();
   }, [nextShuttleMinutes]);
 
   // Hide when its more than an hour away, and if its not defined or 0

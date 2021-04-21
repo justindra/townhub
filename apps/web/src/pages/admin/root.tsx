@@ -34,6 +34,7 @@ const AdminProfile: React.FC = () => {
     };
 
     getUserMetadata();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

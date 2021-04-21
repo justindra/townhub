@@ -26,6 +26,11 @@ export const MarkerGenerator: React.FC<{
   const classes = useStyles();
 
   useEffect(() => {
+    const centreOnCurrentGeoLocation = async () => {
+      const coords = await getCurrentGeoLocation();
+      map.setView(coords, 14);
+    };
+
     // If a set of markers was provided, zoom to contain all the markers
     if (markers && markers.length) {
       map.fitBounds(
@@ -35,12 +40,7 @@ export const MarkerGenerator: React.FC<{
     } else {
       centreOnCurrentGeoLocation();
     }
-  }, [markers]);
-
-  const centreOnCurrentGeoLocation = async () => {
-    const coords = await getCurrentGeoLocation();
-    map.setView(coords, 14);
-  };
+  }, [markers, map]);
 
   const handleMarkerClick = (marker: {
     id: string;
