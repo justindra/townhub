@@ -1,0 +1,7 @@
+{
+  "extends": ["react-app"],
+  "rules": {
+    // Remove warnings from eslint about Typescript types/interfaces being unused
+    "@typescript-eslint/no-unused-vars": "off"
+  }
+}
