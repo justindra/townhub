@@ -1,0 +1,27 @@
+{
+  "name": "@townhub-services/files",
+  "private": true,
+  "version": "0.0.0",
+  "main": "dist/index",
+  "devDependencies": {
+    "@babel/preset-env": "7.12.1",
+    "@babel/preset-typescript": "7.12.1",
+    "babel-loader": "8.1.0",
+    "cache-loader": "^4.1.0",
+    "serverless-apigw-binary": "^0.4.4",
+    "serverless-apigwy-binary": "^1.0.0",
+    "serverless-webpack": "^5.3.5",
+    "ts-loader": "^8.0.11",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "dependencies": {
+    "@townhub-libs/core": "^0.0.0",
+    "@townhub-libs/files": "^0.0.0",
+    "sharp": "^0.26.3"
+  },
+  "scripts": {
+    "build:dependencies": "lerna run build --scope @townhub-services/files --include-dependencies",
+    "deploy": "serverless deploy",
+    "remove": "serverless remove"
+  }
+}

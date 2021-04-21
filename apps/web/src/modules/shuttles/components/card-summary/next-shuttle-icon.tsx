@@ -44,10 +44,12 @@ export const NextShuttleIcon: React.FC<{
     return () => {
       clearInterval(intervalId);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     setTheMinutes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextShuttleMinutes]);
 
   // Hide when its more than an hour away, and if its not defined or 0

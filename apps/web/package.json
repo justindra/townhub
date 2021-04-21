@@ -4,11 +4,18 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.2.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
+    "@fortawesome/free-regular-svg-icons": "^5.15.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "@loadable/component": "^5.14.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@townhub-libs/core": "^0.0.0",
     "@townhub-libs/shuttles": "^0.0.0",
+    "@townhub-libs/towns": "^0.0.0",
+    "@townhub-libs/vendors": "^0.0.0",
     "axios": "^0.21.0",
     "google-maps-react": "^2.0.6",
     "leaflet": "^1.7.1",
@@ -29,12 +36,14 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
+    "console": "^0.7.2",
     "eslint-config-react-app": "^6.0.0",
     "react-scripts": "4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:dependencies": "lerna run build --scope @townhub-apps/web --include-dependencies",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

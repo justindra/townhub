@@ -1,0 +1,23 @@
+infraStack: ${self:provider.stage}-townhub-infra-cdk-module-users
+tables:
+  users:
+    name: ${cf:${self:custom.users.infraStack}.UsersTableName}
+    arn: ${cf:${self:custom.users.infraStack}.UsersTableArn}
+tableIamRoles:
+  usersTable:
+    Effect: Allow
+    Action:
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:BatchGetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    Resource:
+      - ${self:custom.users.tables.users.arn}
+      # Also allow all indexes in that table
+      - Fn::Join:
+          - ''
+          - - ${self:custom.users.tables.users.arn}
+            - '/index/*'

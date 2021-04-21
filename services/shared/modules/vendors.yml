@@ -1,0 +1,23 @@
+infraStack: ${self:provider.stage}-townhub-infra-cdk-module-vendor
+tables:
+  vendors:
+    name: ${cf:${self:custom.vendors.infraStack}.VendorsTableName}
+    arn: ${cf:${self:custom.vendors.infraStack}.VendorsTableArn}
+tableIamRoles:
+  vendorsTable:
+    Effect: Allow
+    Action:
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:BatchGetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    Resource:
+      - ${self:custom.vendors.tables.vendors.arn}
+      # Also allow all indexes in that table
+      - Fn::Join:
+          - ''
+          - - ${self:custom.vendors.tables.vendors.arn}
+            - '/index/*'

@@ -1,4 +1,4 @@
-import { BaseEntity } from '@townhub-libs/core';
+import { BaseEntity } from '@townhub-libs/models';
 
 export interface RouteStop {
   stopId: string;

@@ -1,5 +1,5 @@
 import { App, Stack, StackProps } from '@serverless-stack/resources';
-import { TownhubTable } from '../resources/table';
+import { TownhubTable } from '../resources';
 
 /**
  * A Stack containing all the static infrastructure for the shuttle feature
@@ -10,7 +10,7 @@ import { TownhubTable } from '../resources/table';
  * @output SchedulesTableName, SchedulesTableArn
  * @output DailySchedulesTableName, DailySchedulesTableArn
  */
-export default class ShuttlesStack extends Stack {
+export class ShuttlesStack extends Stack {
   constructor(scope: App, id: string, props?: StackProps) {
     super(scope, id, props);
 

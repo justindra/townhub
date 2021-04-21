@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Typography, Link } from '@material-ui/core';
-import { Link as RouterLink } from 'react-router-dom';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ReactGA from 'react-ga';
 
@@ -19,11 +18,6 @@ export const AboutPage: React.FC<{
         display: 'flex',
         flexDirection: 'column',
       }}>
-      <RouterLink to='/shuttles'>
-        <Link variant='body2' color='textPrimary' paragraph component='span'>
-          Back to Shuttles
-        </Link>
-      </RouterLink>
       <div
         style={{
           flex: 1,

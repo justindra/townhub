@@ -5,6 +5,12 @@ interface DatabaseDetail {
   CF_OUTPUT: string;
 }
 
+interface StackConfiguration {
+  /** The name of the stack to search for */
+  name: string;
+  databaseDetails: DatabaseDetail[];
+}
+
 const setEnvVars = (
   details: DatabaseDetail[],
   outputs?: CloudFormation.Outputs
@@ -18,12 +24,11 @@ const setEnvVars = (
   });
 };
 
-interface StackConfiguration {
-  /** The name of the stack to search for */
-  name: string;
-  databaseDetails: DatabaseDetail[];
-}
-
+/**
+ * Set table names as environment variables after reading it from a
+ * CloudFormation Stack
+ * @param config
+ */
 export const setTableNamesFromStack = async (config: StackConfiguration[]) => {
   const CF = new CloudFormation();
 

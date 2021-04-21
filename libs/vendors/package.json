@@ -1,0 +1,25 @@
+{
+  "name": "@townhub-libs/vendors",
+  "version": "0.0.0",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index",
+    "./web": "./dist/web"
+  },
+  "private": true,
+  "dependencies": {
+    "@townhub-libs/core": "^0.0.0"
+  },
+  "devDependencies": {
+    "@townhub-libs/seed-helpers": "^0.0.0",
+    "@types/faker": "^5.1.5",
+    "faker": "^5.1.0"
+  },
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "test": "jest",
+    "seed": "ts-node-script ./seed/index.ts"
+  }
+}

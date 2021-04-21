@@ -63,6 +63,7 @@ export default class ApiGatewayStack extends Stack {
       deployOptions: {
         stageName: scope.stage,
       },
+      binaryMediaTypes: ['image/*']
     });
 
     // Expired Token Gateway Response

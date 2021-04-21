@@ -18,10 +18,20 @@
       "@townhub-libs/auth/*": ["libs/auth/src/*"],
       "@townhub-libs/core": ["libs/core/src"],
       "@townhub-libs/core/*": ["libs/core/src/*"],
+      "@townhub-libs/files": ["libs/files/src"],
+      "@townhub-libs/files/*": ["libs/files/src/*"],
+      "@townhub-libs/models": ["libs/models/src"],
+      "@townhub-libs/models/*": ["libs/models/src/*"],
+      "@townhub-libs/seed-helpers": ["libs/seed-helpers/src"],
+      "@townhub-libs/seed-helpers/*": ["libs/seed-helpers/src/*"],
       "@townhub-libs/shuttles": ["libs/shuttles/src"],
       "@townhub-libs/shuttles/*": ["libs/shuttles/src/*"],
       "@townhub-libs/towns": ["libs/towns/src"],
       "@townhub-libs/towns/*": ["libs/towns/src/*"],
+      "@townhub-libs/users": ["libs/users/src"],
+      "@townhub-libs/users/*": ["libs/users/src/*"],
+      "@townhub-libs/vendors": ["libs/vendors/src"],
+      "@townhub-libs/vendors/*": ["libs/vendors/src/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

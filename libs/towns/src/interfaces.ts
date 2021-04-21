@@ -1,8 +1,16 @@
-import { BaseEntity } from '@townhub-libs/core';
+import { BaseEntity } from '@townhub-libs/models';
 
 interface ModuleSetting {
-  /** The name of the module */
-  name: 'shuttles';
+  /** The name to show it to people */
+  name: string;
+  /** The type of the module */
+  type: 'shuttles' | 'vendors';
+  /** A slug to use in the frontend. This should be unique for the whole module array */
+  slug: string;
+  /** Description of the module instance */
+  description: string;
+  /** The icon to use to show in the app, it should be a font-awesome icon */
+  icon: string | string[];
 }
 
 export interface Town extends BaseEntity {

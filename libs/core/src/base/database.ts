@@ -1,6 +1,7 @@
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
+import { BaseEntity } from '@townhub-libs/models';
 
 const client = new DynamoDB.DocumentClient();
 
@@ -19,14 +20,6 @@ const ddb = {
     client.scan(params).promise(),
   batchGet: (params: DynamoDB.DocumentClient.BatchGetItemInput) =>
     client.batchGet(params).promise(),
-};
-
-export type BaseEntity = {
-  id: string;
-  /** The time this entity was created */
-  createdAt: number;
-  /** The time this entity was updated */
-  updatedAt: number;
 };
 
 export type OmitAuditFields<TItem> = Omit<
