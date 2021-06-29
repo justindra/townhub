@@ -21,21 +21,33 @@ const ddb = {
     client.batchGet(params).promise(),
 };
 
-export type BaseEntity = {
+export type BaseEntity<TEntityType extends string = string> = {
   id: string;
   /** The time this entity was created */
   createdAt: number;
-  /** The time this entity was updated */
+  /** The time this entity was last updated */
   updatedAt: number;
+  /** The user who created this entity */
+  createdBy: string;
+  /** The user who last updated this entity */
+  updatedBy: string;
+  /**
+   * The entity type to use, this is system-wide and allows us to perform
+   * easier checks in the future
+   */
+  entityType: TEntityType;
 };
 
 export type OmitAuditFields<TItem> = Omit<
   TItem,
-  'createdAt' | 'updatedAt' | 'assignedAt'
+  'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
 >;
 export type OmitId<TItem> = Omit<TItem, 'id'>;
+export type OmitEntityType<TItem> = Omit<TItem, 'entityType'>;
 
-export type DatabaseCreateInput<TItem> = OmitAuditFields<OmitId<TItem>>;
+export type DatabaseCreateInput<TItem> = OmitAuditFields<
+  OmitEntityType<OmitId<TItem>>
+>;
 export type DatabaseUpdateInput<TItem> = Partial<TItem>;
 
 export type ArrayElement<A> = A extends readonly (infer T)[] ? T : A;
@@ -52,7 +64,11 @@ export class Database<TItem extends BaseEntity = any> {
   protected ddb: typeof ddb = ddb;
   protected tableName: string = '';
 
-  constructor(tableNameEnvVariable: string) {
+  /**
+   * @param tableNameEnvVariable The ENV Variable of the Table name
+   * @param entityType The entity type this Database handles if any
+   */
+  constructor(tableNameEnvVariable: string, protected entityType: string) {
     const tableName = process.env[tableNameEnvVariable];
     if (!tableName) {
       console.warn(
@@ -80,13 +96,17 @@ export class Database<TItem extends BaseEntity = any> {
   /**
    * Create a new item in the database
    * @param item The item to place in
+   * @param actorId The user performing the create
    */
-  async create(item: DatabaseCreateInput<TItem>) {
-    const newItem: any = {
+  async create(item: DatabaseCreateInput<TItem>, actorId: string) {
+    const newItem: BaseEntity = {
       id: uuidv4(),
       ...item,
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
+      createdBy: actorId,
+      updatedBy: actorId,
+      entityType: this.entityType,
     };
     await this.ddb.put({
       TableName: this.tableName,
@@ -102,13 +122,15 @@ export class Database<TItem extends BaseEntity = any> {
    *
    * @param id The id of the item to update
    * @param item The fields to update
+   * @param actorId The user performing the update
    */
-  async update(id: string, item: DatabaseUpdateInput<TItem>) {
+  async update(id: string, item: DatabaseUpdateInput<TItem>, actorId: string) {
     const oldItem = await this.get(id);
-    const newItem = {
+    const newItem: BaseEntity = {
       ...oldItem,
       ...item,
       updatedAt: new Date().valueOf(),
+      updatedBy: actorId,
     };
 
     await this.ddb.put({
@@ -123,13 +145,14 @@ export class Database<TItem extends BaseEntity = any> {
    * Upsert an item into the database, e.g. create it if it doesn't exist
    * or update an existing one into the database
    * @param item The item to upsert
+   * @param actorId The user performing the upsert
    */
-  async upsert(item: DatabaseUpdateInput<TItem>) {
+  async upsert(item: DatabaseUpdateInput<TItem>, actorId: string) {
     if (!item.id) {
-      return this.create(item as TItem);
+      return this.create(item as TItem, actorId);
     }
 
-    return this.update(item.id, item);
+    return this.update(item.id, item, actorId);
   }
 
   /**
