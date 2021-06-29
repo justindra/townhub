@@ -1,12 +1,20 @@
 {
   "name": "@townhub-infra/cdk",
   "version": "0.0.0",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index",
+    "./constants": "./dist/constants"
+  },
   "private": true,
   "scripts": {
     "test": "sst test",
     "build": "sst build",
     "deploy": "sst deploy",
-    "remove": "sst remove"
+    "remove": "sst remove",
+    "build:constants": "rollup -c ./rollup.config.js"
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.79.0",
@@ -19,7 +27,8 @@
     "@aws-cdk/aws-ssm": "1.79.0",
     "@aws-cdk/core": "1.79.0",
     "@serverless-stack/cli": "0.4.5",
-    "@serverless-stack/resources": "0.4.5"
+    "@serverless-stack/resources": "0.4.5",
+    "@townhub-libs/modules": "0.0.0"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.79.0"

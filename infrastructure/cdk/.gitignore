@@ -8,10 +8,10 @@
 
 # production
 /build
+/dist
 cdk.context.json
 
 # typescript
-*.js
 *.d.ts
 
 # misc

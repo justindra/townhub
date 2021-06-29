@@ -14,14 +14,12 @@
     // Paths to shared libraries
     "baseUrl": ".",
     "paths": {
+      "@townhub-infra/cdk": ["infrastructure/cdk/src"],
       "@townhub-libs/auth": ["libs/auth/src"],
-      "@townhub-libs/auth/*": ["libs/auth/src/*"],
       "@townhub-libs/core": ["libs/core/src"],
-      "@townhub-libs/core/*": ["libs/core/src/*"],
+      "@townhub-libs/modules": ["libs/modules/src"],
       "@townhub-libs/shuttles": ["libs/shuttles/src"],
-      "@townhub-libs/shuttles/*": ["libs/shuttles/src/*"],
-      "@townhub-libs/towns": ["libs/towns/src"],
-      "@townhub-libs/towns/*": ["libs/towns/src/*"],
+      "@townhub-libs/towns": ["libs/towns/src"]
     }
   },
   "exclude": ["node_modules", "dist"]
