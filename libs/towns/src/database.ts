@@ -4,23 +4,20 @@ import {
   Database,
   DatabaseCreateInput,
 } from '@townhub-libs/core';
+import { TOWNS_DATABASE } from './constants';
 import { Town } from './interfaces';
-
-export const TOWNS_DATABASE = {
-  ENV: 'TOWNS_DATABASE_NAME',
-  CF_OUTPUT: 'TownsTableName',
-};
 
 export class TownsDatabase extends Database<Town> {
   constructor() {
-    super(TOWNS_DATABASE.ENV);
+    super(TOWNS_DATABASE.ENV, TOWNS_DATABASE.ENTITY_TYPE);
   }
 
   /**
    * Create a new town. Must have a unique Human Readable ID
    * @param item The town to create
+   * @param actorId The user creating the town
    */
-  async create(item: DatabaseCreateInput<Town>) {
+  async create(item: DatabaseCreateInput<Town>, actorId: string) {
     try {
       const existingTown = await this.getByHid(item.hid);
       if (existingTown)
@@ -34,7 +31,7 @@ export class TownsDatabase extends Database<Town> {
     }
 
     // We are here, so must be able to continue
-    return super.create(item);
+    return super.create(item, actorId);
   }
 
   /**

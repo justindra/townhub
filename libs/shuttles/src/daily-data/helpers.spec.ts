@@ -190,7 +190,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 1',
         createdAt: 0,
+        createdBy: 'system',
+        entityType: 'stop',
         updatedAt: 0,
+        updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -198,7 +201,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 2',
         createdAt: 0,
+        createdBy: 'system',
+        entityType: 'stop',
         updatedAt: 0,
+        updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -206,7 +212,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 3',
         createdAt: 0,
+        createdBy: 'system',
+        entityType: 'stop',
         updatedAt: 0,
+        updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -214,7 +223,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 4',
         createdAt: 0,
+        createdBy: 'system',
+        entityType: 'stop',
         updatedAt: 0,
+        updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
     ];
@@ -235,7 +247,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 1',
           createdAt: 0,
+          createdBy: 'system',
+          entityType: 'stop',
           updatedAt: 0,
+          updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -252,7 +267,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 2',
           createdAt: 0,
+          createdBy: 'system',
+          entityType: 'stop',
           updatedAt: 0,
+          updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -269,7 +287,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 3',
           createdAt: 0,
+          createdBy: 'system',
+          entityType: 'stop',
           updatedAt: 0,
+          updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -286,7 +307,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 4',
           createdAt: 0,
+          createdBy: 'system',
+          entityType: 'stop',
           updatedAt: 0,
+          updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -337,7 +361,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 1',
           createdAt: 0,
+          createdBy: 'system',
           updatedAt: 0,
+          updatedBy: 'system',
+          entityType: 'stop',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -354,7 +381,10 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 3',
           createdAt: 0,
+          createdBy: 'system',
           updatedAt: 0,
+          updatedBy: 'system',
+          entityType: 'stop',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -378,6 +408,9 @@ describe('shuttle helpers', () => {
   describe('convertRoutesToDailyDataRoutes', () => {
     const route: Route = {
       createdAt: 1604903727734,
+      createdBy: 'system',
+      updatedBy: 'system',
+      entityType: 'route',
       stopList: [
         {
           stopId: 'stop-1',
@@ -400,7 +433,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 1',
         createdAt: 0,
+        createdBy: 'system',
         updatedAt: 0,
+        updatedBy: 'system',
+        entityType: 'stop',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -408,7 +444,10 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 2',
         createdAt: 0,
+        createdBy: 'system',
         updatedAt: 0,
+        updatedBy: 'system',
+        entityType: 'stop',
         point: { lat: 1, lng: 1 },
       },
     ];

@@ -1,4 +1,5 @@
 import { BaseEntity } from '@townhub-libs/core';
+import { SHUTTLES_DATABASES } from './constants';
 
 export interface RouteStop {
   stopId: string;
@@ -17,7 +18,8 @@ export interface RouteStopDepartureTime {
 }
 
 /** A shuttle's route */
-export interface Route extends BaseEntity {
+export interface Route
+  extends BaseEntity<typeof SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE> {
   /** The town this belongs to */
   townId: string;
   name: string;
@@ -32,7 +34,8 @@ export interface Point {
 }
 
 /** A shuttle stop location */
-export interface Stop extends BaseEntity {
+export interface Stop
+  extends BaseEntity<typeof SHUTTLES_DATABASES.STOP.ENTITY_TYPE> {
   /** The town this belongs to */
   townId: string;
   name: string;
@@ -84,7 +87,8 @@ export interface ScheduleStartTimes {
   hiddenStops: string[];
 }
 
-export interface Schedule extends BaseEntity {
+export interface Schedule
+  extends BaseEntity<typeof SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE> {
   /** The town this belongs to */
   townId: string;
   /** The route to use */
@@ -107,7 +111,8 @@ export interface DailyDataRoute extends Route {
 }
 
 /** The data for a particular data */
-export interface DailyData extends BaseEntity {
+export interface DailyData
+  extends BaseEntity<typeof SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE> {
   /** The date this data is related to (YYYY-MM-DD) */
   timestamp: string;
   /** The town this data relates to */

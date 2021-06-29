@@ -1,4 +1,9 @@
-import { DEFAULT_TIMEZONE, getDate, getDayDateRange } from '@townhub-libs/core';
+import {
+  DEFAULT_ACTOR_ID,
+  DEFAULT_TIMEZONE,
+  getDate,
+  getDayDateRange,
+} from '@townhub-libs/core';
 import {
   DailySchedulesDatabase,
   RoutesDatabase,
@@ -22,7 +27,8 @@ import {
 export const getDailyData = async (
   townId: string,
   timestamp: number,
-  timezone: string = DEFAULT_TIMEZONE
+  timezone: string = DEFAULT_TIMEZONE,
+  actorId: string = DEFAULT_ACTOR_ID
 ) => {
   const DailySchedules = new DailySchedulesDatabase();
   const Schedules = new SchedulesDatabase();
@@ -68,13 +74,16 @@ export const getDailyData = async (
     middleOfDay
   );
 
-  const newDailySchedule = await DailySchedules.create({
-    townId,
-    timestamp: dateString,
-    stops: stopSchedules,
-    schedules,
-    routes: dailyDataRoutes,
-  });
+  const newDailySchedule = await DailySchedules.create(
+    {
+      townId,
+      timestamp: dateString,
+      stops: stopSchedules,
+      schedules,
+      routes: dailyDataRoutes,
+    },
+    actorId
+  );
 
   return newDailySchedule;
 };

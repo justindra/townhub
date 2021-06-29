@@ -1,40 +1,25 @@
 import { Database } from '@townhub-libs/core';
+import { SHUTTLES_DATABASES } from './constants';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
-
-export const SHUTTLES_DATABASES = {
-  STOP: {
-    ENV: 'SHUTTLE_STOPS_DATABASE_NAME',
-    CF_OUTPUT: 'StopsTableName',
-  },
-  ROUTE: {
-    ENV: 'SHUTTLE_ROUTES_DATABASE_NAME',
-    CF_OUTPUT: 'RoutesTableName',
-  },
-  SCHEDULE: {
-    ENV: 'SHUTTLE_SCHEDULES_DATABASE_NAME',
-    CF_OUTPUT: 'SchedulesTableName',
-  },
-  DAILY_SCHEDULE: {
-    ENV: 'SHUTTLE_DAILY_SCHEDULES_DATABASE_NAME',
-    CF_OUTPUT: 'DailySchedulesTableName',
-  },
-};
 
 export class StopsDatabase extends Database<Stop> {
   constructor() {
-    super(SHUTTLES_DATABASES.STOP.ENV);
+    super(SHUTTLES_DATABASES.STOP.ENV, SHUTTLES_DATABASES.STOP.ENTITY_TYPE);
   }
 }
 
 export class RoutesDatabase extends Database<Route> {
   constructor() {
-    super(SHUTTLES_DATABASES.ROUTE.ENV);
+    super(SHUTTLES_DATABASES.ROUTE.ENV, SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE);
   }
 }
 
 export class SchedulesDatabase extends Database<Schedule> {
   constructor() {
-    super(SHUTTLES_DATABASES.SCHEDULE.ENV);
+    super(
+      SHUTTLES_DATABASES.SCHEDULE.ENV,
+      SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE
+    );
   }
 
   /**
@@ -73,7 +58,10 @@ export class SchedulesDatabase extends Database<Schedule> {
 }
 export class DailySchedulesDatabase extends Database<DailyData> {
   constructor() {
-    super(SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV);
+    super(
+      SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV,
+      SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE
+    );
   }
 
   /**
