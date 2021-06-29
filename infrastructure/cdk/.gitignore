@@ -17,6 +17,10 @@ cdk.context.json
 # misc
 .DS_Store
 
+# sst build output
+.build
+cdk.out
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
