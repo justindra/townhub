@@ -1,4 +1,4 @@
-import { BaseEntity } from '@townhub-libs/core';
+import { ModuleEntity } from '@townhub-libs/modules';
 import { SHUTTLES_DATABASES } from './constants';
 
 export interface RouteStop {
@@ -19,7 +19,7 @@ export interface RouteStopDepartureTime {
 
 /** A shuttle's route */
 export interface Route
-  extends BaseEntity<typeof SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE> {
+  extends ModuleEntity<typeof SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE> {
   /** The town this belongs to */
   townId: string;
   name: string;
@@ -35,9 +35,7 @@ export interface Point {
 
 /** A shuttle stop location */
 export interface Stop
-  extends BaseEntity<typeof SHUTTLES_DATABASES.STOP.ENTITY_TYPE> {
-  /** The town this belongs to */
-  townId: string;
+  extends ModuleEntity<typeof SHUTTLES_DATABASES.STOP.ENTITY_TYPE> {
   name: string;
   description?: string;
   /** The GPS Location of the stop */
@@ -88,9 +86,7 @@ export interface ScheduleStartTimes {
 }
 
 export interface Schedule
-  extends BaseEntity<typeof SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE> {
-  /** The town this belongs to */
-  townId: string;
+  extends ModuleEntity<typeof SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE> {
   /** The route to use */
   routeId: string;
   /** The day the route starts becoming active */
@@ -112,11 +108,9 @@ export interface DailyDataRoute extends Route {
 
 /** The data for a particular data */
 export interface DailyData
-  extends BaseEntity<typeof SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE> {
+  extends ModuleEntity<typeof SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE> {
   /** The date this data is related to (YYYY-MM-DD) */
   timestamp: string;
-  /** The town this data relates to */
-  townId: string;
   /** The list of stops used on that day */
   stops: StopSchedule[];
   /** The list of schedules used on that day */

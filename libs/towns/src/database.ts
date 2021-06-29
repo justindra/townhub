@@ -39,7 +39,7 @@ export class TownsDatabase extends Database<Town> {
    * @param hid The human readable ID to search for
    */
   async getByHid(hid: string) {
-    const res = await this.query({
+    const res = await this.search({
       FilterExpression: '#hid = :hid',
       ExpressionAttributeNames: {
         '#hid': 'hid',

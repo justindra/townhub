@@ -189,11 +189,35 @@ export class Database<TItem extends BaseEntity = any> {
   }
 
   /**
-   * Run a DynamoDB Query to find a list of items
-   * @param query The DDB Query to run
+   * Run a dynamoDB Query to find list of items using Global Secondary Indexes
+   * @param query The query to use
    */
   async query(
-    query: Partial<DynamoDB.DocumentClient.ScanInput>
+    query: Partial<AWS.DynamoDB.DocumentClient.QueryInput> = {}
+  ): Promise<TItem[]> {
+    const res = await this.ddb.query({
+      TableName: this.tableName,
+      ...query,
+    });
+
+    // If there are still some more results to scan through,
+    // we make sure we go through and add those results in too
+    if (res.LastEvaluatedKey) {
+      const nextRes = await this.query({
+        ...query,
+        ExclusiveStartKey: res.LastEvaluatedKey,
+      });
+      return [...(res.Items as TItem[]), ...nextRes];
+    }
+    return res.Items as TItem[];
+  }
+
+  /**
+   * Run a DynamoDB Query to find a list of items using scan
+   * @param query The DDB Query to run
+   */
+  async search(
+    query: Partial<DynamoDB.DocumentClient.ScanInput> = {}
   ): Promise<TItem[]> {
     const res = await this.ddb.scan({
       TableName: this.tableName,
@@ -201,6 +225,15 @@ export class Database<TItem extends BaseEntity = any> {
       ...query,
     });
 
+    // If there are still some more results to scan through,
+    // we make sure we go through and add those results in too
+    if (res.LastEvaluatedKey) {
+      const nextRes = await this.search({
+        ...query,
+        ExclusiveStartKey: res.LastEvaluatedKey,
+      });
+      return [...(res.Items as TItem[]), ...nextRes];
+    }
     return res.Items as TItem[];
   }
 
@@ -208,11 +241,6 @@ export class Database<TItem extends BaseEntity = any> {
    * List all existing items in the database
    */
   async list(): Promise<TItem[]> {
-    const res = await this.ddb.scan({
-      TableName: this.tableName,
-      Select: 'ALL_ATTRIBUTES',
-    });
-
-    return res.Items as TItem[];
+    return this.search();
   }
 }

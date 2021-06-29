@@ -1,0 +1,17 @@
+{
+  "name": "@townhub-libs/modules",
+  "version": "0.0.0",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
+  "private": true,
+  "dependencies": {
+    "@townhub-libs/core": "^0.0.0",
+    "@townhub-infra/cdk": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js",
+    "test": "jest"
+  }
+}
