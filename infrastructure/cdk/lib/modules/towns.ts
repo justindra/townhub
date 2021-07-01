@@ -1,7 +1,7 @@
 import { AttributeType } from '@aws-cdk/aws-dynamodb';
+import { DEFAULT_SECONDARY_INDEXES } from '@townhub-libs/constants';
 import { App, Stack, StackProps } from '@serverless-stack/resources';
 import { TownhubTable } from '../resources/table';
-import { DEFAULT_SECONDARY_INDEXES } from '../../src/constants';
 
 /**
  * A Stack containing all the static infrastructure for the towns feature
