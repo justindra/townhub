@@ -19,10 +19,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Use Node.js 14
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '14'
       # Cache Yarn packages to reduce install time
       - uses: c-hive/gha-yarn-cache@v2
       # Run install and test
