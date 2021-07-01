@@ -17,6 +17,7 @@ import {
   generateStopSchedulesForDate,
   getStopIdsFromRouteList,
 } from './helpers';
+import { Schedule } from '../interfaces';
 
 /**
  * Get a single day's worth of data
@@ -52,7 +53,7 @@ export const getDailyData = async (
   // Get all schedules for today (filtered by the day-of-week it is in operation)
   const schedules = (
     await Schedules.getByTimestamp(startOfDayValue, endOfDayValue, townId)
-  ).filter((schedule) => {
+  ).filter((schedule: Schedule) => {
     return schedule.startTimes.filter(
       filterStartTimesByDayOfWeek(middleOfDay.weekday)
     ).length;
