@@ -51,7 +51,7 @@ export const getDailyData = async (
   if (availableDailySchedules.length) return availableDailySchedules[0];
 
   // Get all schedules for today (filtered by the day-of-week it is in operation)
-  const schedules = (
+  const schedules: Schedule[] = (
     await Schedules.getByTimestamp(startOfDayValue, endOfDayValue, townId)
   ).filter((schedule: Schedule) => {
     return schedule.startTimes.filter(
