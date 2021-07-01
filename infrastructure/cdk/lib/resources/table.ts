@@ -27,6 +27,8 @@ export interface TownhubTableProps {
  * @output TableStreamArn (optional)
  */
 export class TownhubTable {
+  ddbTable: Table;
+
   constructor(
     scope: Construct,
     id: string,
@@ -39,7 +41,7 @@ export class TownhubTable {
     const DEFAULT_BILLING_MODE: BillingMode = BillingMode.PAY_PER_REQUEST;
 
     // Create the table
-    const table = new Table(scope, id, {
+    this.ddbTable = new Table(scope, id, {
       partitionKey: DEFAULT_PARTITION_KEY,
       billingMode: DEFAULT_BILLING_MODE,
       // Retain on prod, otherwise destroy
@@ -51,13 +53,12 @@ export class TownhubTable {
     });
 
     // Cloudformation Outputs
-    new CfnOutput(scope, `${id}TableName`, { value: table.tableName });
-    new CfnOutput(scope, `${id}TableArn`, { value: table.tableArn });
+    new CfnOutput(scope, `${id}TableName`, { value: this.ddbTable.tableName });
+    new CfnOutput(scope, `${id}TableArn`, { value: this.ddbTable.tableArn });
     if (outputStream) {
       new CfnOutput(scope, `${id}TableStreamArn`, {
-        value: table.tableStreamArn ?? '',
+        value: this.ddbTable.tableStreamArn ?? '',
       });
     }
-    return table;
   }
 }

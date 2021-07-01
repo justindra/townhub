@@ -15,8 +15,8 @@ export default function main(app: App): void {
     rootDomainName,
   });
 
-  new ShuttlesStack(app, 'module-shuttle');
   new TownsStack(app, 'module-town');
+  new ShuttlesStack(app, 'module-shuttle');
 
   // Setup subdomains for each town in the system
   // TODO: Eventually, might move this into a Lambda function that adds a new

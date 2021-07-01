@@ -1,40 +1,25 @@
-import { Database } from '@townhub-libs/core';
+import { BaseModuleDatabase } from '@townhub-libs/modules';
+import { SHUTTLES_DATABASES } from './constants';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
 
-export const SHUTTLES_DATABASES = {
-  STOP: {
-    ENV: 'SHUTTLE_STOPS_DATABASE_NAME',
-    CF_OUTPUT: 'StopsTableName',
-  },
-  ROUTE: {
-    ENV: 'SHUTTLE_ROUTES_DATABASE_NAME',
-    CF_OUTPUT: 'RoutesTableName',
-  },
-  SCHEDULE: {
-    ENV: 'SHUTTLE_SCHEDULES_DATABASE_NAME',
-    CF_OUTPUT: 'SchedulesTableName',
-  },
-  DAILY_SCHEDULE: {
-    ENV: 'SHUTTLE_DAILY_SCHEDULES_DATABASE_NAME',
-    CF_OUTPUT: 'DailySchedulesTableName',
-  },
-};
-
-export class StopsDatabase extends Database<Stop> {
+export class StopsDatabase extends BaseModuleDatabase<Stop> {
   constructor() {
-    super(SHUTTLES_DATABASES.STOP.ENV);
+    super(SHUTTLES_DATABASES.STOP.ENV, SHUTTLES_DATABASES.STOP.ENTITY_TYPE);
   }
 }
 
-export class RoutesDatabase extends Database<Route> {
+export class RoutesDatabase extends BaseModuleDatabase<Route> {
   constructor() {
-    super(SHUTTLES_DATABASES.ROUTE.ENV);
+    super(SHUTTLES_DATABASES.ROUTE.ENV, SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE);
   }
 }
 
-export class SchedulesDatabase extends Database<Schedule> {
+export class SchedulesDatabase extends BaseModuleDatabase<Schedule> {
   constructor() {
-    super(SHUTTLES_DATABASES.SCHEDULE.ENV);
+    super(
+      SHUTTLES_DATABASES.SCHEDULE.ENV,
+      SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE
+    );
   }
 
   /**
@@ -55,7 +40,7 @@ export class SchedulesDatabase extends Database<Schedule> {
     if (townId.length) {
       expressions.push('#townId = :townId');
     }
-    return this.query({
+    return this.search({
       FilterExpression: expressions.join(' AND '),
       ExpressionAttributeNames: {
         '#startDate': 'startDate',
@@ -71,9 +56,12 @@ export class SchedulesDatabase extends Database<Schedule> {
     });
   }
 }
-export class DailySchedulesDatabase extends Database<DailyData> {
+export class DailySchedulesDatabase extends BaseModuleDatabase<DailyData> {
   constructor() {
-    super(SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV);
+    super(
+      SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV,
+      SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE
+    );
   }
 
   /**
@@ -86,7 +74,7 @@ export class DailySchedulesDatabase extends Database<DailyData> {
     if (townId.length) {
       expressions.push('#townId = :townId');
     }
-    return this.query({
+    return this.search({
       FilterExpression: expressions.join(' AND '),
       ExpressionAttributeNames: {
         '#timestamp': 'timestamp',

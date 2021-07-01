@@ -1,28 +1,33 @@
 {
   "name": "@townhub-infra/cdk",
   "version": "0.0.0",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
   "private": true,
   "scripts": {
     "test": "sst test",
     "build": "sst build",
     "deploy": "sst deploy",
+    "diff": "sst diff",
     "remove": "sst remove"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.79.0",
-    "@aws-cdk/aws-cloudfront": "1.79.0",
-    "@aws-cdk/aws-dynamodb": "1.79.0",
-    "@aws-cdk/aws-iam": "1.79.0",
-    "@aws-cdk/aws-route53": "1.79.0",
-    "@aws-cdk/aws-route53-targets": "1.79.0",
-    "@aws-cdk/aws-s3": "1.79.0",
-    "@aws-cdk/aws-ssm": "1.79.0",
-    "@aws-cdk/core": "1.79.0",
-    "@serverless-stack/cli": "0.4.5",
-    "@serverless-stack/resources": "0.4.5"
+    "@aws-cdk/aws-apigateway": "1.105.0",
+    "@aws-cdk/aws-cloudfront": "1.105.0",
+    "@aws-cdk/aws-dynamodb": "1.105.0",
+    "@aws-cdk/aws-iam": "1.105.0",
+    "@aws-cdk/aws-route53": "1.105.0",
+    "@aws-cdk/aws-route53-targets": "1.105.0",
+    "@aws-cdk/aws-s3": "1.105.0",
+    "@aws-cdk/aws-ssm": "1.105.0",
+    "@aws-cdk/core": "1.105.0",
+    "@townhub-libs/constants": "0.0.0",
+    "@serverless-stack/cli": "0.30.0",
+    "@serverless-stack/resources": "0.30.0"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.79.0"
+    "@aws-cdk/assert": "1.105.0"
   },
   "jest": {
     "testPathIgnorePatterns": [

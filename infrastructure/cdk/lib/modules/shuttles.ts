@@ -1,5 +1,5 @@
 import { App, Stack, StackProps } from '@serverless-stack/resources';
-import { TownhubTable } from '../resources/table';
+import { TownhubModuleTable } from '../resources/module-table';
 
 /**
  * A Stack containing all the static infrastructure for the shuttle feature
@@ -15,9 +15,9 @@ export default class ShuttlesStack extends Stack {
     super(scope, id, props);
 
     // Create the different tables for this module
-    new TownhubTable(this, 'Stops', { stage: scope.stage });
-    new TownhubTable(this, 'Routes', { stage: scope.stage });
-    new TownhubTable(this, 'Schedules', { stage: scope.stage });
-    new TownhubTable(this, 'DailySchedules', { stage: scope.stage });
+    new TownhubModuleTable(this, 'Stops', { stage: scope.stage });
+    new TownhubModuleTable(this, 'Routes', { stage: scope.stage });
+    new TownhubModuleTable(this, 'Schedules', { stage: scope.stage });
+    new TownhubModuleTable(this, 'DailySchedules', { stage: scope.stage });
   }
 }

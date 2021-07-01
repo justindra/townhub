@@ -1,4 +1,9 @@
-import { DEFAULT_TIMEZONE, getDate, getDayDateRange } from '@townhub-libs/core';
+import {
+  DEFAULT_ACTOR_ID,
+  DEFAULT_TIMEZONE,
+  getDate,
+  getDayDateRange,
+} from '@townhub-libs/core';
 import {
   DailySchedulesDatabase,
   RoutesDatabase,
@@ -12,6 +17,7 @@ import {
   generateStopSchedulesForDate,
   getStopIdsFromRouteList,
 } from './helpers';
+import { Schedule } from '../interfaces';
 
 /**
  * Get a single day's worth of data
@@ -22,7 +28,8 @@ import {
 export const getDailyData = async (
   townId: string,
   timestamp: number,
-  timezone: string = DEFAULT_TIMEZONE
+  timezone: string = DEFAULT_TIMEZONE,
+  actorId: string = DEFAULT_ACTOR_ID
 ) => {
   const DailySchedules = new DailySchedulesDatabase();
   const Schedules = new SchedulesDatabase();
@@ -44,9 +51,9 @@ export const getDailyData = async (
   if (availableDailySchedules.length) return availableDailySchedules[0];
 
   // Get all schedules for today (filtered by the day-of-week it is in operation)
-  const schedules = (
+  const schedules: Schedule[] = (
     await Schedules.getByTimestamp(startOfDayValue, endOfDayValue, townId)
-  ).filter((schedule) => {
+  ).filter((schedule: Schedule) => {
     return schedule.startTimes.filter(
       filterStartTimesByDayOfWeek(middleOfDay.weekday)
     ).length;
@@ -68,13 +75,19 @@ export const getDailyData = async (
     middleOfDay
   );
 
-  const newDailySchedule = await DailySchedules.create({
-    townId,
-    timestamp: dateString,
-    stops: stopSchedules,
-    schedules,
-    routes: dailyDataRoutes,
-  });
+  const newDailySchedule = await DailySchedules.create(
+    {
+      townId,
+      // TODO: Update this to get a proper moduleId once we have
+      // it saved
+      moduleId: 'test',
+      timestamp: dateString,
+      stops: stopSchedules,
+      schedules,
+      routes: dailyDataRoutes,
+    },
+    actorId
+  );
 
   return newDailySchedule;
 };

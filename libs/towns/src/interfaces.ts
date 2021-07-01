@@ -1,11 +1,12 @@
 import { BaseEntity } from '@townhub-libs/core';
+import { TOWNS_DATABASE } from './constants';
 
 interface ModuleSetting {
   /** The name of the module */
   name: 'shuttles';
 }
 
-export interface Town extends BaseEntity {
+export interface Town extends BaseEntity<typeof TOWNS_DATABASE.ENTITY_TYPE> {
   /** A human-readable ID, can be used as a slug too */
   hid: string;
   /** The name of the town */
