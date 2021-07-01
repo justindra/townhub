@@ -16,6 +16,7 @@
     "paths": {
       "@townhub-infra/cdk": ["infrastructure/cdk/src"],
       "@townhub-libs/auth": ["libs/auth/src"],
+      "@townhub-libs/constants": ["libs/constants/src"],
       "@townhub-libs/core": ["libs/core/src"],
       "@townhub-libs/modules": ["libs/modules/src"],
       "@townhub-libs/shuttles": ["libs/shuttles/src"],

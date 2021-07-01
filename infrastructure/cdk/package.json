@@ -4,18 +4,13 @@
   "main": "dist/index",
   "module": "dist/index.es",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": "./dist/index",
-    "./constants": "./dist/constants"
-  },
   "private": true,
   "scripts": {
     "test": "sst test",
     "build": "sst build",
     "deploy": "sst deploy",
     "diff": "sst diff",
-    "remove": "sst remove",
-    "build:constants": "rollup -c ./rollup.config.js"
+    "remove": "sst remove"
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.105.0",
@@ -27,9 +22,9 @@
     "@aws-cdk/aws-s3": "1.105.0",
     "@aws-cdk/aws-ssm": "1.105.0",
     "@aws-cdk/core": "1.105.0",
+    "@townhub-libs/constants": "0.0.0",
     "@serverless-stack/cli": "0.30.0",
-    "@serverless-stack/resources": "0.30.0",
-    "@townhub-libs/modules": "0.0.0"
+    "@serverless-stack/resources": "0.30.0"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.105.0"

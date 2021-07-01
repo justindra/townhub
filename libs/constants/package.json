@@ -1,14 +1,11 @@
 {
-  "name": "@townhub-libs/modules",
+  "name": "@townhub-libs/constants",
   "version": "0.0.0",
   "main": "dist/index",
   "module": "dist/index.es",
   "types": "dist/index.d.ts",
   "private": true,
-  "dependencies": {
-    "@townhub-libs/constants": "^0.0.0",
-    "@townhub-libs/core": "^0.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "build": "rollup -c ./rollup.config.js",

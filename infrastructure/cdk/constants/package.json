@@ -1,5 +1,0 @@
-{
-  "sideEffects": false,
-  "module": "../dist/constants.es.js",
-  "typings": "../dist/constants.d.ts"
-}

@@ -1,5 +1,5 @@
+import { DEFAULT_SECONDARY_INDEXES } from '@townhub-libs/constants';
 import { Database } from '@townhub-libs/core';
-import { DEFAULT_SECONDARY_INDEXES } from '@townhub-infra/cdk/constants';
 import { MODULES_DATABASE } from './constants';
 import { Module, ModuleEntity } from './interfaces';
 
