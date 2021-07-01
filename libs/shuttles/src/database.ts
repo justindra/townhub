@@ -1,4 +1,3 @@
-import { Database } from '@townhub-libs/core';
 import { BaseModuleDatabase } from '@townhub-libs/modules';
 import { SHUTTLES_DATABASES } from './constants';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
