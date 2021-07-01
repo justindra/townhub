@@ -77,6 +77,8 @@ export const getDailyData = async (
   const newDailySchedule = await DailySchedules.create(
     {
       townId,
+      // TODO: Update this to get a proper moduleId once we have
+      // it saved
       moduleId: 'test',
       timestamp: dateString,
       stops: stopSchedules,
