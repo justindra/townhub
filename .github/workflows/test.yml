@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: '12'
       # Cache Yarn packages to reduce install time
-      # - uses: c-hive/gha-yarn-cache@v1
+      - uses: c-hive/gha-yarn-cache@v2
       # Run install and test
       - run: yarn install
       - run: yarn run build:libs
