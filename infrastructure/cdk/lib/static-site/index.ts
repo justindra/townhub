@@ -1,15 +1,18 @@
-import { Stack, StackProps, App } from '@serverless-stack/resources';
-import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
-import { CfnOutput, Duration, RemovalPolicy } from '@aws-cdk/core';
-import { Bucket } from '@aws-cdk/aws-s3';
+import {
+  DnsValidatedCertificate,
+  CertificateValidation,
+} from '@aws-cdk/aws-certificatemanager';
 import {
   CloudFrontWebDistribution,
   OriginAccessIdentity,
 } from '@aws-cdk/aws-cloudfront';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
+import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
+import { Bucket } from '@aws-cdk/aws-s3';
+import { CfnOutput, Duration, RemovalPolicy } from '@aws-cdk/core';
+import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { getDomainNameList } from './helpers';
-import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -40,26 +43,26 @@ export default class StaticSiteStack extends Stack {
       domainName: rootDomainName,
     });
 
-    // Get the SSL Certificate ARN (see @townhub/infra-ssl for details)
-    // StringParameter.valueFromLookup seems to add a newline character at the end,
-    // so we should remove it before using.
-    // https://github.com/aws/aws-cdk/issues/10446
-    const sslCertificateArn = StringParameter.valueFromLookup(
-      this,
-      '/ssl-certs/global'
-    ).replace(/\r?\n|\r/g, '');
-
-    // Create the bucket
-    const bucket = new Bucket(this, 'StaticSiteBucket', {
-      removalPolicy: RemovalPolicy.DESTROY,
-    });
-
     // Define the custom domain to use for the api
     const hostingDomainNames = getDomainNameList(
       scope.stage,
       rootDomainName,
       subdomains
     );
+
+    // Create a new SSL Certificate for the Api Domain
+    const sslCertificate = new DnsValidatedCertificate(this, 'sslCertificate', {
+      domainName: rootDomainName,
+      hostedZone,
+      region: 'us-east-1',
+      validation: CertificateValidation.fromDns(hostedZone),
+      subjectAlternativeNames: hostingDomainNames,
+    });
+
+    // Create the bucket
+    const bucket = new Bucket(this, 'StaticSiteBucket', {
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
 
     // Create the CloudFront OAI
     const oai = new OriginAccessIdentity(this, 'OAI', {
@@ -104,7 +107,7 @@ export default class StaticSiteStack extends Stack {
           },
         ],
         aliasConfiguration: {
-          acmCertRef: sslCertificateArn,
+          acmCertRef: sslCertificate.certificateArn,
           names: hostingDomainNames,
         },
       }

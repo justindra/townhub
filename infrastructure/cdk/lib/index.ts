@@ -22,8 +22,8 @@ export default function main(app: App): void {
   // TODO: Eventually, might move this into a Lambda function that adds a new
   // subdomain every time we create a new town in the database, or have a
   // script that polls DDB for the latest list before running this.
-  new StaticSiteStack(app, 'StaticAppPageStack', {
-    rootDomainName,
-    subdomains: ['fernie', 'revelstoke'],
-  });
+  // new StaticSiteStack(app, 'StaticAppPageStack', {
+  //   rootDomainName,
+  //   subdomains: ['fernie', 'revelstoke'],
+  // });
 }
