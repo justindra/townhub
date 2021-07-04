@@ -3,7 +3,7 @@
  */
 export class UnauthenticatedException extends Error {
   statusCode = 401;
-  constructor(message: string = 'User is not authenticated') {
+  constructor(message = 'User is not authenticated') {
     super(message);
     this.name = 'UnauthenticatedException';
     // Set the prototype explicitly.
@@ -18,7 +18,7 @@ export class UnauthenticatedException extends Error {
  */
 export class UnauthorizedException extends UnauthenticatedException {
   statusCode = 403;
-  constructor(message: string = 'User does not have the correct role') {
+  constructor(message = 'User does not have the correct role') {
     super(message);
     this.name = 'UnauthorizedException';
     // Set the prototype explicitly.

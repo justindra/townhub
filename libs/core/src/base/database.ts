@@ -62,7 +62,7 @@ export type DatabaseQueryInput<TItem> = {
  */
 export class Database<TItem extends BaseEntity = any> {
   protected ddb: typeof ddb = ddb;
-  protected tableName: string = '';
+  protected tableName = '';
 
   /**
    * @param tableNameEnvVariable The ENV Variable of the Table name

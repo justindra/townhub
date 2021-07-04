@@ -35,6 +35,10 @@ export default class MyStack extends sst.Stack {
 
     new CrudEndpoints(this, api, 'modules', 'moduleId');
 
+    api.addRoutes(this, {
+      'GET /modules/{moduleId}/shuttles/{shuttleId}': 'src/test.main',
+    });
+
     // Show the endpoint in the output
     this.addOutputs({
       ApiEndpoint: api.url,

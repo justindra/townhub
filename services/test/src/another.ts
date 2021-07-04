@@ -11,7 +11,7 @@ export const main = ApiGatewayWrapper(async (details, event, context) => {
     data: {
       details,
       event,
-      context
+      context,
     },
   };
 });
