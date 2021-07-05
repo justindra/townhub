@@ -6,8 +6,8 @@
     "test": "sst test",
     "start": "sst start",
     "build": "sst build",
-    "build:dependencies": "lerna run build --scope @townhub/services --include-dependencies",
     "deploy": "sst deploy",
+    "diff": "sst diff",
     "remove": "sst remove"
   },
   "devDependencies": {

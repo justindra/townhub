@@ -6,7 +6,7 @@ import { ApiGatewayWrapper } from '@townhub-libs/core';
  */
 export const main = ApiGatewayWrapper(async (details, event, context) => {
   return {
-    statusCode: 200,
+    statusCode: 20,
     message: 'Go Serverless v1.20! Your function executed successfully!',
     data: {
       details,
