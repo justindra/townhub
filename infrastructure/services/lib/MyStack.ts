@@ -31,12 +31,18 @@ export default class MyStack extends sst.Stack {
       routes: {
         'GET /': 'src/lambda.handler',
       },
+      defaultFunctionProps: {
+        bundle: { nodeModules: ['@sentry/node'] },
+      },
     });
 
     new CrudEndpoints(this, api, 'modules', 'moduleId');
 
     api.addRoutes(this, {
-      'GET /modules/{moduleId}/shuttles/{shuttleId}': 'src/test.main',
+      'GET /modules/{moduleId}/shuttles/{shuttleId}': {
+        handler: 'src/test.main',
+        functionName: 'test',
+      },
     });
 
     // Show the endpoint in the output
