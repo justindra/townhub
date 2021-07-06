@@ -1,6 +1,11 @@
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
+import {
+  BaseEntity,
+  DatabaseCreateInput,
+  DatabaseUpdateInput,
+} from './interfaces';
 
 const client = new DynamoDB.DocumentClient();
 
@@ -19,41 +24,6 @@ const ddb = {
     client.scan(params).promise(),
   batchGet: (params: DynamoDB.DocumentClient.BatchGetItemInput) =>
     client.batchGet(params).promise(),
-};
-
-export type BaseEntity<TEntityType extends string = string> = {
-  id: string;
-  /** The time this entity was created */
-  createdAt: number;
-  /** The time this entity was last updated */
-  updatedAt: number;
-  /** The user who created this entity */
-  createdBy: string;
-  /** The user who last updated this entity */
-  updatedBy: string;
-  /**
-   * The entity type to use, this is system-wide and allows us to perform
-   * easier checks in the future
-   */
-  entityType: TEntityType;
-};
-
-export type OmitAuditFields<TItem> = Omit<
-  TItem,
-  'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
->;
-export type OmitId<TItem> = Omit<TItem, 'id'>;
-export type OmitEntityType<TItem> = Omit<TItem, 'entityType'>;
-
-export type DatabaseCreateInput<TItem> = OmitAuditFields<
-  OmitEntityType<OmitId<TItem>>
->;
-export type DatabaseUpdateInput<TItem> = Partial<TItem>;
-
-export type ArrayElement<A> = A extends readonly (infer T)[] ? T : A;
-
-export type DatabaseQueryInput<TItem> = {
-  [key in keyof TItem]: ArrayElement<TItem[key]>;
 };
 
 /**
@@ -100,13 +70,12 @@ export class Database<TItem extends BaseEntity = any> {
    */
   async create(item: DatabaseCreateInput<TItem>, actorId: string) {
     const newItem: BaseEntity = {
-      id: uuidv4(),
+      id: `th-${this.entityType}|${uuidv4()}`,
       ...item,
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
       createdBy: actorId,
       updatedBy: actorId,
-      entityType: this.entityType,
     };
     await this.ddb.put({
       TableName: this.tableName,
