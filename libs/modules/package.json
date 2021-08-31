@@ -7,7 +7,8 @@
   "private": true,
   "dependencies": {
     "@townhub-libs/constants": "^0.0.0",
-    "@townhub-libs/core": "^0.0.0"
+    "@townhub-libs/core": "^0.0.0",
+    "@townhub-libs/towns": "^0.0.0"
   },
   "devDependencies": {},
   "scripts": {
