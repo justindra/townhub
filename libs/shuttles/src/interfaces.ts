@@ -18,8 +18,7 @@ export interface RouteStopDepartureTime {
 }
 
 /** A shuttle's route */
-export interface Route
-  extends ModuleEntity<typeof SHUTTLES_DATABASES.ROUTE.ENTITY_TYPE> {
+export interface Route extends ModuleEntity {
   /** The town this belongs to */
   townId: string;
   name: string;
@@ -34,8 +33,7 @@ export interface Point {
 }
 
 /** A shuttle stop location */
-export interface Stop
-  extends ModuleEntity<typeof SHUTTLES_DATABASES.STOP.ENTITY_TYPE> {
+export interface Stop extends ModuleEntity {
   name: string;
   description?: string;
   /** The GPS Location of the stop */
@@ -85,8 +83,7 @@ export interface ScheduleStartTimes {
   hiddenStops: string[];
 }
 
-export interface Schedule
-  extends ModuleEntity<typeof SHUTTLES_DATABASES.SCHEDULE.ENTITY_TYPE> {
+export interface Schedule extends ModuleEntity {
   /** The route to use */
   routeId: string;
   /** The day the route starts becoming active */
@@ -107,8 +104,7 @@ export interface DailyDataRoute extends Route {
 }
 
 /** The data for a particular data */
-export interface DailyData
-  extends ModuleEntity<typeof SHUTTLES_DATABASES.DAILY_SCHEDULE.ENTITY_TYPE> {
+export interface DailyData extends ModuleEntity {
   /** The date this data is related to (YYYY-MM-DD) */
   timestamp: string;
   /** The list of stops used on that day */
