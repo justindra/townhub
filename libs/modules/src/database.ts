@@ -27,7 +27,8 @@ export class ModulesDatabase extends Database<Module> {
 }
 
 export class BaseModuleDatabase<
-  TItem extends ModuleEntity = any
+  TItem extends ModuleEntity<TEntityType> = any,
+  TEntityType extends string = string
 > extends Database<TItem> {
   /**
    * List all items by the townId

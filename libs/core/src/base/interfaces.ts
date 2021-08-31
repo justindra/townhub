@@ -20,15 +20,16 @@
  *   removing the need to even double check if there is a duplicate or not. The
  *   likelihood of it being non-unique is very small.
  */
-export type EntityId = `th-${string}|${string}`;
+export type EntityId<TEntityType extends string = string> =
+  `th-${TEntityType}|${string}`;
 
 /**
  * What every entity should look like inside of the Townhub system. This allows
  * us to have basic audit fields and have it tracked without the need for a
  * more complex system which we can add later on in the future.
  */
-export type BaseEntity = {
-  id: EntityId;
+export type BaseEntity<TEntityType extends string> = {
+  id: EntityId<TEntityType>;
   /** The time this entity was created */
   createdAt: number;
   /** The time this entity was last updated */

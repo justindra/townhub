@@ -186,57 +186,52 @@ describe('shuttle helpers', () => {
     ];
     const stops: Stop[] = [
       {
-        id: 'stop-1',
+        id: 'th-stop|stop-1',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 1',
         createdAt: 0,
         createdBy: 'system',
-        entityType: 'stop',
         updatedAt: 0,
         updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
-        id: 'stop-2',
+        id: 'th-stop|stop-2',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 2',
         createdAt: 0,
         createdBy: 'system',
-        entityType: 'stop',
         updatedAt: 0,
         updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
-        id: 'stop-3',
+        id: 'th-stop|stop-3',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 3',
         createdAt: 0,
         createdBy: 'system',
-        entityType: 'stop',
         updatedAt: 0,
         updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
-        id: 'stop-4',
+        id: 'th-stop|stop-4',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 4',
         createdAt: 0,
         createdBy: 'system',
-        entityType: 'stop',
         updatedAt: 0,
         updatedBy: 'system',
         point: { lat: 0, lng: 0 },
       },
     ];
-    const timestamp = DateTime.fromMillis(1602530054192).setZone(
-      DEFAULT_TIMEZONE
-    );
+    const timestamp =
+      DateTime.fromMillis(1602530054192).setZone(DEFAULT_TIMEZONE);
     it('should return correct set of stop schedules', () => {
       const result = generateStopSchedulesForDate(
         schedules,
@@ -247,13 +242,12 @@ describe('shuttle helpers', () => {
 
       const expected: StopSchedule[] = [
         {
-          id: 'stop-1',
+          id: 'th-stop|stop-1',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 1',
           createdAt: 0,
           createdBy: 'system',
-          entityType: 'stop',
           updatedAt: 0,
           updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
@@ -268,13 +262,12 @@ describe('shuttle helpers', () => {
           point: { lat: 0, lng: 0 },
         },
         {
-          id: 'stop-2',
+          id: 'th-stop|stop-2',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 2',
           createdAt: 0,
           createdBy: 'system',
-          entityType: 'stop',
           updatedAt: 0,
           updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
@@ -289,13 +282,12 @@ describe('shuttle helpers', () => {
           point: { lat: 0, lng: 0 },
         },
         {
-          id: 'stop-3',
+          id: 'th-stop|stop-3',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 3',
           createdAt: 0,
           createdBy: 'system',
-          entityType: 'stop',
           updatedAt: 0,
           updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
@@ -310,13 +302,12 @@ describe('shuttle helpers', () => {
           point: { lat: 0, lng: 0 },
         },
         {
-          id: 'stop-4',
+          id: 'th-stop|stop-4',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 4',
           createdAt: 0,
           createdBy: 'system',
-          entityType: 'stop',
           updatedAt: 0,
           updatedBy: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
@@ -365,7 +356,7 @@ describe('shuttle helpers', () => {
 
       const expected: StopSchedule[] = [
         {
-          id: 'stop-1',
+          id: 'th-stop|stop-1',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 1',
@@ -373,7 +364,6 @@ describe('shuttle helpers', () => {
           createdBy: 'system',
           updatedAt: 0,
           updatedBy: 'system',
-          entityType: 'stop',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -386,7 +376,7 @@ describe('shuttle helpers', () => {
           point: { lat: 0, lng: 0 },
         },
         {
-          id: 'stop-3',
+          id: 'th-stop|stop-3',
           townId: 'town-1',
           moduleId: 'transit-1',
           name: 'Stop 3',
@@ -394,7 +384,6 @@ describe('shuttle helpers', () => {
           createdBy: 'system',
           updatedAt: 0,
           updatedBy: 'system',
-          entityType: 'stop',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -420,14 +409,13 @@ describe('shuttle helpers', () => {
       createdAt: 1604903727734,
       createdBy: 'system',
       updatedBy: 'system',
-      entityType: 'route',
       stopList: [
         {
-          stopId: 'stop-1',
+          stopId: 'th-stop|stop-1',
           legMinutes: 0,
         },
         {
-          stopId: 'stop-2',
+          stopId: 'th-stop|stop-2',
           legMinutes: 3,
         },
       ],
@@ -435,12 +423,12 @@ describe('shuttle helpers', () => {
       description: 'The morning route',
       townId: '1eefd261-6b35-4f2a-8e44-fffec17b2f1a',
       moduleId: 'transit-1',
-      id: '60ec0346-8f98-4451-9571-6a9ff17430c9',
+      id: 'th-route|60ec0346-8f98-4451-9571-6a9ff17430c9',
       updatedAt: 1604903727734,
     };
     const stops: Stop[] = [
       {
-        id: 'stop-1',
+        id: 'th-stop|stop-1',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 1',
@@ -448,11 +436,10 @@ describe('shuttle helpers', () => {
         createdBy: 'system',
         updatedAt: 0,
         updatedBy: 'system',
-        entityType: 'stop',
         point: { lat: 0, lng: 0 },
       },
       {
-        id: 'stop-2',
+        id: 'th-stop|stop-2',
         townId: 'town-1',
         moduleId: 'transit-1',
         name: 'Stop 2',
@@ -460,7 +447,6 @@ describe('shuttle helpers', () => {
         createdBy: 'system',
         updatedAt: 0,
         updatedBy: 'system',
-        entityType: 'stop',
         point: { lat: 1, lng: 1 },
       },
     ];

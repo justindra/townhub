@@ -30,7 +30,10 @@ const ddb = {
  * A Database class with basic CRUD functionalities
  * that can be extended for different tables
  */
-export class Database<TItem extends BaseEntity = any> {
+export class Database<
+  TItem extends BaseEntity<TEntityType> = any,
+  TEntityType extends string = string
+> {
   protected ddb: typeof ddb = ddb;
   protected tableName: string = '';
 
@@ -38,7 +41,7 @@ export class Database<TItem extends BaseEntity = any> {
    * @param tableNameEnvVariable The ENV Variable of the Table name
    * @param entityType The entity type this Database handles if any
    */
-  constructor(tableNameEnvVariable: string, protected entityType: string) {
+  constructor(tableNameEnvVariable: string, protected entityType: TEntityType) {
     const tableName = process.env[tableNameEnvVariable];
     if (!tableName) {
       console.warn(
@@ -69,9 +72,11 @@ export class Database<TItem extends BaseEntity = any> {
    * @param actorId The user performing the create
    */
   async create(item: DatabaseCreateInput<TItem>, actorId: string) {
-    const newItem: BaseEntity = {
+    const newItem: BaseEntity<TEntityType> = {
+      // Create the new id
       id: `th-${this.entityType}|${uuidv4()}`,
       ...item,
+      // Set all the audit fields
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
       createdBy: actorId,
@@ -95,7 +100,7 @@ export class Database<TItem extends BaseEntity = any> {
    */
   async update(id: string, item: DatabaseUpdateInput<TItem>, actorId: string) {
     const oldItem = await this.get(id);
-    const newItem: BaseEntity = {
+    const newItem: BaseEntity<TEntityType> = {
       ...oldItem,
       ...item,
       updatedAt: new Date().valueOf(),

@@ -35,9 +35,9 @@ export const getStopIdsFromRouteList = (routes: Route[]): string[] => {
  * based on the given day of the week
  * @param dayOfWeek
  */
-export const filterStartTimesByDayOfWeek = (dayOfWeek: number) => (
-  val: ScheduleStartTimes
-) => val.daysInOperation.includes(dayOfWeek);
+export const filterStartTimesByDayOfWeek =
+  (dayOfWeek: number) => (val: ScheduleStartTimes) =>
+    val.daysInOperation.includes(dayOfWeek);
 
 /**
  * Get the scheduled start times for a particular day of the week based on a

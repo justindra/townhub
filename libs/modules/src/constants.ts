@@ -1,5 +1,5 @@
 export const MODULES_DATABASE = {
-  ENV: 'MODULES_DATABASE_NAME',
+  ENV: 'MODULES_TABLE_NAME',
   CF_OUTPUT: 'ModulesTableName',
   ENTITY_TYPE: 'module',
 } as const;
