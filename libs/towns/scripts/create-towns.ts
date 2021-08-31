@@ -8,21 +8,12 @@ AWS.config.update({
   region: 'us-west-2',
 });
 
-import { TOWNS_DATABASE, TownsDatabase } from '@townhub-libs/towns';
-import { SHUTTLES_DATABASES } from '@townhub-libs/shuttles';
-import { setTableNamesFromStack } from './helpers';
+import { DEFAULT_ACTOR_ID } from '@townhub-libs/core';
+import { setTableNamesFromStack } from '@townhub-libs/script-helpers';
+import { TOWNS_DATABASE, TownsDatabase } from '../src';
 
 const main = async () => {
   await setTableNamesFromStack([
-    {
-      name: 'dev-townhub-infra-cdk-module-shuttle',
-      databaseDetails: [
-        SHUTTLES_DATABASES.STOP,
-        SHUTTLES_DATABASES.ROUTE,
-        SHUTTLES_DATABASES.SCHEDULE,
-        SHUTTLES_DATABASES.DAILY_SCHEDULE,
-      ],
-    },
     {
       name: 'dev-townhub-infra-cdk-module-town',
       databaseDetails: [TOWNS_DATABASE],
@@ -32,7 +23,7 @@ const main = async () => {
 
   await Towns.create(
     {
-      hid: 'fernie2',
+      hid: 'fernie',
       timezone: 'America/Los_Angeles',
       name: 'Fernie2',
       modules: [
@@ -40,8 +31,22 @@ const main = async () => {
           name: 'shuttles',
         },
       ],
+    } as any,
+    DEFAULT_ACTOR_ID
+  );
+
+  await Towns.create(
+    {
+      hid: 'revelstoke',
+      timezone: 'America/Los_Angeles',
+      name: 'Revelstoke',
+      modules: [
+        {
+          name: 'shuttles',
+        },
+      ],
     },
-    'system'
+    DEFAULT_ACTOR_ID
   );
 };
 

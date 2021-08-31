@@ -15,7 +15,14 @@ export default class TownsStack extends Stack {
     super(scope, id, props);
 
     // Create the different tables for this module
-    new TownhubTable(this, 'Towns', { stage: scope.stage });
+    const TownsTable = new TownhubTable(this, 'Towns', { stage: scope.stage });
+
+    // Create an index by HID so we can easily find out if a HID exists or not
+    // before creating a new one
+    TownsTable.ddbTable.addGlobalSecondaryIndex({
+      indexName: 'hid',
+      partitionKey: { name: 'hid', type: AttributeType.STRING },
+    });
 
     // The modules table
     const ModulesTable = new TownhubTable(this, 'Modules', {

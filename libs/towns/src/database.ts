@@ -7,7 +7,10 @@ import {
 import { TOWNS_DATABASE } from './constants';
 import { Town } from './interfaces';
 
-export class TownsDatabase extends Database<Town> {
+export class TownsDatabase extends Database<
+  Town,
+  typeof TOWNS_DATABASE.ENTITY_TYPE
+> {
   constructor() {
     super(TOWNS_DATABASE.ENV, TOWNS_DATABASE.ENTITY_TYPE);
   }
@@ -19,6 +22,9 @@ export class TownsDatabase extends Database<Town> {
    */
   async create(item: DatabaseCreateInput<Town>, actorId: string) {
     try {
+      // Unfortunately DynamoDB's Condition Expression for `put`s only works
+      // with the PartitionKey. So we need to do this check for existing HIDs
+      // client-side here.
       const existingTown = await this.getByHid(item.hid);
       if (existingTown)
         throw new ValidationException(`Town exists with HID: ${item.hid}`);
@@ -39,8 +45,9 @@ export class TownsDatabase extends Database<Town> {
    * @param hid The human readable ID to search for
    */
   async getByHid(hid: string) {
-    const res = await this.search({
-      FilterExpression: '#hid = :hid',
+    const res = await this.query({
+      IndexName: 'hid',
+      KeyConditionExpression: '#hid = :hid',
       ExpressionAttributeNames: {
         '#hid': 'hid',
       },

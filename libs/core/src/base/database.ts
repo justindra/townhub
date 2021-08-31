@@ -1,6 +1,6 @@
-import { DynamoDB } from 'aws-sdk';
+import { AWSError, DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
-import { NotFoundException } from './exceptions';
+import { NotFoundException, ValidationException } from './exceptions';
 import {
   BaseEntity,
   DatabaseCreateInput,
@@ -82,14 +82,21 @@ export class Database<
       createdBy: actorId,
       updatedBy: actorId,
     };
-    const res = await this.ddb.put({
-      TableName: this.tableName,
-      Item: newItem,
-      // Only add if the attribute does not exist
-      ConditionExpression: 'attribute_not_exists(id)',
-    });
 
-    console.log(res);
+    try {
+      await this.ddb.put({
+        TableName: this.tableName,
+        Item: newItem,
+        // Only add if the attribute does not exist
+        ConditionExpression: 'attribute_not_exists(id)',
+      });
+    } catch (error) {
+      if ((error as AWSError).code === 'ConditionalCheckFailedException') {
+        throw new ValidationException(
+          `${this.entityType} with id ${newItem.id} already exists, please try again`
+        );
+      }
+    }
 
     return newItem as TItem;
   }

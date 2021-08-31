@@ -14,6 +14,6 @@
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
     "test": "jest",
-    "testdatabase": "ts-node-script ./scripts/testdatabase.ts"
+    "create-towns": "ts-node-script ./scripts/create-towns.ts"
   }
 }
