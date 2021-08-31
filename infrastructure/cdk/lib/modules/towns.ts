@@ -35,6 +35,8 @@ export default class TownsStack extends Stack {
         name: DEFAULT_SECONDARY_INDEXES.BY_TOWN.key,
         type: AttributeType.STRING,
       },
+      // Sort by the Module Type
+      sortKey: { name: 'type', type: AttributeType.STRING },
     });
   }
 }

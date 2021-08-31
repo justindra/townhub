@@ -65,6 +65,10 @@ export class ModulesDatabase extends Database<
   }
 }
 
+/**
+ * The Database to extend from for all entities that live under a particular
+ * module.
+ */
 export class BaseModuleDatabase<
   TItem extends ModuleEntity<TEntityType> = any,
   TEntityType extends string = string
