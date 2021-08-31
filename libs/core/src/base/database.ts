@@ -1,6 +1,11 @@
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
+import {
+  BaseEntity,
+  DatabaseCreateInput,
+  DatabaseUpdateInput,
+} from './interfaces';
 
 const client = new DynamoDB.DocumentClient();
 
@@ -21,46 +26,14 @@ const ddb = {
     client.batchGet(params).promise(),
 };
 
-export type BaseEntity<TEntityType extends string = string> = {
-  id: string;
-  /** The time this entity was created */
-  createdAt: number;
-  /** The time this entity was last updated */
-  updatedAt: number;
-  /** The user who created this entity */
-  createdBy: string;
-  /** The user who last updated this entity */
-  updatedBy: string;
-  /**
-   * The entity type to use, this is system-wide and allows us to perform
-   * easier checks in the future
-   */
-  entityType: TEntityType;
-};
-
-export type OmitAuditFields<TItem> = Omit<
-  TItem,
-  'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
->;
-export type OmitId<TItem> = Omit<TItem, 'id'>;
-export type OmitEntityType<TItem> = Omit<TItem, 'entityType'>;
-
-export type DatabaseCreateInput<TItem> = OmitAuditFields<
-  OmitEntityType<OmitId<TItem>>
->;
-export type DatabaseUpdateInput<TItem> = Partial<TItem>;
-
-export type ArrayElement<A> = A extends readonly (infer T)[] ? T : A;
-
-export type DatabaseQueryInput<TItem> = {
-  [key in keyof TItem]: ArrayElement<TItem[key]>;
-};
-
 /**
  * A Database class with basic CRUD functionalities
  * that can be extended for different tables
  */
-export class Database<TItem extends BaseEntity = any> {
+export class Database<
+  TItem extends BaseEntity<TEntityType> = any,
+  TEntityType extends string = string
+> {
   protected ddb: typeof ddb = ddb;
   protected tableName: string = '';
 
@@ -68,7 +41,7 @@ export class Database<TItem extends BaseEntity = any> {
    * @param tableNameEnvVariable The ENV Variable of the Table name
    * @param entityType The entity type this Database handles if any
    */
-  constructor(tableNameEnvVariable: string, protected entityType: string) {
+  constructor(tableNameEnvVariable: string, protected entityType: TEntityType) {
     const tableName = process.env[tableNameEnvVariable];
     if (!tableName) {
       console.warn(
@@ -99,14 +72,15 @@ export class Database<TItem extends BaseEntity = any> {
    * @param actorId The user performing the create
    */
   async create(item: DatabaseCreateInput<TItem>, actorId: string) {
-    const newItem: BaseEntity = {
-      id: uuidv4(),
+    const newItem: BaseEntity<TEntityType> = {
+      // Create the new id
+      id: `th-${this.entityType}|${uuidv4()}`,
       ...item,
+      // Set all the audit fields
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
       createdBy: actorId,
       updatedBy: actorId,
-      entityType: this.entityType,
     };
     await this.ddb.put({
       TableName: this.tableName,
@@ -126,7 +100,7 @@ export class Database<TItem extends BaseEntity = any> {
    */
   async update(id: string, item: DatabaseUpdateInput<TItem>, actorId: string) {
     const oldItem = await this.get(id);
-    const newItem: BaseEntity = {
+    const newItem: BaseEntity<TEntityType> = {
       ...oldItem,
       ...item,
       updatedAt: new Date().valueOf(),

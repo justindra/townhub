@@ -1,7 +1,7 @@
 import { Construct } from '@aws-cdk/core';
 import { AttributeType } from '@aws-cdk/aws-dynamodb';
-import { TownhubTable, TownhubTableProps } from './table';
 import { DEFAULT_SECONDARY_INDEXES } from '@townhub-libs/constants';
+import { TownhubTable, TownhubTableProps } from './table';
 
 /**
  * A Table used in Townhub for all entities that belong to a specific module.

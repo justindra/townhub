@@ -18,7 +18,7 @@ export interface Module
 /**
  * The entity to extend from for all Entities that live under a module
  */
-export interface ModuleEntity<TEntityType extends string = string>
+export interface ModuleEntity<TEntityType extends string>
   extends BaseEntity<TEntityType> {
   /** The town this entity belongs to */
   townId: string;
