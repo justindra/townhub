@@ -7,3 +7,5 @@ export const MODULES_DATABASE = {
 export const MODULE_TYPE = {
   TRANSIT: 'transit',
 } as const;
+
+export const AVAILABLE_MODULES = [MODULE_TYPE.TRANSIT];
