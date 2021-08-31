@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "CommonJS",
     "target": "es2019",
     "moduleResolution": "node",
 
@@ -19,6 +19,7 @@
       "@townhub-libs/constants": ["libs/constants/src"],
       "@townhub-libs/core": ["libs/core/src"],
       "@townhub-libs/modules": ["libs/modules/src"],
+      "@townhub-libs/script-helpers": ["libs/script-helpers/src"],
       "@townhub-libs/shuttles": ["libs/shuttles/src"],
       "@townhub-libs/towns": ["libs/towns/src"]
     }

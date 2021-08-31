@@ -8,9 +8,12 @@
   "dependencies": {
     "@townhub-libs/core": "^0.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@townhub-libs/script-helpers": "^0.0.0"
+  },
   "scripts": {
     "build": "rollup -c ./rollup.config.js",
-    "test": "jest"
+    "test": "jest",
+    "testdatabase": "ts-node-script ./scripts/testdatabase.ts"
   }
 }

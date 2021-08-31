@@ -1,0 +1,13 @@
+{
+  "name": "@townhub-libs/script-helpers",
+  "version": "0.0.0",
+  "description": "Library for helpers to use for running local scripts",
+  "main": "dist/index",
+  "module": "dist/index.es",
+  "types": "dist/index.d.ts",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "build": "rollup -c ./rollup.config.js"
+  }
+}

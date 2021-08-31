@@ -63,7 +63,7 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
       Sentry.setContext('Town', { townId });
 
       const pathParameters: TPathParameters =
-        ((event.pathParameters as unknown) as TPathParameters) ??
+        (event.pathParameters as unknown as TPathParameters) ??
         ({} as TPathParameters);
 
       const timezone = DEFAULT_TIMEZONE;
@@ -88,9 +88,9 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
       await Sentry.flush(2000);
 
       return {
-        statusCode: error.statusCode || 500,
+        statusCode: (error as { statusCode: number }).statusCode || 500,
         body: JSON.stringify({
-          message: error.message || 'Something went wrong',
+          message: (error as Error).message || 'Something went wrong',
           error: error,
         }),
         headers: DEFAULT_HEADERS,

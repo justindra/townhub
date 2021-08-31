@@ -82,10 +82,14 @@ export class Database<
       createdBy: actorId,
       updatedBy: actorId,
     };
-    await this.ddb.put({
+    const res = await this.ddb.put({
       TableName: this.tableName,
       Item: newItem,
+      // Only add if the attribute does not exist
+      ConditionExpression: 'attribute_not_exists(id)',
     });
+
+    console.log(res);
 
     return newItem as TItem;
   }
@@ -158,7 +162,9 @@ export class Database<
 
       return (data.Responses?.[this.tableName] as TItem[]) ?? [];
     } catch (error) {
-      throw new NotFoundException(error.message || 'Unable to find items');
+      throw new NotFoundException(
+        (error as Error).message || 'Unable to find items'
+      );
     }
   }
 
