@@ -1,7 +1,17 @@
 import { AttributeType } from '@aws-cdk/aws-dynamodb';
 import { DEFAULT_SECONDARY_INDEXES } from '@townhub-libs/constants';
-import { App, Stack, StackProps } from '@serverless-stack/resources';
+import {
+  Api,
+  ApiAuthorizationType,
+  App,
+  Stack,
+  StackProps,
+} from '@serverless-stack/resources';
 import { TownhubTable } from '../resources/table';
+
+interface TownsStackProps extends StackProps {
+  api: Api;
+}
 
 /**
  * A Stack containing all the static infrastructure for the towns feature
@@ -11,7 +21,7 @@ import { TownhubTable } from '../resources/table';
  * @output ModulesTableName, ModulesTableArn
  */
 export default class TownsStack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps) {
+  constructor(scope: App, id: string, { api, ...props }: TownsStackProps) {
     super(scope, id, props);
 
     // Create the different tables for this module
@@ -37,6 +47,15 @@ export default class TownsStack extends Stack {
       },
       // Sort by the Module Type
       sortKey: { name: 'type', type: AttributeType.STRING },
+    });
+
+    // TODO: update these routes to be more related ones. Just testing it atm.
+    api.addRoutes(this, {
+      'GET /towns': {
+        function: 'src/index.main',
+        authorizationType: ApiAuthorizationType.NONE,
+      },
+      'GET /test': 'src/index.main',
     });
   }
 }

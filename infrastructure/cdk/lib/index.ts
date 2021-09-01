@@ -3,6 +3,7 @@ import ApiGatewayStack from './api-gateway';
 import StaticSiteStack from './static-site';
 import ShuttlesStack from './modules/shuttles';
 import TownsStack from './modules/towns';
+import ApiGatewayVNextStack from './api-gateway-vnext';
 
 export default function main(app: App): void {
   const rootDomainName = 'townhub.ca';
@@ -15,7 +16,12 @@ export default function main(app: App): void {
     rootDomainName,
   });
 
-  new TownsStack(app, 'module-town');
+  // The new API Gateway that uses SST instead of Serverless Framework
+  const ApiGateway = new ApiGatewayVNextStack(app, 'ApiGateway', {
+    rootDomainName,
+  });
+
+  new TownsStack(app, 'module-town', { api: ApiGateway.api });
   new ShuttlesStack(app, 'module-shuttle');
 
   // Setup subdomains for each town in the system
