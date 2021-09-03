@@ -13,22 +13,22 @@
     "remove": "sst remove"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.105.0",
-    "@aws-cdk/aws-certificatemanager": "1.105.0",
-    "@aws-cdk/aws-cloudfront": "1.105.0",
-    "@aws-cdk/aws-dynamodb": "1.105.0",
-    "@aws-cdk/aws-iam": "1.105.0",
-    "@aws-cdk/aws-route53": "1.105.0",
-    "@aws-cdk/aws-route53-targets": "1.105.0",
-    "@aws-cdk/aws-s3": "1.105.0",
-    "@aws-cdk/aws-ssm": "1.105.0",
-    "@aws-cdk/core": "1.105.0",
+    "@aws-cdk/aws-apigateway": "1.114.0",
+    "@aws-cdk/aws-certificatemanager": "1.114.0",
+    "@aws-cdk/aws-cloudfront": "1.114.0",
+    "@aws-cdk/aws-dynamodb": "1.114.0",
+    "@aws-cdk/aws-iam": "1.114.0",
+    "@aws-cdk/aws-route53": "1.114.0",
+    "@aws-cdk/aws-route53-targets": "1.114.0",
+    "@aws-cdk/aws-s3": "1.114.0",
+    "@aws-cdk/aws-ssm": "1.114.0",
+    "@aws-cdk/core": "1.114.0",
     "@townhub-libs/constants": "0.0.0",
-    "@serverless-stack/cli": "0.30.0",
-    "@serverless-stack/resources": "0.30.0"
+    "@serverless-stack/cli": "0.40.6",
+    "@serverless-stack/resources": "0.40.6"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.105.0"
+    "@aws-cdk/assert": "1.114.0"
   },
   "jest": {
     "testPathIgnorePatterns": [
