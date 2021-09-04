@@ -35,11 +35,6 @@
     "deploy:services": "lerna run deploy --scope @townhub-services/* --",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
   },
