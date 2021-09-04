@@ -15,7 +15,7 @@
     "@rollup/plugin-node-resolve": "13.0.4",
     "@types/aws-lambda": "8.10.83",
     "@types/jest": "27.0.1",
-    "husky": "7.0.2",
+    "husky": "^7.0.0",
     "jest": "27.1.0",
     "lerna": "4.0.0",
     "lint-staged": "11.1.2",
@@ -32,12 +32,8 @@
     "test": "jest",
     "build:apps": "lerna run build --scope @townhub-apps/* --include-dependencies --",
     "build:libs": "lerna run build --scope @townhub-libs/* --sort --",
-    "deploy:services": "lerna run deploy --scope @townhub-services/* --"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "deploy:services": "lerna run deploy --scope @townhub-services/* --",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
