@@ -1,0 +1,74 @@
+{
+  "name": "@townhub-apps/admin",
+  "description": "The Townhub Admin web application",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "???"
+  },
+  "dependencies": {
+    "aurelia": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0",
+    "@aurelia/testing": "latest",
+    "htmlhint": "^0.15.1",
+    "lesshint": "^6.3.7",
+    "rimraf": "^3.0.2",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "url-loader": "^4.1.1",
+    "file-loader": "^6.2.0",
+    "style-loader": "^2.0.0",
+    "css-loader": "^5.2.6",
+    "@aurelia/webpack-loader": "latest",
+    "ts-loader": "^9.2.3",
+    "less-loader": "^10.0.0",
+    "less": "^4.1.1",
+    "postcss-loader": "^6.1.0",
+    "postcss": "^8.3.5",
+    "autoprefixer": "^10.2.6",
+    "@types/node": "^15.12.4",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "jest-transform-stub": "^2.0.0",
+    "@aurelia/ts-jest": "latest",
+    "cross-env": "^7.0.3",
+    "cypress": "^7.5.0",
+    "eslint-plugin-cypress": "^2.11.3",
+    "start-server-and-test": "^1.12.5"
+  },
+  "scripts": {
+    "lint:js": "eslint src test cypress --ext .js,.ts",
+    "lint:css": "lesshint \"src/**/*.less\"",
+    "lint:html": "htmlhint -c .htmlhintrc src",
+    "lint": "npm run lint:js && npm run lint:html && npm run lint:css",
+    "pretest": "npm run lint",
+    "start": "webpack serve",
+    "build": "rimraf dist && webpack --env production",
+    "analyze": "rimraf dist && webpack --env production --analyze",
+    "test": "jest",
+    "cypress": "cypress run",
+    "test:e2e": "cross-env CI=1 start-server-and-test start http://localhost:9000 cypress"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "\\.(css|less|sass|scss|styl|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "jest-transform-stub",
+      "\\.(ts|html)$": "@aurelia/ts-jest"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.d.ts"
+    ],
+    "globals": {
+      "ts-jest": {
+        "isolatedModules": true
+      }
+    }
+  }
+}
