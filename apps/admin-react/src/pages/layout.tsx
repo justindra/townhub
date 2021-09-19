@@ -4,8 +4,8 @@ import { NavLink, NavLinkProps } from 'react-router-dom';
 const NavItem: FC<NavLinkProps> = ({ isActive, ...props }) => {
   return (
     <NavLink
-      className='w-full flex items-center p-4 transition-colors duration-200 justify-start'
-      activeClassName='text-blue-400 font-bold bg-gradient-to-r from-white via-transparent dark:from-gray-600 border-l-4 border-blue-600'
+      className='max-w-full flex rounded-xl items-center py-2 px-4 mx-4 my-1 transition-colors duration-300 justify-start text-gray-300 hover:bg-blue-400 hover:bg-opacity-25'
+      activeClassName='font-bold bg-blue-600 hover:bg-blue-700 hover:bg-opacity-100'
       {...props}
     />
   );
