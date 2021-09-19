@@ -11,7 +11,6 @@ import {
   useHistory,
   useRouteMatch,
 } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import { HomePage } from './home';
 import { PageLayout } from './layout';
 import { LoadingPage } from './loading';
