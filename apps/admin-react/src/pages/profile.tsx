@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { FC, useEffect, useState } from 'react';
 
 export const ProfilePage: FC = () => {
-  const { user, logout, getIdTokenClaims } = useAuth0();
+  const { user, getIdTokenClaims } = useAuth0();
 
   const [userMetadata, setUserMetadata] = useState(null);
 
@@ -34,9 +34,6 @@ export const ProfilePage: FC = () => {
       ) : (
         'No user metadata defined'
       )}
-      <button onClick={() => logout({ returnTo: window.location.origin })}>
-        Logout
-      </button>
     </div>
   );
 };
