@@ -12,12 +12,23 @@ const NavItem: FC<NavLinkProps> = ({ isActive, ...props }) => {
   );
 };
 
+const UserProfile: FC = () => {
+  const { user } = useAuth0();
+  return (
+    <img
+      src={user.picture}
+      alt={user.name}
+      className='object-cover rounded-full h-10 w-10 '
+    />
+  );
+};
+
 export const PageLayout: FC = ({ children }) => {
   const { logout } = useAuth0();
   return (
     <div className='h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-100 flex'>
       <div className='h-screen hidden lg:flex relative w-48 flex-col'>
-        <div className='flex items-center justify-center p-4 text-lg font-bold uppercase'>
+        <div className='flex items-center justify-center p-4 py-5 text-lg font-bold uppercase'>
           Townhub
         </div>
         <nav className='mt-2 mx-4 flex-1'>
@@ -34,7 +45,12 @@ export const PageLayout: FC = ({ children }) => {
           </button>
         </nav>
       </div>
-      <div>{children}</div>
+      <div className='flex-1'>
+        <div className='w-full p-4 flex items-center justify-end'>
+          <UserProfile />
+        </div>
+        <div className='p-4'>{children}</div>
+      </div>
     </div>
   );
 };
