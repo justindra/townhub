@@ -1,4 +1,4 @@
-import { Database } from '@townhub-libs/core';
+import { BaseEntity, Database } from '@townhub-libs/core';
 import { Stop, Route, Schedule, DailyData } from './interfaces';
 
 export const SHUTTLES_DATABASES = {
@@ -20,19 +20,33 @@ export const SHUTTLES_DATABASES = {
   },
 };
 
-export class StopsDatabase extends Database<Stop> {
+class DatabaseWithTown<TItem extends BaseEntity> extends Database<TItem> {
+  async listByTown(townId: string) {
+    return this.query({
+      FilterExpression: '#townId = :townId',
+      ExpressionAttributeNames: {
+        '#townId': 'townId',
+      },
+      ExpressionAttributeValues: {
+        ':townId': townId,
+      },
+    });
+  }
+}
+
+export class StopsDatabase extends DatabaseWithTown<Stop> {
   constructor() {
     super(SHUTTLES_DATABASES.STOP.ENV);
   }
 }
 
-export class RoutesDatabase extends Database<Route> {
+export class RoutesDatabase extends DatabaseWithTown<Route> {
   constructor() {
     super(SHUTTLES_DATABASES.ROUTE.ENV);
   }
 }
 
-export class SchedulesDatabase extends Database<Schedule> {
+export class SchedulesDatabase extends DatabaseWithTown<Schedule> {
   constructor() {
     super(SHUTTLES_DATABASES.SCHEDULE.ENV);
   }

@@ -33,7 +33,7 @@
   },
   {
     "id": "stop-5",
-    "name": "Sandman / Best Western",
+    "name": "Sandman/Best Western",
     "point": {
       "lat": 51.01026428899239,
       "lng": -118.21800724376543
@@ -165,6 +165,22 @@
     "point": {
       "lat": 50.94418456422642,
       "lng": -118.22303118293834
+    }
+  },
+  {
+    "id": "stop-22",
+    "name": "Basecamp",
+    "point": {
+      "lat": 51.02228154432931,
+      "lng": -118.21337577285092
+    }
+  },
+  {
+    "id": "stop-23",
+    "name": "Columbia Park",
+    "point": {
+      "lat": 51.013662263473975,
+      "lng": -118.21911135003644
     }
   }
 ]

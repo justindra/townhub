@@ -8,13 +8,11 @@
   "dependencies": {
     "@townhub-libs/core": "^0.0.0",
     "lodash.uniq": "^4.5.0",
-    "lodash.uniqby": "^4.7.0",
-    "luxon": "^1.25.0"
+    "lodash.uniqby": "^4.7.0"
   },
   "devDependencies": {
     "@types/lodash.uniq": "^4.5.6",
-    "@types/lodash.uniqby": "^4.7.6",
-    "@types/luxon": "^1.25.0"
+    "@types/lodash.uniqby": "^4.7.6"
   },
   "scripts": {
     "build": "rollup -c ./rollup.config.js",

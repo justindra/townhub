@@ -1,9 +1,14 @@
 [
   {
-    "routeId": "nordic-inbound",
-    "startDate": 1606464000000,
-    "endDate": 1617692400000,
+    "routeId": "nordic-inbound-2021",
+    "startDate": "2021-11-27",
+    "endDate": "2022-03-20",
     "startTimes": [
+      {
+        "startTimeHour": 9,
+        "startTimeMinute": 30,
+        "daysInOperation": [6, 7]
+      },
       {
         "startTimeHour": 10,
         "startTimeMinute": 37,
@@ -17,10 +22,16 @@
     ]
   },
   {
-    "routeId": "nordic-outbound",
-    "startDate": 1606464000000,
-    "endDate": 1617692400000,
+    "routeId": "nordic-outbound-2021",
+    "startDate": "2021-11-27",
+    "endDate": "2022-03-20",
     "startTimes": [
+      {
+        "startTimeHour": 9,
+        "startTimeMinute": 50,
+        "daysInOperation": [6, 7],
+        "hiddenStops": ["stop-3", "stop-2"]
+      },
       {
         "startTimeHour": 11,
         "startTimeMinute": 5,
@@ -30,7 +41,14 @@
         "startTimeHour": 13,
         "startTimeMinute": 30,
         "daysInOperation": [6, 7]
-      },
+      }
+    ]
+  },
+  {
+    "routeId": "nordic-outbound-2021-a",
+    "startDate": "2021-11-27",
+    "endDate": "2022-03-20",
+    "startTimes": [
       {
         "startTimeHour": 15,
         "startTimeMinute": 0,

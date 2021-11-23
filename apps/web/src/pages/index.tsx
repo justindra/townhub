@@ -1,6 +1,5 @@
 import {
   AppBar,
-  Button,
   IconButton,
   makeStyles,
   Paper,
@@ -10,13 +9,14 @@ import {
 import { Town } from '@townhub-libs/towns';
 import { DailyData } from '@townhub-libs/shuttles';
 import React, { FC, useEffect, useState } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { Switch, Route, Redirect, Link, useLocation } from 'react-router-dom';
 import { LoadingPage } from '../components';
 import { ShuttleModule } from '../modules';
 import { useTownhub } from '../state';
 import { AboutPage } from './about';
 import InfoIcon from '@material-ui/icons/Info';
 import ReactGA from 'react-ga';
+import { DateTime } from 'luxon';
 
 const usePageLayoutStyles = makeStyles((theme) => ({
   appContainer: {
@@ -34,8 +34,15 @@ const usePageLayoutStyles = makeStyles((theme) => ({
   },
 }));
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 export const PageRoutes: FC = () => {
   const pageLayoutClasses = usePageLayoutStyles();
+  const query = useQuery();
 
   const { Shuttles, Towns } = useTownhub();
 
@@ -44,11 +51,16 @@ export const PageRoutes: FC = () => {
 
   useEffect(() => {
     let active = true;
+
     (async () => {
       // Set the town id from the URL
       const town = await Towns.setTownIdFromUrl();
       // Go get the daily data for the shuttles
-      const daily = await Shuttles.getDailyData();
+      const date = query.get('date');
+      const timestamp = date
+        ? DateTime.fromISO(date).startOf('day').valueOf()
+        : new Date().valueOf();
+      const daily = await Shuttles.getDailyData(timestamp);
       if (active) {
         setTown(town);
         setDailyData(daily);
