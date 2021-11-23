@@ -1,8 +1,8 @@
 [
   {
-    "routeId": "rmr-outbound",
-    "startDate": 1606464000000,
-    "endDate": 1617692400000,
+    "routeId": "rmr-outbound-2021-A",
+    "startDate": "2021-11-27",
+    "endDate": "2022-03-20",
     "startTimes": [
       {
         "startTimeHour": 10,
@@ -10,19 +10,22 @@
         "daysInOperation": [6, 7]
       },
       {
-        "startTimeHour": 12,
-        "startTimeMinute": 35,
-        "daysInOperation": [6, 7]
-      },
-      {
         "startTimeHour": 17,
         "startTimeMinute": 45,
-        "daysInOperation": [6, 7]
-      },
+        "daysInOperation": [6, 7],
+        "hiddenStops": []
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-A",
+    "startDate": "2021-11-27",
+    "endDate": "2022-04-18",
+    "startTimes": [
       {
         "startTimeHour": 12,
         "startTimeMinute": 35,
-        "daysInOperation": [1, 2, 3, 4, 5],
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
         "hiddenStops": ["stop-1"]
       },
       {
@@ -38,208 +41,141 @@
         "hiddenStops": ["stop-1"]
       },
       {
-        "startTimeHour": 15,
-        "startTimeMinute": 50,
-        "daysInOperation": [6, 7],
+        "startTimeHour": 16,
+        "startTimeMinute": 5,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
         "hiddenStops": ["stop-1"]
       },
       {
-        "startTimeHour": 16,
+        "startTimeHour": 17,
         "startTimeMinute": 20,
         "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
         "hiddenStops": ["stop-1"]
+      },
+      {
+        "startTimeHour": 18,
+        "startTimeMinute": 35,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
+        "hiddenStops": ["stop-1"]
+      },
+      {
+        "startTimeHour": 19,
+        "startTimeMinute": 45,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
+        "hiddenStops": ["stop-1"]
+      },
+      {
+        "startTimeHour": 20,
+        "startTimeMinute": 55,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
+        "hiddenStops": ["stop-1"]
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-A",
+    "startDate": "2021-11-27",
+    "endDate": "2021-12-17",
+    "startTimes": [
+      {
+        "startTimeHour": 18,
+        "startTimeMinute": 5,
+        "daysInOperation": [6, 7]
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-A",
+    "startDate": "2021-12-18",
+    "endDate": "2022-03-20",
+    "startTimes": [
+      {
+        "startTimeHour": 18,
+        "startTimeMinute": 5,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        "startTimeHour": 22,
+        "startTimeMinute": 5,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
+        "hiddenStops": ["stop-1"]
+      },
+      {
+        "startTimeHour": 23,
+        "startTimeMinute": 0,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
+        "hiddenStops": ["stop-1"]
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-B",
+    "startDate": "2021-11-27",
+    "endDate": "2021-12-17",
+    "startTimes": [
+      {
+        "startTimeHour": 14,
+        "startTimeMinute": 30,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 15,
+        "startTimeMinute": 20,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 16,
+        "startTimeMinute": 10,
+        "daysInOperation": [6, 7]
+      },
+      {
+        "startTimeHour": 17,
+        "startTimeMinute": 0,
+        "daysInOperation": [6, 7]
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-B",
+    "startDate": "2021-12-18",
+    "endDate": "2022-03-20",
+    "startTimes": [
+      {
+        "startTimeHour": 14,
+        "startTimeMinute": 30,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        "startTimeHour": 15,
+        "startTimeMinute": 20,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        "startTimeHour": 16,
+        "startTimeMinute": 10,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      },
+      {
+        "startTimeHour": 17,
+        "startTimeMinute": 0,
+        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
+      }
+    ]
+  },
+  {
+    "routeId": "rmr-outbound-2021-B",
+    "startDate": "2021-11-27",
+    "endDate": "2022-03-20",
+    "startTimes": [
+      {
+        "startTimeHour": 15,
+        "startTimeMinute": 50,
+        "daysInOperation": [6, 7]
       },
       {
         "startTimeHour": 16,
         "startTimeMinute": 40,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 17,
-        "startTimeMinute": 20,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1606464000000,
-    "endDate": 1608364800000,
-    "startTimes": [
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 5,
         "daysInOperation": [6, 7]
-      },
-      {
-        "startTimeHour": 14,
-        "startTimeMinute": 30,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 15,
-        "startTimeMinute": 20,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 16,
-        "startTimeMinute": 5,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 17,
-        "startTimeMinute": 0,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1616396400000,
-    "endDate": 1617606000000,
-    "startTimes": [
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 5,
-        "daysInOperation": [6, 7]
-      },
-      {
-        "startTimeHour": 14,
-        "startTimeMinute": 30,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 15,
-        "startTimeMinute": 20,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 16,
-        "startTimeMinute": 5,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 17,
-        "startTimeMinute": 0,
-        "daysInOperation": [6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1608364800000,
-    "endDate": 1616396400000,
-    "startTimes": [
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 5,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
-      },
-      {
-        "startTimeHour": 14,
-        "startTimeMinute": 30,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 15,
-        "startTimeMinute": 20,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 16,
-        "startTimeMinute": 5,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 17,
-        "startTimeMinute": 0,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1608278400000,
-    "endDate": 1616396400000,
-    "startTimes": [
-      {
-        "startTimeHour": 20,
-        "startTimeMinute": 55,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
-      },
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 35,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 19,
-        "startTimeMinute": 45,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1616742000000,
-    "endDate": 1616914800000,
-    "startTimes": [
-      {
-        "startTimeHour": 20,
-        "startTimeMinute": 55,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
-      },
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 35,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 19,
-        "startTimeMinute": 45,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      }
-    ]
-  },
-  {
-    "routeId": "rmr-outbound",
-    "startDate": 1617346800000,
-    "endDate": 1617606000000,
-    "startTimes": [
-      {
-        "startTimeHour": 20,
-        "startTimeMinute": 55,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7]
-      },
-      {
-        "startTimeHour": 18,
-        "startTimeMinute": 35,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
-      },
-      {
-        "startTimeHour": 19,
-        "startTimeMinute": 45,
-        "daysInOperation": [1, 2, 3, 4, 5, 6, 7],
-        "hiddenStops": ["stop-1"]
       }
     ]
   }

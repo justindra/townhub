@@ -2,7 +2,7 @@
   {
     "routeId": "nordic-inbound-2021",
     "startDate": "2021-11-27",
-    "endDate": "2022-04-18",
+    "endDate": "2022-03-20",
     "startTimes": [
       {
         "startTimeHour": 9,
@@ -24,7 +24,7 @@
   {
     "routeId": "nordic-outbound-2021",
     "startDate": "2021-11-27",
-    "endDate": "2022-04-18",
+    "endDate": "2022-03-20",
     "startTimes": [
       {
         "startTimeHour": 9,
@@ -47,7 +47,7 @@
   {
     "routeId": "nordic-outbound-2021-a",
     "startDate": "2021-11-27",
-    "endDate": "2022-04-18",
+    "endDate": "2022-03-20",
     "startTimes": [
       {
         "startTimeHour": 15,

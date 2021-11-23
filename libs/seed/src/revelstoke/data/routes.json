@@ -66,9 +66,9 @@
     ]
   },
   {
-    "id": "rmr-outbound",
+    "id": "rmr-outbound-2021-A",
     "name": "RMR Outbound",
-    "description": "Heading from RMR",
+    "description": "Heading from RMR (Option A)",
     "stops": [
       { "stop": "stop-15", "legMinutes": 0 },
       { "stop": "stop-14", "legMinutes": 2 },
@@ -86,6 +86,30 @@
       { "stop": "stop-3", "legMinutes": 2 },
       { "stop": "stop-2", "legMinutes": 5 },
       { "stop": "stop-1", "legMinutes": 7 }
+    ]
+  },
+  {
+    "id": "rmr-outbound-2021-B",
+    "name": "RMR Outbound",
+    "description": "Heading from RMR (Option B)",
+    "stops": [
+      { "stop": "stop-15", "legMinutes": 0 },
+      { "stop": "stop-14", "legMinutes": 2 },
+      { "stop": "stop-13", "legMinutes": 4 },
+      { "stop": "stop-12", "legMinutes": 1 },
+      { "stop": "stop-11", "legMinutes": 2 },
+      { "stop": "stop-10", "legMinutes": 1 },
+      { "stop": "stop-16", "legMinutes": 1 },
+      { "stop": "stop-17", "legMinutes": 1 },
+      { "stop": "stop-18", "legMinutes": 2 },
+      { "stop": "stop-19", "legMinutes": 1 },
+      { "stop": "stop-20", "legMinutes": 1 },
+      { "stop": "stop-4", "legMinutes": 3 },
+      { "stop": "stop-5", "legMinutes": 1 },
+      { "stop": "stop-23", "legMinutes": 3 },
+      { "stop": "stop-22", "legMinutes": 3 },
+      { "stop": "stop-3", "legMinutes": 3 },
+      { "stop": "stop-2", "legMinutes": 5 }
     ]
   },
   {

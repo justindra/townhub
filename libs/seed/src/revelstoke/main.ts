@@ -170,8 +170,8 @@ const main = async () => {
     });
   };
 
-  // await Promise.all(schedulesInboundData.map(addSchedule));
-  // await Promise.all(schedulesOutboundData.map(addSchedule));
+  await Promise.all(schedulesInboundData.map(addSchedule));
+  await Promise.all(schedulesOutboundData.map(addSchedule));
   await Promise.all(schedulesNordicData.map(addSchedule));
 };
 
