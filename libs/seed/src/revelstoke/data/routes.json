@@ -1,6 +1,6 @@
 [
   {
-    "id": "rmr-inbound",
+    "id": "rmr-inbound-2021-A",
     "name": "RMR Inbound",
     "description": "Heading to RMR",
     "stops": [
@@ -45,7 +45,7 @@
     ]
   },
   {
-    "id": "nordic-inbound",
+    "id": "nordic-inbound-2021",
     "name": "Nordic Inbound",
     "description": "Heading to Nordic Ski Club",
     "stops": [
@@ -55,7 +55,7 @@
     ]
   },
   {
-    "id": "nordic-outbound",
+    "id": "nordic-outbound-2021",
     "name": "Nordic Outbound",
     "description": "Heading from Nordic Ski Club",
     "stops": [
@@ -63,6 +63,17 @@
       { "stop": "stop-1", "legMinutes": 8 },
       { "stop": "stop-3", "legMinutes": 7 },
       { "stop": "stop-2", "legMinutes": 5 }
+    ]
+  },
+  {
+    "id": "nordic-outbound-2021-a",
+    "name": "Nordic Outbound",
+    "description": "Heading from Nordic Ski Club (Option A)",
+    "stops": [
+      { "stop": "stop-21", "legMinutes": 0 },
+      { "stop": "stop-1", "legMinutes": 8 },
+      { "stop": "stop-2", "legMinutes": 7 },
+      { "stop": "stop-3", "legMinutes": 5 }
     ]
   }
 ]

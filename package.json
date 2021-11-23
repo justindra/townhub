@@ -41,5 +41,8 @@
   },
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
+  },
+  "dependencies": {
+    "luxon": "^2.1.1"
   }
 }

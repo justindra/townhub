@@ -17,12 +17,15 @@ import {
   Stop,
   Route,
 } from '@townhub-libs/shuttles';
+import { DateTime } from 'luxon';
+import { isEqual } from 'lodash';
 import { setTableNamesFromStack } from '../helpers';
 import stopsData from './data/stops.json';
 import routesData from './data/routes.json';
 import schedulesInboundData from './data/schedules-inbound.json';
 import schedulesOutboundData from './data/schedules-outbound.json';
 import schedulesNordicData from './data/schedules-nordic.json';
+import { hasSameStops } from './helpers';
 
 const main = async () => {
   await setTableNamesFromStack([
@@ -49,32 +52,43 @@ const main = async () => {
 
   const townId = town.id;
 
-  const createdStops: Stop[] = [];
-  const createdRoutes: Route[] = [];
+  const createdStops: (Stop & { oldStopId: string })[] = [];
+  const createdRoutes: (Route & { oldRouteId: string })[] = [];
+
+  // Get the list of the current items in the Database
+  const currentStops = await Stops.listByTown(town.id);
+  const currentRoutes = await Routes.listByTown(town.id);
+  const currentSchedules = await Schedules.listByTown(town.id);
 
   const addStop = async (stop: typeof stopsData[0]) => {
+    const existingStop = currentStops.find(
+      (val) =>
+        val.point.lat === stop.point.lat && val.point.lng === stop.point.lng
+    );
+    if (existingStop) {
+      const updatedStop = await Stops.update(existingStop.id, {
+        name: stop.name,
+      });
+      createdStops.push({ ...updatedStop, oldStopId: stop.id });
+      return;
+    }
+
     const newStop = await Stops.create({
       name: stop.name,
       townId,
       point: stop.point,
     });
-    createdStops.push(newStop);
+    createdStops.push({ ...newStop, oldStopId: stop.id });
   };
 
   await Promise.all(stopsData.map(addStop));
 
   const findStop = (oldStopId: string) => {
-    const stopData = stopsData.find((val) => val.id === oldStopId);
-    return createdStops.find((val) => val.name === stopData?.name);
+    return createdStops.find((val) => val.oldStopId === oldStopId);
   };
 
   const findRoute = (oldRouteId: string) => {
-    const routeData = routesData.find((val) => val.id === oldRouteId);
-    return createdRoutes.find(
-      (val) =>
-        val.name === routeData?.name &&
-        val.stopList.length === routeData?.stops.length
-    );
+    return createdRoutes.find((val) => val.oldRouteId === oldRouteId);
   };
 
   const addRoute = async (route: typeof routesData[0]) => {
@@ -85,6 +99,20 @@ const main = async () => {
         legMinutes: val.legMinutes,
       };
     });
+
+    const existingRoute = currentRoutes.find((val) =>
+      hasSameStops(val.stopList, stopList)
+    );
+    if (existingRoute) {
+      // Just update the name and description if required
+      const updatedRoute = await Routes.update(existingRoute.id, {
+        name: route.name,
+        description: route.description,
+      });
+      createdRoutes.push({ ...updatedRoute, oldRouteId: route.id });
+      return;
+    }
+
     const newRoute = await Routes.create({
       townId,
       name: route.name,
@@ -92,18 +120,16 @@ const main = async () => {
       stopList,
     });
 
-    createdRoutes.push(newRoute);
+    createdRoutes.push({ ...newRoute, oldRouteId: route.id });
   };
 
   await Promise.all(routesData.map(addRoute));
 
-  const addSchedule = async (schedule: typeof schedulesInboundData[0]) => {
-    const route = findRoute(schedule.routeId);
-    await Schedules.create({
-      townId,
-      routeId: route?.id ?? '',
-      startDate: schedule.startDate,
-      endDate: schedule.endDate,
+  const addSchedule = async (schedule: typeof schedulesNordicData[0]) => {
+    const convertedSchedule = {
+      ...schedule,
+      startDate: DateTime.fromISO(schedule.startDate).startOf('day').valueOf(),
+      endDate: DateTime.fromISO(schedule.endDate).endOf('day').valueOf(),
       startTimes: schedule.startTimes.map((val) => {
         const hiddenStops = val.hiddenStops
           ? val.hiddenStops.map((oldStopId) => {
@@ -118,11 +144,34 @@ const main = async () => {
           hiddenStops,
         };
       }),
+    };
+
+    const route = findRoute(schedule.routeId);
+
+    const existingSchedule = currentSchedules.find(
+      (val) =>
+        val.startDate === convertedSchedule.startDate &&
+        val.endDate === convertedSchedule.endDate &&
+        isEqual(val.startTimes, convertedSchedule.startTimes)
+    );
+
+    if (existingSchedule) {
+      return;
+    }
+
+    console.log('creating a new schedule...', schedule.routeId);
+
+    await Schedules.create({
+      townId,
+      routeId: route?.id ?? '',
+      startDate: convertedSchedule.startDate,
+      endDate: convertedSchedule.endDate,
+      startTimes: convertedSchedule.startTimes,
     });
   };
 
-  await Promise.all(schedulesInboundData.map(addSchedule));
-  await Promise.all(schedulesOutboundData.map(addSchedule));
+  // await Promise.all(schedulesInboundData.map(addSchedule));
+  // await Promise.all(schedulesOutboundData.map(addSchedule));
   await Promise.all(schedulesNordicData.map(addSchedule));
 };
 
