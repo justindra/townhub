@@ -1,11 +1,10 @@
 import {
-  ISODateString,
   ISOTimeString,
   NonNegativeInteger,
   TransitEntity,
 } from '../interfaces';
 
-enum TripDirection {
+export enum TripDirection {
   Outbound = 0,
   Inbound = 1,
 }
@@ -137,7 +136,7 @@ export interface Trip extends TransitEntity {
   /**
    * The frequencies that the trip occurs throughout the day
    */
-  frequencies: TripFrequencyType[];
+  frequencies: TripFrequency[];
   /**
    * Text that appears on signage identifying the trip's destination to riders.
    * Use this field to distinguish between different patterns of service on the
