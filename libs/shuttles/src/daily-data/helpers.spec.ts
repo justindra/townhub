@@ -189,32 +189,32 @@ describe('shuttle helpers', () => {
         id: 'stop-1',
         townId: 'town-1',
         name: 'Stop 1',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-2',
         townId: 'town-1',
         name: 'Stop 2',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-3',
         townId: 'town-1',
         name: 'Stop 3',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-4',
         townId: 'town-1',
         name: 'Stop 4',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 0, lng: 0 },
       },
     ];
@@ -234,8 +234,8 @@ describe('shuttle helpers', () => {
           id: 'stop-1',
           townId: 'town-1',
           name: 'Stop 1',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -251,8 +251,8 @@ describe('shuttle helpers', () => {
           id: 'stop-2',
           townId: 'town-1',
           name: 'Stop 2',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -268,8 +268,8 @@ describe('shuttle helpers', () => {
           id: 'stop-3',
           townId: 'town-1',
           name: 'Stop 3',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -285,8 +285,8 @@ describe('shuttle helpers', () => {
           id: 'stop-4',
           townId: 'town-1',
           name: 'Stop 4',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -336,8 +336,8 @@ describe('shuttle helpers', () => {
           id: 'stop-1',
           townId: 'town-1',
           name: 'Stop 1',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -353,8 +353,8 @@ describe('shuttle helpers', () => {
           id: 'stop-3',
           townId: 'town-1',
           name: 'Stop 3',
-          createdAt: 0,
-          updatedAt: 0,
+          created_at: 0,
+          updated_at: 0,
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -377,7 +377,7 @@ describe('shuttle helpers', () => {
 
   describe('convertRoutesToDailyDataRoutes', () => {
     const route: Route = {
-      createdAt: 1604903727734,
+      created_at: 1604903727734,
       stopList: [
         {
           stopId: 'stop-1',
@@ -392,23 +392,23 @@ describe('shuttle helpers', () => {
       description: 'The morning route',
       townId: '1eefd261-6b35-4f2a-8e44-fffec17b2f1a',
       id: '60ec0346-8f98-4451-9571-6a9ff17430c9',
-      updatedAt: 1604903727734,
+      updated_at: 1604903727734,
     };
     const stops: Stop[] = [
       {
         id: 'stop-1',
         townId: 'town-1',
         name: 'Stop 1',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 0, lng: 0 },
       },
       {
         id: 'stop-2',
         townId: 'town-1',
         name: 'Stop 2',
-        createdAt: 0,
-        updatedAt: 0,
+        created_at: 0,
+        updated_at: 0,
         point: { lat: 1, lng: 1 },
       },
     ];

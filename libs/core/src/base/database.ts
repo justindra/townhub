@@ -24,15 +24,22 @@ const ddb = {
 export type BaseEntity = {
   id: string;
   /** The time this entity was created */
-  createdAt: number;
+  created_at: number;
   /** The time this entity was updated */
-  updatedAt: number;
+  updated_at: number;
+  /**
+   * The time this entity was created
+   * @deprecated
+   */
+  createdAt?: number;
+  /**
+   * The time this entity was updated
+   * @deprecated
+   */
+  updatedAt?: number;
 };
 
-export type OmitAuditFields<TItem> = Omit<
-  TItem,
-  'createdAt' | 'updatedAt' | 'assignedAt'
->;
+export type OmitAuditFields<TItem> = Omit<TItem, 'created_at' | 'updated_at'>;
 export type OmitId<TItem> = Omit<TItem, 'id'>;
 
 export type DatabaseCreateInput<TItem> = OmitAuditFields<OmitId<TItem>>;
@@ -82,9 +89,12 @@ export class Database<TItem extends BaseEntity = any> {
    * @param item The item to place in
    */
   async create(item: DatabaseCreateInput<TItem>) {
-    const newItem: any = {
+    const newItem: BaseEntity = {
       id: uuidv4(),
       ...item,
+      created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf(),
+      // TODO: Remove the below once we are happy it has been removed
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
     };
@@ -108,6 +118,8 @@ export class Database<TItem extends BaseEntity = any> {
     const newItem = {
       ...oldItem,
       ...item,
+      updated_at: new Date().valueOf(),
+      // TODO: remove once all is deprecated
       updatedAt: new Date().valueOf(),
     };
 
@@ -161,7 +173,9 @@ export class Database<TItem extends BaseEntity = any> {
 
       return (data.Responses?.[this.tableName] as TItem[]) ?? [];
     } catch (error) {
-      throw new NotFoundException(error.message || 'Unable to find items');
+      throw new NotFoundException(
+        (error as Error).message || 'Unable to find items'
+      );
     }
   }
 
