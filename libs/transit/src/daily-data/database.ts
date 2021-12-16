@@ -1,4 +1,9 @@
-import { Database, DatabaseCreateInput } from '@townhub-libs/core';
+import {
+  Database,
+  DatabaseCreateInput,
+  NotFoundException,
+} from '@townhub-libs/core';
+import { DateTime } from 'luxon';
 import { TransitDatabaseEnv } from '../constants';
 import { DailyTransitData } from './interfaces';
 
@@ -37,5 +42,22 @@ export class DailyDataDatabase extends Database<DailyTransitData> {
     });
 
     return newItem;
+  }
+
+  /**
+   * Get a daily transit data for a particular date and agency
+   * @param agencyId The agency to search for in
+   * @param date The date to check
+   */
+  async getByDate(agencyId: string, date: DateTime): Promise<DailyTransitData> {
+    const res = await this.ddb.get({
+      TableName: this.tableName,
+      Key: { agency_id: agencyId, date: date.toISODate() },
+    });
+    if (!res.Item)
+      throw new NotFoundException(
+        `Unable to find a daily transit data for agency ${agencyId} on ${date.toISODate()}`
+      );
+    return res.Item as DailyTransitData;
   }
 }
