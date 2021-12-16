@@ -6,6 +6,15 @@ type TripsDatabaseCreateInput = Omit<
   DatabaseCreateInput<Trip>,
   'route_id_service_id'
 >;
+
+/**
+ * The Trips Table should be setup with the following details:
+ * * PartitionKey: `route_id`
+ * * SortKey:      `service_id`
+ *
+ * This will allow us to make sure that the route_id|service_id combination is
+ * unique in the database.
+ */
 export class TripsDatabase extends Database<Trip> {
   constructor() {
     super(TransitDatabaseEnv.Trips);
@@ -15,15 +24,17 @@ export class TripsDatabase extends Database<Trip> {
    * When creating a new trip, we want to make sure that the particular
    * service_id and route_id combination does not already exist in the database
    * @param item The new trip to create
+   * @param actorId The user performing the create
    * @returns The trip that was created
    */
-  async create(item: TripsDatabaseCreateInput): Promise<Trip> {
-    const newItem = this.generateCreateItemInput(item);
+  async create(item: TripsDatabaseCreateInput, actorId: string): Promise<Trip> {
+    const newItem = this.generateCreateItemInput(item, actorId);
     await this.ddb.put({
       TableName: this.tableName,
       Item: newItem,
-      ConditionExpression:
-        'attribute_not_exists(id) AND attribute_not_exists(route_id_service_id)',
+      // As this is evaluated after checking that both the PK and SK matches,
+      // we don't need to check that service_id is also unique.
+      ConditionExpression: 'attribute_not_exists(route_id)',
     });
 
     return newItem;
@@ -65,19 +76,5 @@ export class TripsDatabase extends Database<Trip> {
     });
 
     return res;
-  }
-
-  /**
-   * We need to automaticall add the route_id and service_id combination so
-   * that it's always correct
-   * @param item The newly created item
-   * @returns A trip that can be used for the create call
-   */
-  protected generateCreateItemInput(item: TripsDatabaseCreateInput): Trip {
-    return super.generateCreateItemInput({
-      ...item,
-      // Set the combination id
-      route_id_service_id: `${item.route_id}|${item.service_id}`,
-    });
   }
 }

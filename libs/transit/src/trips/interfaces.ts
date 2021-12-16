@@ -127,12 +127,6 @@ export interface Trip extends TransitEntity {
   /** Identifies a set of dates when service is available */
   service_id: string;
   /**
-   * A combination key merging the route_id and the service_id so that we can
-   * query for a combination route and service easily. Should be in the format
-   * of `[route_id]|[service_id]` (a pipe in between).
-   */
-  route_id_service_id: `${string}|${string}`;
-  /**
    * An ordered list of stops that is included in this trip, the index in the
    * array, indicates the sequence.
    */

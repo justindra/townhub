@@ -25,8 +25,12 @@ export type BaseEntity = {
   id: string;
   /** The time this entity was created */
   created_at: number;
+  /** The user that created this entity */
+  created_by: string;
   /** The time this entity was updated */
   updated_at: number;
+  /** The user that last updated this entity */
+  updated_by: string;
   /**
    * The time this entity was created
    * @deprecated
@@ -39,7 +43,10 @@ export type BaseEntity = {
   updatedAt?: number;
 };
 
-export type OmitAuditFields<TItem> = Omit<TItem, 'created_at' | 'updated_at'>;
+export type OmitAuditFields<TItem> = Omit<
+  TItem,
+  'created_at' | 'updated_at' | 'created_by' | 'updated_by'
+>;
 export type OmitId<TItem> = Omit<TItem, 'id'>;
 
 export type DatabaseCreateInput<TItem> = OmitAuditFields<OmitId<TItem>>;
@@ -87,9 +94,10 @@ export class Database<TItem extends BaseEntity = any> {
   /**
    * Create a new item in the database
    * @param item The item to place in
+   * @param actorId The user performing the create
    */
-  async create(item: DatabaseCreateInput<TItem>) {
-    const newItem = this.generateCreateItemInput(item);
+  async create(item: DatabaseCreateInput<TItem>, actorId: string) {
+    const newItem = this.generateCreateItemInput(item, actorId);
     await this.ddb.put({
       TableName: this.tableName,
       Item: newItem,
@@ -105,8 +113,9 @@ export class Database<TItem extends BaseEntity = any> {
    *
    * @param id The id of the item to update
    * @param item The fields to update
+   * @param actorId The user performing the update
    */
-  async update(id: string, item: DatabaseUpdateInput<TItem>) {
+  async update(id: string, item: DatabaseUpdateInput<TItem>, actorId: string) {
     const oldItem = await this.get(id);
     const newItem = {
       ...oldItem,
@@ -128,13 +137,14 @@ export class Database<TItem extends BaseEntity = any> {
    * Upsert an item into the database, e.g. create it if it doesn't exist
    * or update an existing one into the database
    * @param item The item to upsert
+   * @param actorId The user performing the update/insert
    */
-  async upsert(item: DatabaseUpdateInput<TItem>) {
+  async upsert(item: DatabaseUpdateInput<TItem>, actorId: string) {
     if (!item.id) {
-      return this.create(item as TItem);
+      return this.create(item as TItem, actorId);
     }
 
-    return this.update(item.id, item);
+    return this.update(item.id, item, actorId);
   }
 
   /**
@@ -213,14 +223,20 @@ export class Database<TItem extends BaseEntity = any> {
    * Turn the given input into a new item object. This is used as a helper so
    * we can keep it consistent when replacing the create function.
    * @param item The input to the database
+   * @param item The user performing the creation
    * @returns The generated item
    */
-  protected generateCreateItemInput(item: DatabaseCreateInput<TItem>): TItem {
+  protected generateCreateItemInput(
+    item: DatabaseCreateInput<TItem>,
+    actorId: string
+  ): TItem {
     return {
       id: uuidv4(),
       ...item,
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
+      created_by: actorId,
+      updated_by: actorId,
       // TODO: Remove the below once we are happy it has been removed
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
