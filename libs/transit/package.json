@@ -12,6 +12,6 @@
   "scripts": {
     "build:dependencies": "lerna run build --scope @townhub-libs/transit --include-dependencies --",
     "build": "rollup -c ./rollup.config.js",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   }
 }
