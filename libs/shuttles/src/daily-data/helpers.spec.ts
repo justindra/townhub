@@ -190,7 +190,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 1',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -198,7 +200,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 2',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -206,7 +210,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 3',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -214,7 +220,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 4',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 0, lng: 0 },
       },
     ];
@@ -235,7 +243,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 1',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -252,7 +262,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 2',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -269,7 +281,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 3',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -286,7 +300,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 4',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -337,7 +353,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 1',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -354,7 +372,9 @@ describe('shuttle helpers', () => {
           townId: 'town-1',
           name: 'Stop 3',
           created_at: 0,
+          created_by: 'system',
           updated_at: 0,
+          updated_by: 'system',
           scheduleDate: timestamp.toFormat(DEFAULT_DATE_FORMAT),
           routes: [
             {
@@ -378,6 +398,7 @@ describe('shuttle helpers', () => {
   describe('convertRoutesToDailyDataRoutes', () => {
     const route: Route = {
       created_at: 1604903727734,
+      created_by: 'system',
       stopList: [
         {
           stopId: 'stop-1',
@@ -393,6 +414,7 @@ describe('shuttle helpers', () => {
       townId: '1eefd261-6b35-4f2a-8e44-fffec17b2f1a',
       id: '60ec0346-8f98-4451-9571-6a9ff17430c9',
       updated_at: 1604903727734,
+      updated_by: 'system',
     };
     const stops: Stop[] = [
       {
@@ -400,7 +422,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 1',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 0, lng: 0 },
       },
       {
@@ -408,7 +432,9 @@ describe('shuttle helpers', () => {
         townId: 'town-1',
         name: 'Stop 2',
         created_at: 0,
+        created_by: 'system',
         updated_at: 0,
+        updated_by: 'system',
         point: { lat: 1, lng: 1 },
       },
     ];
