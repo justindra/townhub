@@ -11,9 +11,9 @@ export const DDB_INDEX_NAMES = {
   SERVICES: {
     /**
      * * PartitionKey: agency_id
-     * * SortKey:      start_date
+     * * SortKey:      end_date
      */
-    AGENCY_ID_START_DATE: 'agency_id-start_date-index',
+    AGENCY_ID_END_DATE: 'agency_id-end_date-index',
   },
   TRIPS: {
     /**

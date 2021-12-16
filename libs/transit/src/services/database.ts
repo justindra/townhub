@@ -21,10 +21,12 @@ export class ServicesDatabase extends Database<Service> {
     endDate: DateTime
   ): Promise<Service[]> {
     const res = await this.query({
-      IndexName: DDB_INDEX_NAMES.SERVICES.AGENCY_ID_START_DATE,
+      IndexName: DDB_INDEX_NAMES.SERVICES.AGENCY_ID_END_DATE,
+      // Find all that is in the future first
       KeyConditionExpression:
-        'agency_id = :agency_id AND start_date <= :query_end_date',
-      FilterExpression: 'end_date >= :query_start_date',
+        'agency_id = :agency_id AND end_date >= :query_start_date',
+      // And then filter to make sure the start date is before the end date
+      FilterExpression: 'start_date <= :query_end_date',
       ExpressionAttributeValues: {
         ':agency_id': agencyId,
         ':query_start_date': startDate.toISODate(),

@@ -2,11 +2,6 @@ import { Database, DatabaseCreateInput } from '@townhub-libs/core';
 import { DDB_INDEX_NAMES, TransitDatabaseEnv } from '../constants';
 import { Trip } from './interfaces';
 
-type TripsDatabaseCreateInput = Omit<
-  DatabaseCreateInput<Trip>,
-  'route_id_service_id'
->;
-
 /**
  * The Trips Table should be setup with the following details:
  * * PartitionKey: `route_id`
@@ -27,7 +22,10 @@ export class TripsDatabase extends Database<Trip> {
    * @param actorId The user performing the create
    * @returns The trip that was created
    */
-  async create(item: TripsDatabaseCreateInput, actorId: string): Promise<Trip> {
+  async create(
+    item: DatabaseCreateInput<Trip>,
+    actorId: string
+  ): Promise<Trip> {
     const newItem = this.generateCreateItemInput(item, actorId);
     await this.ddb.put({
       TableName: this.tableName,
