@@ -24,14 +24,28 @@ const ddb = {
 export type BaseEntity = {
   id: string;
   /** The time this entity was created */
-  createdAt: number;
+  created_at: number;
+  /** The user that created this entity */
+  created_by: string;
   /** The time this entity was updated */
-  updatedAt: number;
+  updated_at: number;
+  /** The user that last updated this entity */
+  updated_by: string;
+  /**
+   * The time this entity was created
+   * @deprecated
+   */
+  createdAt?: number;
+  /**
+   * The time this entity was updated
+   * @deprecated
+   */
+  updatedAt?: number;
 };
 
 export type OmitAuditFields<TItem> = Omit<
   TItem,
-  'createdAt' | 'updatedAt' | 'assignedAt'
+  'created_at' | 'updated_at' | 'created_by' | 'updated_by'
 >;
 export type OmitId<TItem> = Omit<TItem, 'id'>;
 
@@ -80,17 +94,14 @@ export class Database<TItem extends BaseEntity = any> {
   /**
    * Create a new item in the database
    * @param item The item to place in
+   * @param actorId The user performing the create
    */
-  async create(item: DatabaseCreateInput<TItem>) {
-    const newItem: any = {
-      id: uuidv4(),
-      ...item,
-      createdAt: new Date().valueOf(),
-      updatedAt: new Date().valueOf(),
-    };
+  async create(item: DatabaseCreateInput<TItem>, actorId: string) {
+    const newItem = this.generateCreateItemInput(item, actorId);
     await this.ddb.put({
       TableName: this.tableName,
       Item: newItem,
+      ConditionExpression: 'attribute_not_exists(id)',
     });
 
     return newItem as TItem;
@@ -102,12 +113,15 @@ export class Database<TItem extends BaseEntity = any> {
    *
    * @param id The id of the item to update
    * @param item The fields to update
+   * @param actorId The user performing the update
    */
-  async update(id: string, item: DatabaseUpdateInput<TItem>) {
+  async update(id: string, item: DatabaseUpdateInput<TItem>, actorId: string) {
     const oldItem = await this.get(id);
     const newItem = {
       ...oldItem,
       ...item,
+      updated_at: new Date().valueOf(),
+      // TODO: remove once all is deprecated
       updatedAt: new Date().valueOf(),
     };
 
@@ -123,13 +137,14 @@ export class Database<TItem extends BaseEntity = any> {
    * Upsert an item into the database, e.g. create it if it doesn't exist
    * or update an existing one into the database
    * @param item The item to upsert
+   * @param actorId The user performing the update/insert
    */
-  async upsert(item: DatabaseUpdateInput<TItem>) {
+  async upsert(item: DatabaseUpdateInput<TItem>, actorId: string) {
     if (!item.id) {
-      return this.create(item as TItem);
+      return this.create(item as TItem, actorId);
     }
 
-    return this.update(item.id, item);
+    return this.update(item.id, item, actorId);
   }
 
   /**
@@ -161,7 +176,9 @@ export class Database<TItem extends BaseEntity = any> {
 
       return (data.Responses?.[this.tableName] as TItem[]) ?? [];
     } catch (error) {
-      throw new NotFoundException(error.message || 'Unable to find items');
+      throw new NotFoundException(
+        (error as Error).message || 'Unable to find items'
+      );
     }
   }
 
@@ -170,15 +187,24 @@ export class Database<TItem extends BaseEntity = any> {
    * @param query The DDB Query to run
    */
   async query(
-    query: Partial<DynamoDB.DocumentClient.ScanInput>
+    query: Partial<DynamoDB.DocumentClient.QueryInput>
   ): Promise<TItem[]> {
-    const res = await this.ddb.scan({
+    const res = await this.ddb.query({
       TableName: this.tableName,
       Select: 'ALL_ATTRIBUTES',
       ...query,
     });
 
-    return res.Items as TItem[];
+    // If there are no more results to get, then return
+    if (!res.LastEvaluatedKey) return res.Items as TItem[];
+
+    // Otherwise, resend the query whilst specifying the ExclusiveStartKey
+    const items = await this.query({
+      ...query,
+      ExclusiveStartKey: res.LastEvaluatedKey,
+    });
+    // Then merge and return the results
+    return [...(res.Items as TItem[]), ...items];
   }
 
   /**
@@ -191,5 +217,29 @@ export class Database<TItem extends BaseEntity = any> {
     });
 
     return res.Items as TItem[];
+  }
+
+  /**
+   * Turn the given input into a new item object. This is used as a helper so
+   * we can keep it consistent when replacing the create function.
+   * @param item The input to the database
+   * @param item The user performing the creation
+   * @returns The generated item
+   */
+  protected generateCreateItemInput(
+    item: DatabaseCreateInput<TItem>,
+    actorId: string
+  ): TItem {
+    return {
+      id: uuidv4(),
+      ...item,
+      created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf(),
+      created_by: actorId,
+      updated_by: actorId,
+      // TODO: Remove the below once we are happy it has been removed
+      createdAt: new Date().valueOf(),
+      updatedAt: new Date().valueOf(),
+    } as TItem;
   }
 }

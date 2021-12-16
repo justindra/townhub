@@ -18,11 +18,13 @@ import {
  * @param townId The town to check
  * @param timestamp The timestamp to signify which day it is
  * @param timezone The timezone we are performing the calculations on
+ * @param actorId The user requesting the daily data
  */
 export const getDailyData = async (
   townId: string,
   timestamp: number,
-  timezone: string = DEFAULT_TIMEZONE
+  timezone: string = DEFAULT_TIMEZONE,
+  actorId: string = 'public'
 ) => {
   const DailySchedules = new DailySchedulesDatabase();
   const Schedules = new SchedulesDatabase();
@@ -68,13 +70,16 @@ export const getDailyData = async (
     middleOfDay
   );
 
-  const newDailySchedule = await DailySchedules.create({
-    townId,
-    timestamp: dateString,
-    stops: stopSchedules,
-    schedules,
-    routes: dailyDataRoutes,
-  });
+  const newDailySchedule = await DailySchedules.create(
+    {
+      townId,
+      timestamp: dateString,
+      stops: stopSchedules,
+      schedules,
+      routes: dailyDataRoutes,
+    },
+    actorId
+  );
 
   return newDailySchedule;
 };
