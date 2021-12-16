@@ -89,18 +89,11 @@ export class Database<TItem extends BaseEntity = any> {
    * @param item The item to place in
    */
   async create(item: DatabaseCreateInput<TItem>) {
-    const newItem: BaseEntity = {
-      id: uuidv4(),
-      ...item,
-      created_at: new Date().valueOf(),
-      updated_at: new Date().valueOf(),
-      // TODO: Remove the below once we are happy it has been removed
-      createdAt: new Date().valueOf(),
-      updatedAt: new Date().valueOf(),
-    };
+    const newItem = this.generateCreateItemInput(item);
     await this.ddb.put({
       TableName: this.tableName,
       Item: newItem,
+      ConditionExpression: 'attribute_not_exists(id)',
     });
 
     return newItem as TItem;
@@ -184,15 +177,24 @@ export class Database<TItem extends BaseEntity = any> {
    * @param query The DDB Query to run
    */
   async query(
-    query: Partial<DynamoDB.DocumentClient.ScanInput>
+    query: Partial<DynamoDB.DocumentClient.QueryInput>
   ): Promise<TItem[]> {
-    const res = await this.ddb.scan({
+    const res = await this.ddb.query({
       TableName: this.tableName,
       Select: 'ALL_ATTRIBUTES',
       ...query,
     });
 
-    return res.Items as TItem[];
+    // If there are no more results to get, then return
+    if (!res.LastEvaluatedKey) return res.Items as TItem[];
+
+    // Otherwise, resend the query whilst specifying the ExclusiveStartKey
+    const items = await this.query({
+      ...query,
+      ExclusiveStartKey: res.LastEvaluatedKey,
+    });
+    // Then merge and return the results
+    return [...(res.Items as TItem[]), ...items];
   }
 
   /**
@@ -205,5 +207,23 @@ export class Database<TItem extends BaseEntity = any> {
     });
 
     return res.Items as TItem[];
+  }
+
+  /**
+   * Turn the given input into a new item object. This is used as a helper so
+   * we can keep it consistent when replacing the create function.
+   * @param item The input to the database
+   * @returns The generated item
+   */
+  protected generateCreateItemInput(item: DatabaseCreateInput<TItem>): TItem {
+    return {
+      id: uuidv4(),
+      ...item,
+      created_at: new Date().valueOf(),
+      updated_at: new Date().valueOf(),
+      // TODO: Remove the below once we are happy it has been removed
+      createdAt: new Date().valueOf(),
+      updatedAt: new Date().valueOf(),
+    } as TItem;
   }
 }
