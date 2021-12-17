@@ -3,13 +3,14 @@ import {
   generateJestDynaliteConfig,
   setEnvVariablesFromTableConfig,
 } from '../../build/jest-dynalite.config';
+import { TransitDatabaseEnv } from './src/constants';
 
 export const tableConfigurations: TableConfiguration[] = [
   {
-    TableName: 'test-table',
+    TableName: 'agencies',
     KeySchema: [{ AttributeName: 'id', KeyType: 'HASH' }],
     AttributeDefinitions: [{ AttributeName: 'id', AttributeType: 'S' }],
-    EnvVariableName: 'TEST_TABLE_NAME',
+    EnvVariableName: TransitDatabaseEnv.Agencies,
   },
 ];
 

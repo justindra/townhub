@@ -17,3 +17,15 @@ export const generateJestDynaliteConfig = (
     basePort: 8000,
   };
 };
+
+/**
+ * Set the required ENV variables based on the given list of TableConfigurations
+ * @param tableConfigurations
+ */
+export const setEnvVariablesFromTableConfig = (
+  tableConfigurations: TableConfiguration[]
+) => {
+  tableConfigurations.forEach((table) => {
+    process.env[table.EnvVariableName] = table.TableName;
+  });
+};
