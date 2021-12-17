@@ -2,7 +2,15 @@ import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
 
-const client = new DynamoDB.DocumentClient();
+const client = new DynamoDB.DocumentClient(
+  process.env.MOCK_DYNAMODB_ENDPOINT
+    ? {
+        endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
+        sslEnabled: false,
+        region: 'local',
+      }
+    : undefined
+);
 
 const ddb = {
   get: (params: DynamoDB.DocumentClient.GetItemInput) =>
