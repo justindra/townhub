@@ -129,6 +129,7 @@ export class Database<TItem extends BaseEntity = any> {
       ...oldItem,
       ...item,
       updated_at: new Date().valueOf(),
+      updated_by: actorId,
       // TODO: remove once all is deprecated
       updatedAt: new Date().valueOf(),
     };
@@ -139,20 +140,6 @@ export class Database<TItem extends BaseEntity = any> {
     });
 
     return newItem as TItem;
-  }
-
-  /**
-   * Upsert an item into the database, e.g. create it if it doesn't exist
-   * or update an existing one into the database
-   * @param item The item to upsert
-   * @param actorId The user performing the update/insert
-   */
-  async upsert(item: DatabaseUpdateInput<TItem>, actorId: string) {
-    if (!item.id) {
-      return this.create(item as TItem, actorId);
-    }
-
-    return this.update(item.id, item, actorId);
   }
 
   /**
