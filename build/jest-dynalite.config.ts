@@ -8,10 +8,8 @@ export const generateJestDynaliteConfig = (
   tableConfigurations: TableConfiguration[]
 ) => {
   return {
-    tables: tableConfigurations.map((val) => ({
-      TableName: val.TableName,
-      KeySchema: val.KeySchema,
-      AttributeDefinitions: val.AttributeDefinitions,
+    tables: tableConfigurations.map(({ EnvVariableName, ...val }) => ({
+      ...val,
       ProvisionedThroughput: { ReadCapacityUnits: 1, WriteCapacityUnits: 1 },
     })),
     basePort: 8000,

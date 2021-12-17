@@ -1,11 +1,11 @@
 import { ISODateString, TransitEntity } from '../interfaces';
 
-enum ServiceAvailability {
+export enum ServiceAvailability {
   NotAvailable = 0,
   Available = 1,
 }
 
-enum ExceptionType {
+export enum ExceptionType {
   ServiceAdded = 1,
   ServiceRemoved = 2,
 }

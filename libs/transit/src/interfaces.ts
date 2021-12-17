@@ -8,9 +8,9 @@ export type Timezone = `${string}/${string}`;
 /** An email type */
 export type Email = `${string}@${string}.${string}`;
 /** An ISO Date, formatted in YYYY-MM-DD */
-export type ISODateString = `${string}-${string}-${string}`;
+export type ISODateString = string;
 /** An ISO Time, formatted in HH:MM:SS */
-export type ISOTimeString = `${string}:${string}:${string}`;
+export type ISOTimeString = string;
 
  /** A non-negative integer value */
 export type NonNegativeInteger<T extends number = number> =
