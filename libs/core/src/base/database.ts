@@ -157,13 +157,13 @@ export class Database<TItem extends BaseEntity = any> {
    * Hydrate a list of ids from the database
    * @param ids The list of ids to retrieve
    */
-  async hydrate(ids: string[]): Promise<TItem[]> {
+  async hydrate(ids: string[], idField: keyof TItem = 'id'): Promise<TItem[]> {
     if (!ids.length) return [];
     try {
       const params: DynamoDB.DocumentClient.BatchGetItemInput = {
         RequestItems: {
           [this.tableName]: {
-            Keys: ids.map((id) => ({ id })),
+            Keys: ids.map((id) => ({ [idField]: id })),
           },
         },
       };
@@ -218,7 +218,7 @@ export class Database<TItem extends BaseEntity = any> {
    * Turn the given input into a new item object. This is used as a helper so
    * we can keep it consistent when replacing the create function.
    * @param item The input to the database
-   * @param item The user performing the creation
+   * @param actorId The user performing the creation
    * @returns The generated item
    */
   protected generateCreateItemInput(

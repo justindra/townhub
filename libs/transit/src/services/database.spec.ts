@@ -1,7 +1,7 @@
 import 'jest-dynalite/withDb';
 import { DateTime } from 'luxon';
-import { ServiceAvailability } from '.';
 import { ServicesDatabase } from './database';
+import { ServiceAvailability } from './interfaces';
 
 const ServicesClient = new ServicesDatabase();
 const actorId = 'actorId';
