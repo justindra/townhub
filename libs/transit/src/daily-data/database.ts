@@ -38,7 +38,7 @@ export class DailyDataDatabase extends Database<DailyTransitData> {
       TableName: this.tableName,
       Item: newItem,
       // As this is evaluated after checking that both the PK and SK matches,
-      // we don't need to check that service_id is also unique.
+      // we don't need to check that date is also unique.
       ConditionExpression: 'attribute_not_exists(agency_id)',
     });
 
