@@ -12,9 +12,9 @@ describe('Services Database', () => {
     it('should return the right services during a particular range', async () => {
       await Promise.all(
         [
-          { start_date: '2021-12-12', end_date: '2021-12-21' },
-          { start_date: '2021-12-20', end_date: '2021-12-25' },
-          { start_date: '2021-12-12', end_date: '2021-12-18' },
+          { start_date: '2021-12-12', end_date: '2021-12-21', id: 'service-a' },
+          { start_date: '2021-12-20', end_date: '2021-12-25', id: 'service-b' },
+          { start_date: '2021-12-12', end_date: '2021-12-18', id: 'service-c' },
         ].map(async (val) => {
           await ServicesClient.create(
             {
@@ -40,7 +40,11 @@ describe('Services Database', () => {
         DateTime.fromISO('2021-12-21')
       );
 
-      console.log(res);
+      expect(res.length).toEqual(2);
+      expect(res.map((val) => val.id).sort()).toEqual([
+        'service-a',
+        'service-b',
+      ]);
     });
   });
 });
