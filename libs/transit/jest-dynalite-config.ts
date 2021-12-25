@@ -13,6 +13,18 @@ export const tableConfigurations: TableConfiguration[] = [
     EnvVariableName: TransitDatabaseEnv.Agencies,
   },
   {
+    TableName: 'daily-data',
+    KeySchema: [
+      { AttributeName: 'agency_id', KeyType: 'HASH' },
+      { AttributeName: 'date', KeyType: 'RANGE' },
+    ],
+    AttributeDefinitions: [
+      { AttributeName: 'agency_id', AttributeType: 'S' },
+      { AttributeName: 'date', AttributeType: 'S' },
+    ],
+    EnvVariableName: TransitDatabaseEnv.DailyData,
+  },
+  {
     TableName: 'services',
     KeySchema: [{ AttributeName: 'id', KeyType: 'HASH' }],
     AttributeDefinitions: [

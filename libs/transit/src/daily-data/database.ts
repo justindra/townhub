@@ -2,6 +2,7 @@ import {
   Database,
   DatabaseCreateInput,
   NotFoundException,
+  ValidationException,
 } from '@townhub-libs/core';
 import { DateTime } from 'luxon';
 import { TransitDatabaseEnv } from '../constants';
@@ -42,6 +43,18 @@ export class DailyDataDatabase extends Database<DailyTransitData> {
     });
 
     return newItem;
+  }
+
+  /**
+   * We don't allow getting a daily data by it's ID, so we are just throwing an
+   * error here
+   * @param _id
+   */
+  async get(_id: string) {
+    throw new ValidationException(
+      'Please use getByDate method to get a daily data object'
+    );
+    return (null as unknown) as DailyTransitData;
   }
 
   /**

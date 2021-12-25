@@ -8,8 +8,6 @@ const agencyId = 'agency-1';
 
 describe('Trips Database', () => {
   describe('create', () => {
-    // Unable to test this properly until jest-dynalite is fixed to handle Sort Keys
-    // https://github.com/freshollie/jest-dynalite/issues/77
     it('not create the trip if there is a matching service AND route', async () => {
       await TripsClient.create(
         {
