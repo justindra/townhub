@@ -52,4 +52,36 @@ describe('Database', () => {
       expect(updated.updated_by).toEqual(user);
     });
   });
+
+  describe('delete', () => {
+    it('should delete an existing item', async () => {
+      const existing = await DBClient.create({ name: 'test-123' }, actorId);
+      expect(await DBClient.get(existing.id)).toEqual(existing);
+      await DBClient.delete(existing.id);
+      try {
+        await DBClient.get(existing.id);
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });
+
+  describe('hydrate', () => {
+    it('return all matching ids', async () => {
+      const existingItems = await Promise.all([
+        DBClient.create({ name: 'test-123' }, actorId),
+        DBClient.create({ name: 'test-456' }, actorId),
+        DBClient.create({ name: 'test-789' }, actorId),
+      ]);
+
+      const existingIds = existingItems.map((val) => val.id);
+
+      const hydrated = await DBClient.hydrate([existingIds[0], existingIds[1]]);
+
+      expect(hydrated.length).toEqual(2);
+      expect(hydrated.map((val) => val.id).sort()).toEqual(
+        [existingIds[0], existingIds[1]].sort()
+      );
+    });
+  });
 });
