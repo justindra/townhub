@@ -33,7 +33,7 @@ jobs:
         uses: hayuna/jest-reporter-action@v0.1.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-command: yarn test --coverage
+          test-command: yarn test --coverage --ci --silent
       - name: Run tests
         if: ${{ github.event_name != 'pull_request' }}
         run: yarn test
