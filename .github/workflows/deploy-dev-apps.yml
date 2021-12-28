@@ -17,10 +17,10 @@ jobs:
       REACT_APP_MAP_BOX_API_KEY: ${{ secrets.MAP_BOX_API_KEY }}
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '16'
       # Cache Yarn packages to reduce install time
       - uses: c-hive/gha-yarn-cache@v1
       # Run install and test
@@ -41,4 +41,3 @@ jobs:
         run: CI=false yarn run build:apps
       - name: Upload to S3
         run: aws s3 sync apps/web/build ${{ secrets.TOWNHUB_DEV_APP_BUCKET_S3_URL }} --acl public-read
-
