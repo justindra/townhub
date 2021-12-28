@@ -52,7 +52,7 @@ export type BaseEntity<TEntityType extends string> = {
 /** A utility type to omit all the Audit Fields */
 export type OmitAuditFields<TItem> = Omit<
  TItem,
- 'createdAt' | 'updatedAt' | 'createdBy' | 'updatedBy'
+ 'created_at' | 'updated_at' | 'created_by' | 'updated_by' | 'createdAt' | 'updatedAt'
 >;
 
 /** A utility type to omit the id field */

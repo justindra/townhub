@@ -61,10 +61,12 @@ enum ContinuousBehaviour {
   Coordinate = 3,
 }
 
+export const ROUTE_ENTITY_TYPE = 'transit-route';
+
 /**
  * Identifies a route.
  */
-export interface Route extends TransitEntity {
+export interface Route extends TransitEntity<typeof ROUTE_ENTITY_TYPE> {
   /**
    * Short name of a route. This will often be a short, abstract identifier
    * like "32", "100X", or "Green" that riders use to identify a route, but

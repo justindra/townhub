@@ -1,4 +1,3 @@
-import { BaseEntity } from '@townhub-libs/core';
 import { Timezone, TransitEntity } from '../interfaces';
 
 type Latitude = number;
@@ -61,6 +60,8 @@ enum StopWheelchairBoarding {
   None = 2,
 }
 
+export const STOP_ENTITY_TYPE = 'transit-stop';
+
 /**
  * Identifies a stop, station, or station entrance.
  *
@@ -68,7 +69,7 @@ enum StopWheelchairBoarding {
  * exits. Stops, stations or station entrances are collectively referred to as
  * locations. Multiple routes may use the same stop.
  */
-export interface Stop extends TransitEntity {
+export interface Stop extends TransitEntity<typeof STOP_ENTITY_TYPE> {
   /**
    * Short text or a number that identifies the location for riders. These
    * codes are often used in phone-based transit information systems or printed

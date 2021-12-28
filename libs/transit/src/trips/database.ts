@@ -4,7 +4,7 @@ import {
   ValidationException,
 } from '@townhub-libs/core';
 import { DDB_INDEX_NAMES, TransitDatabaseEnv } from '../constants';
-import { Trip } from './interfaces';
+import { TRIP_ENTITY_TYPE, Trip } from './interfaces';
 
 type TripsDatabaseCreateInput = Omit<
   DatabaseCreateInput<Trip>,
@@ -21,7 +21,7 @@ type TripsDatabaseCreateInput = Omit<
  */
 export class TripsDatabase extends Database<Trip> {
   constructor() {
-    super(TransitDatabaseEnv.Trips);
+    super(TransitDatabaseEnv.Trips, TRIP_ENTITY_TYPE);
   }
 
   /**

@@ -20,7 +20,7 @@ export type NonNegativeInteger<T extends number = number> =
             ? never 
             : T;
 
-export interface TransitEntity extends BaseEntity {
+export interface TransitEntity<TEntiyType extends string> extends BaseEntity<TEntiyType> {
   /** The agency this entity belongs to */
   agency_id: string;
 }
