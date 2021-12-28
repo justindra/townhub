@@ -13,7 +13,7 @@ export const TOWNS_DATABASE = {
 
 export class TownsDatabase extends Database<Town> {
   constructor() {
-    super(TOWNS_DATABASE.ENV);
+    super(TOWNS_DATABASE.ENV, 'town');
   }
 
   /**

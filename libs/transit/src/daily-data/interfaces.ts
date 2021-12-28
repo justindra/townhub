@@ -3,13 +3,16 @@ import { Route } from '../routes/interfaces';
 import { Stop } from '../stops/interfaces';
 import { Trip, TripDirection } from '../trips/interfaces';
 
+export const DAILY_TRANSIT_DATA_ENTITY_TYPE = 'transit-daily-data';
+
 /**
  * The timetable and trip data for a particular date. By saving these details,
  * it means we can just generate this once and run the expensive queries once.
  *
  * All other calls will just be pulling the data out of the database.
  */
-export interface DailyTransitData extends TransitEntity {
+export interface DailyTransitData
+  extends TransitEntity<typeof DAILY_TRANSIT_DATA_ENTITY_TYPE> {
   /** The date this data is for */
   date: ISODateString;
   /** List of routes used on that day */

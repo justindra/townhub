@@ -1,6 +1,11 @@
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
+import {
+  BaseEntity,
+  DatabaseCreateInput,
+  DatabaseUpdateInput,
+} from './interfaces';
 
 const client = new DynamoDB.DocumentClient(
   process.env.MOCK_DYNAMODB_ENDPOINT
@@ -29,37 +34,6 @@ const ddb = {
     client.batchGet(params).promise(),
 };
 
-export type BaseEntity = {
-  id: string;
-  /** The time this entity was created */
-  created_at: number;
-  /** The user that created this entity */
-  created_by: string;
-  /** The time this entity was updated */
-  updated_at: number;
-  /** The user that last updated this entity */
-  updated_by: string;
-  /**
-   * The time this entity was created
-   * @deprecated
-   */
-  createdAt?: number;
-  /**
-   * The time this entity was updated
-   * @deprecated
-   */
-  updatedAt?: number;
-};
-
-export type OmitAuditFields<TItem> = Omit<
-  TItem,
-  'created_at' | 'updated_at' | 'created_by' | 'updated_by'
->;
-export type OmitId<TItem> = Omit<TItem, 'id'>;
-
-export type DatabaseCreateInput<TItem> = OmitAuditFields<OmitId<TItem>>;
-export type DatabaseUpdateInput<TItem> = Partial<TItem>;
-
 export type ArrayElement<A> = A extends readonly (infer T)[] ? T : A;
 
 export type DatabaseQueryInput<TItem> = {
@@ -70,11 +44,18 @@ export type DatabaseQueryInput<TItem> = {
  * A Database class with basic CRUD functionalities
  * that can be extended for different tables
  */
-export class Database<TItem extends BaseEntity = any> {
+export class Database<
+  TItem extends BaseEntity<TEntityType> = any,
+  TEntityType extends string = string
+> {
   protected ddb: typeof ddb = ddb;
   protected tableName: string = '';
 
-  constructor(tableNameEnvVariable: string) {
+  /**
+   * @param tableNameEnvVariable The ENV Variable of the Table name
+   * @param entityType The entity type this Database handles if any
+   */
+  constructor(tableNameEnvVariable: string, protected entityType: TEntityType) {
     const tableName = process.env[tableNameEnvVariable];
     if (!tableName) {
       console.warn(
@@ -226,7 +207,7 @@ export class Database<TItem extends BaseEntity = any> {
     actorId: string
   ): TItem {
     return {
-      id: uuidv4(),
+      id: `th-${this.entityType}|${uuidv4()}`,
       ...item,
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),

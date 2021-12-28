@@ -4,7 +4,7 @@ import {
   ValidationException,
 } from '@townhub-libs/core';
 import { DDB_INDEX_NAMES, TransitDatabaseEnv } from '../constants';
-import { Trip } from './interfaces';
+import { TRIP_ENTITY_TYPE, Trip } from './interfaces';
 
 type TripsDatabaseCreateInput = Omit<
   DatabaseCreateInput<Trip>,
@@ -21,7 +21,7 @@ type TripsDatabaseCreateInput = Omit<
  */
 export class TripsDatabase extends Database<Trip> {
   constructor() {
-    super(TransitDatabaseEnv.Trips);
+    super(TransitDatabaseEnv.Trips, TRIP_ENTITY_TYPE);
   }
 
   /**
@@ -46,11 +46,10 @@ export class TripsDatabase extends Database<Trip> {
         throw new ValidationException(
           `Unable to create as trip with the same service and route already exists`
         );
-      } else {
-        // A different error, so just throw it out
-        console.error(error);
-        throw error;
       }
+      // A different error, so just throw it out
+      console.error(error);
+      throw error;
     }
 
     return newItem;

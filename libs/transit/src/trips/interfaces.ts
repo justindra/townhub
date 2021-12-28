@@ -121,7 +121,9 @@ interface TripFrequency {
   exact_times: TripFrequencyType;
 }
 
-export interface Trip extends TransitEntity {
+export const TRIP_ENTITY_TYPE = 'transit-trip';
+
+export interface Trip extends TransitEntity<typeof TRIP_ENTITY_TYPE> {
   /** A composite key to match both route and service combination */
   route_id_service_id: string;
   /** Identifies a route. */

@@ -10,7 +10,9 @@ export enum ExceptionType {
   ServiceRemoved = 2,
 }
 
-export interface Service extends TransitEntity {
+export const SERVICE_ENTITY_TYPE = 'transit-service';
+
+export interface Service extends TransitEntity<typeof SERVICE_ENTITY_TYPE> {
   /** Indicates whether the service operates on this day of the week */
   monday: ServiceAvailability;
   /** Indicates whether the service operates on this day of the week */

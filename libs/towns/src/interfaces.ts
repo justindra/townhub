@@ -5,7 +5,7 @@ interface ModuleSetting {
   name: 'shuttles';
 }
 
-export interface Town extends BaseEntity {
+export interface Town extends BaseEntity<'town'> {
   /** A human-readable ID, can be used as a slug too */
   hid: string;
   /** The name of the town */

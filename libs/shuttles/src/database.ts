@@ -20,7 +20,10 @@ export const SHUTTLES_DATABASES = {
   },
 };
 
-class DatabaseWithTown<TItem extends BaseEntity> extends Database<TItem> {
+class DatabaseWithTown<
+  TItem extends BaseEntity<TEntityType>,
+  TEntityType extends string = string
+> extends Database<TItem> {
   async listByTown(townId: string) {
     return this.query({
       FilterExpression: '#townId = :townId',
@@ -36,19 +39,19 @@ class DatabaseWithTown<TItem extends BaseEntity> extends Database<TItem> {
 
 export class StopsDatabase extends DatabaseWithTown<Stop> {
   constructor() {
-    super(SHUTTLES_DATABASES.STOP.ENV);
+    super(SHUTTLES_DATABASES.STOP.ENV, 'shuttle-stop');
   }
 }
 
 export class RoutesDatabase extends DatabaseWithTown<Route> {
   constructor() {
-    super(SHUTTLES_DATABASES.ROUTE.ENV);
+    super(SHUTTLES_DATABASES.ROUTE.ENV, 'shuttle-route');
   }
 }
 
 export class SchedulesDatabase extends DatabaseWithTown<Schedule> {
   constructor() {
-    super(SHUTTLES_DATABASES.SCHEDULE.ENV);
+    super(SHUTTLES_DATABASES.SCHEDULE.ENV, 'shuttle-schedule');
   }
 
   /**
@@ -87,7 +90,7 @@ export class SchedulesDatabase extends DatabaseWithTown<Schedule> {
 }
 export class DailySchedulesDatabase extends Database<DailyData> {
   constructor() {
-    super(SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV);
+    super(SHUTTLES_DATABASES.DAILY_SCHEDULE.ENV, 'shuttle-daily-data');
   }
 
   /**

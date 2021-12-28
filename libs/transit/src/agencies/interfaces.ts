@@ -1,13 +1,15 @@
 import { BaseEntity } from '@townhub-libs/core';
 import { Email, LanguageCode, PhoneNumber, Timezone, URL } from '../interfaces';
 
+export const AGENCY_ENTITY_TYPE = 'transit-agency';
+
 /**
  * Identifies a transit brand which is often synonymous with a transit agency.
  * Note that in some cases, such as when a single agency operates multiple
  * separate services, agencies and brands are distinct. This document uses the
  * term "agency" in place of "brand".
  */
-export interface Agency extends BaseEntity {
+export interface Agency extends BaseEntity<typeof AGENCY_ENTITY_TYPE> {
   /** Full name of the transit agency. */
   name: string;
   /**

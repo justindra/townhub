@@ -1,11 +1,11 @@
 import { Database } from '@townhub-libs/core';
 import { DateTime } from 'luxon';
 import { DDB_INDEX_NAMES, TransitDatabaseEnv } from '../constants';
-import { Service } from './interfaces';
+import { SERVICE_ENTITY_TYPE, Service } from './interfaces';
 
 export class ServicesDatabase extends Database<Service> {
   constructor() {
-    super(TransitDatabaseEnv.Services);
+    super(TransitDatabaseEnv.Services, SERVICE_ENTITY_TYPE);
   }
 
   /**

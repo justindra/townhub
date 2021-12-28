@@ -6,7 +6,7 @@ import {
 } from '@townhub-libs/core';
 import { DateTime } from 'luxon';
 import { TransitDatabaseEnv } from '../constants';
-import { DailyTransitData } from './interfaces';
+import { DAILY_TRANSIT_DATA_ENTITY_TYPE, DailyTransitData } from './interfaces';
 
 /**
  * The Daily Data Table should be setup with the following details:
@@ -19,7 +19,7 @@ import { DailyTransitData } from './interfaces';
  */
 export class DailyDataDatabase extends Database<DailyTransitData> {
   constructor() {
-    super(TransitDatabaseEnv.DailyData);
+    super(TransitDatabaseEnv.DailyData, DAILY_TRANSIT_DATA_ENTITY_TYPE);
   }
 
   /**
