@@ -1,16 +1,17 @@
 import 'jest-dynalite/withDb';
-import { BaseEntity, Database } from './database';
+import { Database } from './database';
 import { NotFoundException } from './exceptions';
+import { BaseEntity } from './interfaces';
 
-type Item = BaseEntity & { name: string };
-const DBClient = new Database<Item>('TEST_TABLE_NAME');
+type Item = BaseEntity<'entity'> & { name: string };
+const DBClient = new Database<Item>('TEST_TABLE_NAME', 'entity');
 const actorId = 'test-user';
 
 describe('Database', () => {
   describe('instantiation', () => {
     it('should warn when the tablename is not set or is empty string', () => {
       var warn = jest.spyOn(global.console, 'warn');
-      new Database('');
+      new Database('', 'entity');
       expect(warn).toHaveBeenCalled();
 
       // Cleanup
@@ -23,6 +24,7 @@ describe('Database', () => {
       const res = await DBClient.create({ name: 'Test Name' }, actorId);
 
       expect(res.id).toBeDefined();
+      expect(res.id.startsWith('th-entity')).toBe(true);
       expect(res.created_at).toBeDefined();
       expect(res.updated_at).toBeDefined();
       expect(res.created_by).toEqual(actorId);

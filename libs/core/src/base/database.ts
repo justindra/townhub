@@ -206,8 +206,8 @@ export class Database<
     item: DatabaseCreateInput<TItem>,
     actorId: string
   ): TItem {
-    return ({
-      id: uuidv4(),
+    return {
+      id: `th-${this.entityType}|${uuidv4()}`,
       ...item,
       created_at: new Date().valueOf(),
       updated_at: new Date().valueOf(),
@@ -216,7 +216,6 @@ export class Database<
       // TODO: Remove the below once we are happy it has been removed
       createdAt: new Date().valueOf(),
       updatedAt: new Date().valueOf(),
-      entityType: this.entityType,
-    } as unknown) as TItem;
+    } as TItem;
   }
 }
