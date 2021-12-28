@@ -36,4 +36,4 @@ jobs:
       #     test-command: yarn test --coverage --ci --silent
       - name: Run tests
         # if: ${{ github.event_name != 'pull_request' }}
-        run: yarn test
+        run: yarn test --ci --silent --maxWorkers=1
