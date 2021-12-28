@@ -6,7 +6,7 @@ export const getCurrentGeoLocation = async (): Promise<LatLngExpression> => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position: Position) => {
+        (position) => {
           const coords: LatLngExpression = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
