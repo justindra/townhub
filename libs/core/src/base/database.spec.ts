@@ -7,6 +7,17 @@ const DBClient = new Database<Item>('TEST_TABLE_NAME');
 const actorId = 'test-user';
 
 describe('Database', () => {
+  describe('instantiation', () => {
+    it('should warn when the tablename is not set or is empty string', () => {
+      var warn = jest.spyOn(global.console, 'warn');
+      new Database('');
+      expect(warn).toHaveBeenCalled();
+
+      // Cleanup
+      warn.mockReset();
+      warn.mockRestore();
+    });
+  });
   describe('create', () => {
     it('should add a new item with the correct audit details', async () => {
       const res = await DBClient.create({ name: 'Test Name' }, actorId);
@@ -82,6 +93,14 @@ describe('Database', () => {
       expect(hydrated.map((val) => val.id).sort()).toEqual(
         [existingIds[0], existingIds[1]].sort()
       );
+    });
+
+    it('throws if an error occurs', async () => {
+      try {
+        await DBClient.hydrate(['test-2', 'test-4']);
+      } catch (error) {
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
     });
   });
 });
