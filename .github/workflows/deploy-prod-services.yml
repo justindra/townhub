@@ -12,6 +12,8 @@ on:
 jobs:
   install_and_test:
     runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 16
