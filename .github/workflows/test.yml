@@ -28,12 +28,12 @@ jobs:
       # Run install and test
       - run: yarn install
       - run: yarn run build:libs
-      - name: Run tests with coverage
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: hayuna/jest-reporter-action@v0.1.4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-command: yarn test --coverage --ci --silent
+      # - name: Run tests with coverage
+      #   if: ${{ github.event_name == 'pull_request' }}
+      #   uses: hayuna/jest-reporter-action@v0.1.4
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     test-command: yarn test --coverage --ci --silent
       - name: Run tests
         if: ${{ github.event_name != 'pull_request' }}
         run: yarn test
