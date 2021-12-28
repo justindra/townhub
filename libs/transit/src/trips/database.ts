@@ -46,11 +46,10 @@ export class TripsDatabase extends Database<Trip> {
         throw new ValidationException(
           `Unable to create as trip with the same service and route already exists`
         );
-      } else {
-        // A different error, so just throw it out
-        console.error(error);
-        throw error;
       }
+      // A different error, so just throw it out
+      console.error(error);
+      throw error;
     }
 
     return newItem;
