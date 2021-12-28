@@ -4,6 +4,7 @@ import {
   APIGatewayProxyHandlerV2,
   Context,
 } from 'aws-lambda';
+import { BaseException } from '../base';
 import { DEFAULT_TIMEZONE } from '../helpers';
 
 Sentry.init({
@@ -79,9 +80,9 @@ export const ApiGatewayWrapper = <TDataResult = any, TPathParameters = any>(
       await Sentry.flush(2000);
 
       return {
-        statusCode: error.statusCode || 500,
+        statusCode: (error as BaseException).statusCode || 500,
         body: JSON.stringify({
-          message: error.message || 'Something went wrong',
+          message: (error as BaseException).message || 'Something went wrong',
           error: error,
         }),
         headers: DEFAULT_HEADERS,

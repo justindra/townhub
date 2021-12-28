@@ -4,10 +4,21 @@
  * things. As it is just a way to tidy up our errors.
  */
 
+export class BaseException extends Error {
+  statusCode: number = 500;
+  constructor(message: string) {
+    super(message);
+    this.name = 'BaseExecption';
+    // Set the prototype explicitly.
+    // https://github.com/Microsoft/TypeScript-wiki/blob/master/Breaking-Changes.md#extending-built-ins-like-error-array-and-map-may-no-longer-work
+    Object.setPrototypeOf(this, BaseException.prototype);
+  }
+}
+
 /**
  * Exception created when a user is unauthenticated
  */
-export class UnauthenticatedException extends Error {
+export class UnauthenticatedException extends BaseException {
   statusCode = 401;
   constructor(message: string = 'User is not authenticated') {
     super(message);
@@ -36,7 +47,7 @@ export class UnauthorizedException extends UnauthenticatedException {
 /**
  * Exception created when an item is not found
  */
-export class NotFoundException extends Error {
+export class NotFoundException extends BaseException {
   statusCode = 404;
 
   constructor(message: string) {
@@ -51,7 +62,7 @@ export class NotFoundException extends Error {
 /**
  * Exception created when an item is not found
  */
-export class ValidationException extends Error {
+export class ValidationException extends BaseException {
   statusCode = 400;
 
   constructor(message: string) {
