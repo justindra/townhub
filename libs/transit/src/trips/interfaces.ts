@@ -122,6 +122,8 @@ interface TripFrequency {
 }
 
 export interface Trip extends TransitEntity {
+  /** A composite key to match both route and service combination */
+  route_id_service_id: string;
   /** Identifies a route. */
   route_id: string;
   /** Identifies a set of dates when service is available */

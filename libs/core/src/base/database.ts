@@ -2,7 +2,15 @@ import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import { NotFoundException } from './exceptions';
 
-const client = new DynamoDB.DocumentClient();
+const client = new DynamoDB.DocumentClient(
+  process.env.MOCK_DYNAMODB_ENDPOINT
+    ? {
+        endpoint: process.env.MOCK_DYNAMODB_ENDPOINT,
+        sslEnabled: false,
+        region: 'local',
+      }
+    : undefined
+);
 
 const ddb = {
   get: (params: DynamoDB.DocumentClient.GetItemInput) =>
@@ -121,6 +129,7 @@ export class Database<TItem extends BaseEntity = any> {
       ...oldItem,
       ...item,
       updated_at: new Date().valueOf(),
+      updated_by: actorId,
       // TODO: remove once all is deprecated
       updatedAt: new Date().valueOf(),
     };
@@ -131,20 +140,6 @@ export class Database<TItem extends BaseEntity = any> {
     });
 
     return newItem as TItem;
-  }
-
-  /**
-   * Upsert an item into the database, e.g. create it if it doesn't exist
-   * or update an existing one into the database
-   * @param item The item to upsert
-   * @param actorId The user performing the update/insert
-   */
-  async upsert(item: DatabaseUpdateInput<TItem>, actorId: string) {
-    if (!item.id) {
-      return this.create(item as TItem, actorId);
-    }
-
-    return this.update(item.id, item, actorId);
   }
 
   /**
@@ -162,13 +157,13 @@ export class Database<TItem extends BaseEntity = any> {
    * Hydrate a list of ids from the database
    * @param ids The list of ids to retrieve
    */
-  async hydrate(ids: string[]): Promise<TItem[]> {
+  async hydrate(ids: string[], idField: keyof TItem = 'id'): Promise<TItem[]> {
     if (!ids.length) return [];
     try {
       const params: DynamoDB.DocumentClient.BatchGetItemInput = {
         RequestItems: {
           [this.tableName]: {
-            Keys: ids.map((id) => ({ id })),
+            Keys: ids.map((id) => ({ [idField]: id })),
           },
         },
       };
@@ -223,7 +218,7 @@ export class Database<TItem extends BaseEntity = any> {
    * Turn the given input into a new item object. This is used as a helper so
    * we can keep it consistent when replacing the create function.
    * @param item The input to the database
-   * @param item The user performing the creation
+   * @param actorId The user performing the creation
    * @returns The generated item
    */
   protected generateCreateItemInput(

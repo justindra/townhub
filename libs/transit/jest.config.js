@@ -5,4 +5,5 @@ module.exports = {
   ...base,
   name: package.name,
   displayName: package.name,
+  setupFiles: ['./setup-before-env.ts']
 };

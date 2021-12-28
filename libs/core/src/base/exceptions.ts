@@ -1,3 +1,9 @@
+/* istanbul ignore file */
+/**
+ * We are ignoring this file for code coverage checks as it should not affect
+ * things. As it is just a way to tidy up our errors.
+ */
+
 /**
  * Exception created when a user is unauthenticated
  */

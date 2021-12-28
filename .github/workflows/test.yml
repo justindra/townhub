@@ -16,13 +16,14 @@ on:
 jobs:
   main:
     runs-on: ubuntu-latest
-
+    env:
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 12
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '16'
       # Cache Yarn packages to reduce install time
       - uses: c-hive/gha-yarn-cache@v1
       # Run install and test
@@ -33,7 +34,7 @@ jobs:
         uses: hayuna/jest-reporter-action@v0.1.4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-command: yarn test --coverage
+          test-command: yarn test --coverage --ci --silent
       - name: Run tests
         if: ${{ github.event_name != 'pull_request' }}
-        run: yarn test
+        run: yarn test --ci --silent
