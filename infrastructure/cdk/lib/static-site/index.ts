@@ -1,6 +1,7 @@
 import { Stack, StackProps, App } from '@serverless-stack/resources';
-import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
+import { DnsValidatedCertificate } from '@aws-cdk/aws-certificatemanager';
 import { CfnOutput, Duration, RemovalPolicy } from '@aws-cdk/core';
+import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
 import { Bucket } from '@aws-cdk/aws-s3';
 import {
   CloudFrontWebDistribution,
@@ -8,7 +9,7 @@ import {
 } from '@aws-cdk/aws-cloudfront';
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
-import { getDomainNameList } from './helpers';
+import { getDomainNameList, getSSLDomainName } from './helpers';
 import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
@@ -40,14 +41,15 @@ export default class StaticSiteStack extends Stack {
       domainName: rootDomainName,
     });
 
-    // Get the SSL Certificate ARN (see @townhub/infra-ssl for details)
-    // StringParameter.valueFromLookup seems to add a newline character at the end,
-    // so we should remove it before using.
-    // https://github.com/aws/aws-cdk/issues/10446
-    const sslCertificateArn = StringParameter.valueFromLookup(
-      this,
-      '/ssl-certs/global'
-    ).replace(/\r?\n|\r/g, '');
+    const sslCertificate = new DnsValidatedCertificate(
+      scope,
+      `${id}SSLCertificate`,
+      {
+        hostedZone,
+        region: 'us-east-1',
+        ...getSSLDomainName(rootDomainName, subdomains, false),
+      }
+    );
 
     // Create the bucket
     const bucket = new Bucket(this, 'StaticSiteBucket', {
@@ -104,7 +106,7 @@ export default class StaticSiteStack extends Stack {
           },
         ],
         aliasConfiguration: {
-          acmCertRef: sslCertificateArn,
+          acmCertRef: sslCertificate.certificateArn,
           names: hostingDomainNames,
         },
       }

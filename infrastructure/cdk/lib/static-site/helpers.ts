@@ -18,3 +18,30 @@ export const getDomainNameList = (
 
   return subdomains.map((subdomain) => `${subdomain}.${defaultDomain}`);
 };
+
+/**
+ * Get the domain name required for the SSL certificate, either the rootDomainName
+ * or wildcard when it's hosted in the root.
+ *
+ * @param rootDomainName The rootDomain
+ * @param subdomains An optional list of subdomains to serve the urls on
+ * @param includeRootDomain Whether or not to host on rootDomain as well
+ */
+export const getSSLDomainName = (
+  rootDomainName: string,
+  subdomains?: string[],
+  includeRootDomain = false
+): { domainName: string; subjectAlternativeNames?: string[] } => {
+  if (includeRootDomain) {
+    return {
+      domainName: rootDomainName,
+      subjectAlternativeNames: (subdomains || []).map(
+        (val) => `${val}.${rootDomainName}`
+      ),
+    };
+  }
+
+  return {
+    domainName: `*.${rootDomainName}`,
+  };
+};
