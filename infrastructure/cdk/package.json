@@ -6,10 +6,12 @@
     "test": "sst test",
     "build": "sst build",
     "deploy": "sst deploy",
+    "diff": "sst diff",
     "remove": "sst remove"
   },
   "dependencies": {
     "@aws-cdk/aws-apigateway": "1.126.0",
+    "@aws-cdk/aws-certificatemanager": "1.126.0",
     "@aws-cdk/aws-cloudfront": "1.126.0",
     "@aws-cdk/aws-dynamodb": "1.126.0",
     "@aws-cdk/aws-iam": "1.126.0",

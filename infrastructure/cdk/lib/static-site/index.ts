@@ -10,7 +10,6 @@ import {
 import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
 import { getDomainNameList, getSSLDomainName } from './helpers';
-import { StringParameter } from '@aws-cdk/aws-ssm';
 
 export interface StaticSiteStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -42,7 +41,7 @@ export default class StaticSiteStack extends Stack {
     });
 
     const sslCertificate = new DnsValidatedCertificate(
-      scope,
+      this,
       `${id}SSLCertificate`,
       {
         hostedZone,
