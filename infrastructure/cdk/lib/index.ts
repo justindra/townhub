@@ -5,18 +5,18 @@ import ShuttlesStack from './modules/shuttles';
 import TownsStack from './modules/towns';
 
 export default function main(app: App): void {
-  const rootDomainName = 'townhub.ca';
+  const rootDomainName = app.stage === 'dev' ? 'dev.townhub.ca' : 'townhub.ca';
 
-  new ApiGatewayStack(app, 'ApiGatewayStack', {
-    rootDomainName,
-  });
+  // new ApiGatewayStack(app, 'ApiGatewayStack', {
+  //   rootDomainName,
+  // });
 
-  new StaticSiteStack(app, 'StaticHomePageStack', {
-    rootDomainName,
-  });
+  // new StaticSiteStack(app, 'StaticHomePageStack', {
+  //   rootDomainName,
+  // });
 
-  new ShuttlesStack(app, 'module-shuttle');
-  new TownsStack(app, 'module-town');
+  // new ShuttlesStack(app, 'module-shuttle');
+  // new TownsStack(app, 'module-town');
 
   // Setup subdomains for each town in the system
   // TODO: Eventually, might move this into a Lambda function that adds a new

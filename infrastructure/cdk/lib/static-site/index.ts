@@ -46,7 +46,7 @@ export default class StaticSiteStack extends Stack {
       {
         hostedZone,
         region: 'us-east-1',
-        ...getSSLDomainName(rootDomainName, subdomains, false),
+        ...getSSLDomainName(rootDomainName, subdomains, true),
       }
     );
 
