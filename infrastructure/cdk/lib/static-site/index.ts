@@ -1,5 +1,9 @@
 import { DnsValidatedCertificate } from '@aws-cdk/aws-certificatemanager';
-import { Distribution, CachePolicy } from '@aws-cdk/aws-cloudfront';
+import {
+  Distribution,
+  CachePolicy,
+  ViewerProtocolPolicy,
+} from '@aws-cdk/aws-cloudfront';
 import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
@@ -56,11 +60,16 @@ export default class StaticSiteStack extends Stack {
     const hostingDomainNames = getDomainNameList(rootDomainName, subdomains);
     const bucketOrigin = new S3Origin(bucket);
     const distribution = new Distribution(this, `${id}Distribution`, {
-      defaultBehavior: { origin: bucketOrigin },
+      defaultBehavior: {
+        origin: bucketOrigin,
+        viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+      },
+      defaultRootObject: 'index.html',
       additionalBehaviors: {
         // Don't cache the index.html
         'index.html': {
           origin: bucketOrigin,
+          viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: CachePolicy.CACHING_DISABLED,
         },
       },
