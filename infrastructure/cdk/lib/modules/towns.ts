@@ -12,7 +12,13 @@ export default class TownsStack extends Stack {
     super(scope, id, props);
 
     api.addRoutes(this, {
-      'GET /towns/hid/{townHid}': 'src/towns/get-by-hid.main',
+      'GET /towns/hid/{townHid}': {
+        function: {
+          srcPath: 'src/towns/',
+          handler: 'get-by-hid.main',
+          environment: {},
+        },
+      },
     });
   }
 }
