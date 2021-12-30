@@ -1,17 +1,18 @@
-import { App, Stack, StackProps } from '@serverless-stack/resources';
-import { TownhubTable } from '../resources/table';
+import { App, Stack } from '@serverless-stack/resources';
+import { ServiceStackProps } from './base';
+
+interface TownsServiceProps extends ServiceStackProps {}
 
 /**
  * A Stack containing all the static infrastructure for the towns feature
  * of Townhub.
- *
- * @output TownsTableName, TownsTableArn
  */
 export default class TownsStack extends Stack {
-  constructor(scope: App, id: string, props?: StackProps) {
+  constructor(scope: App, id: string, { api, ...props }: TownsServiceProps) {
     super(scope, id, props);
 
-    // Create the different tables for this module
-    new TownhubTable(this, 'Towns', { stage: scope.stage });
+    api.addRoutes(this, {
+      'GET /towns/hid/{townHid}': 'src/towns/get-by-hid.main',
+    });
   }
 }
