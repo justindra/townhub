@@ -8,14 +8,22 @@
 
 # production
 /build
+cdk.out
 cdk.context.json
 
 # typescript
-*.js
+src/*.js
+lib/*.js
 *.d.ts
 
 # misc
 .DS_Store
+
+# sst build output
+.build
+.sst/artifacts*
+
+.idea
 
 npm-debug.log*
 yarn-debug.log*

@@ -1,63 +1,38 @@
-import { CfnOutput, Construct, RemovalPolicy } from '@aws-cdk/core';
+import { Construct, RemovalPolicy } from '@aws-cdk/core';
 import {
-  Table,
-  AttributeType,
-  BillingMode,
-  Attribute,
-  TableProps,
-  StreamViewType,
-} from '@aws-cdk/aws-dynamodb';
+  Table as SSTTable,
+  TableProps as SSTTableProps,
+} from '@serverless-stack/resources';
 
-export interface TownhubTableProps {
-  /** Any props to pass into the table */
-  tableProps?: TableProps;
-  /** Whether or not to create a stream */
-  outputStream?: boolean;
-  /** The stage passed in from the top */
-  stage?: string;
+interface TownhubTableProps extends SSTTableProps {
+  stage: string;
 }
 
 /**
  * A basic Table used in Townhub which incorporates certain defaults:
- *  - the partition key is always an `id` string
- *  - The billing mode is always pay per request
+ *  - The billing mode is always pay per request (done by SST Table)
+ *  - PIT is enabled in prod
+ *  - The removal policy is retain in prod and destroy in other env
  *
  * @output TableName
  * @output TableArn
  * @output TableStreamArn (optional)
  */
-export class TownhubTable {
+export class TownhubTable extends SSTTable {
   constructor(
     scope: Construct,
     id: string,
-    { outputStream, tableProps, stage }: TownhubTableProps = {}
+    { stage, ...props }: TownhubTableProps
   ) {
-    const DEFAULT_PARTITION_KEY: Attribute = {
-      name: 'id',
-      type: AttributeType.STRING,
-    };
-    const DEFAULT_BILLING_MODE: BillingMode = BillingMode.PAY_PER_REQUEST;
-
-    // Create the table
-    const table = new Table(scope, id, {
-      partitionKey: DEFAULT_PARTITION_KEY,
-      billingMode: DEFAULT_BILLING_MODE,
-      // Retain on prod, otherwise destroy
-      removalPolicy:
-        stage === 'prod' ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
-      // Set the streamViewType to show both by default
-      ...(outputStream ? { stream: StreamViewType.NEW_IMAGE } : {}),
-      ...(tableProps ?? {}),
+    super(scope, id, {
+      ...props,
+      dynamodbTable: {
+        // In prod, we enable PIT
+        pointInTimeRecovery: stage === 'prod',
+        // In prod, we retain otherwise, we just remove it
+        removalPolicy:
+          stage === 'prod' ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+      },
     });
-
-    // Cloudformation Outputs
-    new CfnOutput(scope, `${id}TableName`, { value: table.tableName });
-    new CfnOutput(scope, `${id}TableArn`, { value: table.tableArn });
-    if (outputStream) {
-      new CfnOutput(scope, `${id}TableStreamArn`, {
-        value: table.tableStreamArn ?? '',
-      });
-    }
-    return table;
   }
 }
