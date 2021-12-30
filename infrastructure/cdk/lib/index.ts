@@ -7,9 +7,9 @@ import TownsStack from './modules/towns';
 export default function main(app: App): void {
   const rootDomainName = app.stage === 'dev' ? 'dev.townhub.ca' : 'townhub.ca';
 
-  // new ApiGatewayStack(app, 'ApiGatewayStack', {
-  //   rootDomainName,
-  // });
+  new ApiGatewayStack(app, 'ApiGatewayStack', {
+    rootDomainName,
+  });
 
   // new StaticSiteStack(app, 'StaticHomePageStack', {
   //   rootDomainName,
