@@ -25,5 +25,11 @@ export default class ApiGatewayStack extends Stack {
     this.api = new Api(this, 'Api', {
       customDomain: apiDomainName,
     });
+
+    // TODO: Add the below endpoints properly
+    // this.api.addRoutes(this, {
+    //   'GET /towns/hid/{townHid}': 'src/towns/hid/get.main',
+    //   'GET /transit/daily/{timestamp}': 'src/transit/daily.main',
+    // });
   }
 }
