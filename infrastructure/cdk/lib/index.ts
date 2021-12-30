@@ -1,5 +1,4 @@
 import { App } from '@serverless-stack/resources';
-import ShuttlesStack from './modules/shuttles';
 import { TownsStack } from './modules';
 import CoreStack from './core-stack';
 
