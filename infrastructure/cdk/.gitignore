@@ -21,6 +21,7 @@ lib/*.js
 
 # sst build output
 .build
+.sst/artifacts*
 
 .idea
 

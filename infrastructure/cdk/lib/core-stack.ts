@@ -1,5 +1,5 @@
 import { Stack, StackProps, App, Api } from '@serverless-stack/resources';
-import { StaticSite, TownhubTable } from './resources';
+import { StaticSite } from './resources';
 
 export interface CoreStackProps extends StackProps {
   /** The root domain name, used to lookup a Route53 Hosted Zone */
@@ -41,14 +41,5 @@ export default class CoreStack extends Stack {
       rootDomainName,
       subdomains: appSubdomains,
     });
-
-    /*************************************************************************
-     * Towns Database
-     *************************************************************************/
-    new TownhubTable(this, 'Towns', { stage: scope.stage });
-
-    /*************************************************************************
-     * Transit Databases
-     *************************************************************************/
   }
 }

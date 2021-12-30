@@ -1,6 +1,6 @@
 import { App } from '@serverless-stack/resources';
 import ShuttlesStack from './modules/shuttles';
-import TownsStack from './modules/towns';
+import { TownsStack } from './modules';
 import CoreStack from './core-stack';
 
 export default function main(app: App): void {
@@ -16,10 +16,5 @@ export default function main(app: App): void {
     appSubdomains: ['fernie', 'revelstoke'],
   });
 
-  // new StaticSiteStack(app, 'StaticHomePageStack', {
-  //   rootDomainName,
-  // });
-
-  // new ShuttlesStack(app, 'module-shuttle');
-  // new TownsStack(app, 'module-town');
+  new TownsStack(app, 'TownsModule', { api: core.api });
 }
