@@ -7,16 +7,12 @@
  * @param subdomains An optional list of subdomains to serve the urls on
  */
 export const getDomainNameList = (
-  stage: string,
   rootDomainName: string,
   subdomains?: string[]
 ): string[] => {
-  const defaultDomain =
-    stage === 'prod' ? `${rootDomainName}` : `${stage}.${rootDomainName}`;
+  if (!subdomains || !subdomains.length) return [rootDomainName];
 
-  if (!subdomains || !subdomains.length) return [defaultDomain];
-
-  return subdomains.map((subdomain) => `${subdomain}.${defaultDomain}`);
+  return subdomains.map((subdomain) => `${subdomain}.${rootDomainName}`);
 };
 
 /**

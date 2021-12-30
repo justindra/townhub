@@ -1,6 +1,7 @@
 {
   "name": "townhub-infra-cdk",
-  "type": "@serverless-stack/resources",
   "stage": "dev",
-  "region": "us-west-2"
+  "region": "us-west-2",
+  "lint": true,
+  "typeCheck": true
 }

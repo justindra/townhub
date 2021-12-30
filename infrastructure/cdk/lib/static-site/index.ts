@@ -1,14 +1,11 @@
-import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { DnsValidatedCertificate } from '@aws-cdk/aws-certificatemanager';
-import { CfnOutput, Duration, RemovalPolicy } from '@aws-cdk/core';
+import { Distribution, CachePolicy } from '@aws-cdk/aws-cloudfront';
+import { S3Origin } from '@aws-cdk/aws-cloudfront-origins';
 import { ARecord, HostedZone, RecordTarget } from '@aws-cdk/aws-route53';
-import { Bucket } from '@aws-cdk/aws-s3';
-import {
-  CloudFrontWebDistribution,
-  OriginAccessIdentity,
-} from '@aws-cdk/aws-cloudfront';
-import { PolicyStatement } from '@aws-cdk/aws-iam';
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets';
+import { Bucket } from '@aws-cdk/aws-s3';
+import { CfnOutput, RemovalPolicy } from '@aws-cdk/core';
+import { Stack, StackProps, App } from '@serverless-stack/resources';
 import { getDomainNameList, getSSLDomainName } from './helpers';
 
 export interface StaticSiteStackProps extends StackProps {
@@ -46,7 +43,7 @@ export default class StaticSiteStack extends Stack {
       {
         hostedZone,
         region: 'us-east-1',
-        ...getSSLDomainName(rootDomainName, subdomains, true),
+        ...getSSLDomainName(rootDomainName, subdomains),
       }
     );
 
@@ -56,60 +53,29 @@ export default class StaticSiteStack extends Stack {
     });
 
     // Define the custom domain to use for the api
-    const hostingDomainNames = getDomainNameList(
-      scope.stage,
-      rootDomainName,
-      subdomains
-    );
-
-    // Create the CloudFront OAI
-    const oai = new OriginAccessIdentity(this, 'OAI', {
-      comment: `OAI for ${scope.name} bucket`,
-    });
-
-    // Create and attach the access policy to the bucket only allowing
-    // the CloudFront OAI to access it.
-    const policy = new PolicyStatement();
-    policy.addActions('s3:GetBucket*');
-    policy.addActions('s3:GetObject*');
-    policy.addActions('s3:List*');
-    policy.addResources(bucket.bucketArn, `${bucket.bucketArn}/$`);
-    policy.addCanonicalUserPrincipal(
-      oai.cloudFrontOriginAccessIdentityS3CanonicalUserId
-    );
-
-    bucket.addToResourcePolicy(policy);
-
-    const distribution = new CloudFrontWebDistribution(
-      this,
-      'StaticSiteDistribution',
-      {
-        originConfigs: [
-          {
-            s3OriginSource: {
-              s3BucketSource: bucket,
-              originAccessIdentity: oai,
-            },
-            behaviors: [
-              { defaultTtl: Duration.seconds(0), pathPattern: 'index.html' },
-              { isDefaultBehavior: true },
-            ],
-          },
-        ],
-        // Re-direct all 404s to the index.html to allow for SPA routing
-        errorConfigurations: [
-          {
-            errorCode: 404,
-            responseCode: 200,
-            responsePagePath: '/index.html',
-          },
-        ],
-        aliasConfiguration: {
-          acmCertRef: sslCertificate.certificateArn,
-          names: hostingDomainNames,
+    const hostingDomainNames = getDomainNameList(rootDomainName, subdomains);
+    const bucketOrigin = new S3Origin(bucket);
+    const distribution = new Distribution(this, `${id}Distribution`, {
+      defaultBehavior: { origin: bucketOrigin },
+      additionalBehaviors: {
+        // Don't cache the index.html
+        'index.html': {
+          origin: bucketOrigin,
+          cachePolicy: CachePolicy.CACHING_DISABLED,
         },
-      }
-    );
+      },
+      domainNames: hostingDomainNames,
+      certificate: sslCertificate,
+      errorResponses: [
+        // Forward any missing files to the index, so that it can be handled by
+        // the react app instead
+        {
+          httpStatus: 404,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+        },
+      ],
+    });
 
     // Go through each given domain names and set the policies and domain
     // names for each required hosting domain names
