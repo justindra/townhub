@@ -1,0 +1,13 @@
+{
+  "name": "@townhub/core",
+  "version": "0.0.1",
+  "main": "core/index",
+  "scripts": {
+    "script": "esr",
+    "test": "jest"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "esbuild-runner": "^2.2.1"
+  }
+}

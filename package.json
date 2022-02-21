@@ -1,0 +1,37 @@
+{
+  "name": "townhub",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "sst:start": "AWS_PROFILE=townhub-dev sst start --stage dev",
+    "sst:build": "AWS_PROFILE=townhub-dev sst build --stage dev",
+    "sst:deploy": "AWS_PROFILE=townhub-dev sst deploy --stage dev",
+    "sst:remove": "AWS_PROFILE=townhub-dev sst remove --stage dev",
+    "prepare": "husky install",
+    "prettier": "prettier --write --ignore-unknown"
+  },
+  "workspaces": [
+    "backend",
+    "frontend/*"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "serverless-stack"
+    ]
+  },
+  "devDependencies": {
+    "@serverless-stack/cli": "0.65.3",
+    "@serverless-stack/resources": "0.65.3",
+    "@tsconfig/node14": "^1.0.1",
+    "@types/aws-lambda": "^8.10.92",
+    "@types/node": "<15.0.0",
+    "aws-cdk-lib": "2.7.0",
+    "husky": "7.0.4",
+    "jest": "^27.5.1",
+    "lerna": "4.0.0",
+    "lint-staged": "12.3.4",
+    "prettier": "2.5.1",
+    "typescript": "^4.5.5"
+  }
+}
