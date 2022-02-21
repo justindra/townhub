@@ -1,2 +1,0 @@
-restApiId: ${ssm:/townhub/${opt:stage, 'dev'}/api-gateway/rest-api-id}
-restApiRootResourceId: ${ssm:/townhub/${opt:stage, 'dev'}/api-gateway/rest-api-root-resource-id}
