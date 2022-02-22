@@ -2,7 +2,6 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Sample } from '@townhub/core';
-import { Transite } from '@townhub/core/transit';
 
 function App() {
   console.log(Sample.foo());
@@ -11,7 +10,7 @@ function App() {
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload. {Transite}
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
           className='App-link'

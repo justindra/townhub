@@ -1,11 +1,11 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["core", "services", "scripts"],
+  "include": ["core", "services", "scripts", "transit"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@townhub/core": ["core"],
-      "@townhub/core/*": ["core/*"]
+      "@townhub/core/transit": ["transit"]
     }
   }
 }

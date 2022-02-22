@@ -14,11 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "paths": {
-      // "@townhub/core": ["../../backend/core"],
-      "@townhub/core/*": ["../../backend/core/*"]
-    }
+    "jsx": "react-jsx"
   },
   "include": ["src", "../../backend"]
 }

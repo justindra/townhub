@@ -1,2 +1,11 @@
 export * from './sample';
-export * from './transit';
+export type {
+  BaseEntity,
+  Nullable,
+  Timezone,
+  LanguageCode,
+} from './interfaces';
+
+// Re-export the modules
+export * from '../transit';
+export * from './users';
