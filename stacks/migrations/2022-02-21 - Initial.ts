@@ -1,6 +1,7 @@
 import type { Kysely, Sql } from 'kysely';
 import {
   DEFAULT_AGENCIES_TABLE_NAME,
+  DEFAULT_STOPS_TABLE_NAME,
   DEFAULT_USERS_TABLE_NAME,
 } from '../../backend';
 
@@ -36,7 +37,7 @@ export async function up(db: KyselyWithRaw): Promise<void> {
     .raw('CREATE EXTENSION IF NOT EXISTS postgis')
     .execute(undefined as any);
   await db
-    .raw('CREATE EXTENSION IF NOT EXISTS "pgcrypto"')
+    .raw('CREATE EXTENSION IF NOT EXISTS pgcrypto')
     .execute(undefined as any);
 
   // Create the users table
@@ -65,13 +66,30 @@ export async function up(db: KyselyWithRaw): Promise<void> {
     .addColumn('fare_url', 'text')
     .addColumn('email', 'text')
     .execute();
+
+  // Create the Stops Table
+  await createBaseTable(db, DEFAULT_STOPS_TABLE_NAME)
+    .addColumn('imported_id', 'text', (col) => col.unique())
+    .addColumn('code', 'text')
+    .addColumn('name', 'text', (col) => col.notNull())
+    .addColumn('location', 'point' as any)
+    .addColumn('zone_id', 'uuid')
+    .addColumn('url', 'text')
+    .addColumn('location_type', 'integer')
+    .addColumn('parent_station', 'uuid')
+    .addColumn('timezone', 'text')
+    .addColumn('wheelchair_boarding', 'integer')
+    .addColumn('level_id', 'uuid')
+    .addColumn('platform_code', 'text')
+    .execute();
 }
 
 export async function down(db: KyselyWithRaw): Promise<void> {
   // Drop the Tables created
+  await db.schema.dropTable(DEFAULT_STOPS_TABLE_NAME).ifExists().execute();
   await db.schema.dropTable(DEFAULT_AGENCIES_TABLE_NAME).ifExists().execute();
   await db.schema.dropTable(DEFAULT_USERS_TABLE_NAME).ifExists().execute();
   // Drop the Extensions
-  await db.raw('DROP EXTENSION IF EXISTS "pgcrypto"').execute(undefined as any);
+  await db.raw('DROP EXTENSION IF EXISTS pgcrypto').execute(undefined as any);
   await db.raw('DROP EXTENSION IF EXISTS postgis').execute(undefined as any);
 }

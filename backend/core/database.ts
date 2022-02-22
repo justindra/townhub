@@ -30,7 +30,10 @@ const convertItemToColumnAndValues = <TItem extends Record<string, any>>(
   return { columns, values };
 };
 
-export class DatabaseTable<TItem extends BaseEntity> {
+export class DatabaseTable<
+  TItem extends BaseEntity,
+  TDatabaseItem extends BaseEntity = TItem
+> {
   /** The database instance to send queries to */
   private db: iDataAPIClient;
 
@@ -53,17 +56,19 @@ export class DatabaseTable<TItem extends BaseEntity> {
     item: DatabaseCreateInput<TItem>,
     actorId: string
   ): Promise<TItem> {
-    const { columns, values } = convertItemToColumnAndValues({
-      ...item,
-      created_by: actorId,
-      updated_by: actorId,
-    });
+    const { columns, values } = convertItemToColumnAndValues(
+      this.beforeDBTransform({
+        ...item,
+        created_by: actorId,
+        updated_by: actorId,
+      } as Partial<TItem>)
+    );
 
     const query = `INSERT INTO ${this.tableName}(${columns.join(', ')})
 VALUES (${values.map((val) => `'${val}'`).join(', ')})
 RETURNING *`;
     const res = await this.db.query(query);
-    return res.records?.[0];
+    return this.afterDBTransform(res.records?.[0]);
   }
 
   /**
@@ -79,12 +84,12 @@ RETURNING *`;
     actorId: string
   ): Promise<TItem> {
     const { columns, values } = convertItemToColumnAndValues(
-      {
+      this.beforeDBTransform({
         ...item,
         // Set the audit values
         updated_at: DateTime.local().toISO(),
         updated_by: actorId,
-      },
+      }),
       // Ignore these values, so that it can never be updated
       ['created_at', 'created_by', 'id']
     );
@@ -95,6 +100,34 @@ WHERE id = '${id}'
 RETURNING *`;
 
     const res = await this.db.query(query);
-    return res.records?.[0];
+    return this.afterDBTransform(res.records?.[0]);
+  }
+
+  /**
+   * List all data from the table
+   */
+  async list(): Promise<TItem[]> {
+    const res = await this.db.query(`SELECT * from ${this.tableName}`);
+    return res.records.map(this.afterDBTransform);
+  }
+
+  /**
+   * A transformer to transform any of the item(s) to fit with the database item
+   * before it gets inserted back in, or updated.
+   * @param item The item to push in
+   */
+  beforeDBTransform<TBeforeItem = Partial<TItem>>(
+    item: TBeforeItem
+  ): TDatabaseItem {
+    return item as any as TDatabaseItem;
+  }
+
+  /**
+   * A transformer to transform any of the database item(s) into one that fits
+   * the interface as required for usage
+   * @param databaseItem The raw database item
+   */
+  afterDBTransform(databaseItem: TDatabaseItem): TItem {
+    return databaseItem as any as TItem;
   }
 }
