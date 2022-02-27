@@ -3,6 +3,7 @@ import { Kysely, MutationObject, Selectable, Updateable } from 'kysely';
 import { DataApiDialect } from 'kysely-data-api';
 import { DateTime } from 'luxon';
 
+// Setup Kysely configuration
 const db = new Kysely({
   dialect: new DataApiDialect({
     mode: 'postgres',
@@ -15,6 +16,18 @@ const db = new Kysely({
   }),
 });
 
+/**
+ * TODO:
+ *  - Setup Kysely plugin to automatically transform date fields from DateTime
+ *    to ISO string before sending to the database and then re-transform back
+ *    to the DateTime object when it comes back. (See the camelCase plugin for
+ *    inspiration)
+ */
+
+/**
+ * A wrapper around the database so that we can just make some simple calls to
+ * do simple CRUD for different tables.
+ */
 export class DatabaseTable<
   TDatabase extends Record<string, any>,
   TTableName extends keyof TDatabase & string,
