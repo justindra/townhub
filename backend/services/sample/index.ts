@@ -32,11 +32,12 @@ export const handler: APIGatewayProxyHandlerV2 = async () => {
 
   await StopsClient.create(
     {
-      name: 'stop X',
+      name: 'stop this is crazy',
       lat: 0.2,
       lon: 0.3,
     } as Stop,
-    '82571933-b93e-4db8-a852-7fefbf2a4ec5'
+    // '82571933-b93e-4db8-a852-7fefbf2a4ec5'
+    null as any as string
   );
 
   const records = await StopsClient.list();

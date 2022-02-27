@@ -1,3 +1,6 @@
+import { ColumnType, Generated } from 'kysely';
+import { DateTime } from 'luxon';
+
 /**
  * An IETF BCP 47 language code. For an introduction to IETF BCP 47, refer to
  * http://www.rfc-editor.org/rfc/bcp/bcp47.txt and http://www.w3.org/International/articles/language-tags/.
@@ -15,20 +18,17 @@ export type Timezone = string;
 /** Set field as nullable */
 export type Nullable<TField> = TField | null;
 
-/**
- * The base Entity that all are based on
- */
 export type BaseEntity = {
   /** The id of this entity, should be a v4 UUID */
-  id: string;
+  id: Generated<string>;
   /** The time this entity was created */
-  created_at: string;
+  created_at: ColumnType<DateTime, never, never>;
   /** The person who created the entity */
-  created_by: string;
+  created_by: ColumnType<string, string | undefined, never>;
   /** The time this entity was updated */
-  updated_at: string;
+  updated_at: ColumnType<DateTime, string | undefined, string>;
   /** The person who updated the entity */
-  updated_by: string;
+  updated_by: ColumnType<string, string | undefined, string>;
 };
 
 export type OmitAuditFields<TItem = BaseEntity> = Omit<

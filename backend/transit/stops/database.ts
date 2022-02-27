@@ -1,4 +1,5 @@
 import { DatabaseTable } from 'core/database';
+import { Selectable, sql, Updateable } from 'kysely';
 import { Stop } from './interfaces';
 
 export const DEFAULT_STOPS_TABLE_NAME = 'stops';
@@ -15,15 +16,23 @@ type DatabaseStop = Omit<Stop, 'lon' | 'lat'> & {
   location: string;
 };
 
-export class StopsTable extends DatabaseTable<Stop, DatabaseStop> {
+type Database = {
+  [DEFAULT_STOPS_TABLE_NAME]: DatabaseStop;
+};
+
+export class StopsTable extends DatabaseTable<
+  Database,
+  typeof DEFAULT_STOPS_TABLE_NAME,
+  Stop
+> {
   constructor() {
     super(DEFAULT_STOPS_TABLE_NAME);
   }
 
-  beforeDBTransform(item: Partial<Stop>): DatabaseStop {
-    const res: DatabaseStop = {
+  beforeDBTransform(item: Stop) {
+    const res: Updateable<Database[typeof DEFAULT_STOPS_TABLE_NAME]> = {
       ...item,
-    } as DatabaseStop;
+    } as any;
 
     // Remove the latitude and longitude as that is never actually saved in the
     // database.
@@ -33,20 +42,18 @@ export class StopsTable extends DatabaseTable<Stop, DatabaseStop> {
     // If both the latitude and longitude was set, then make sure we set the
     // location with the point
     if (item.lat && item.lon) {
-      res.location = `(${item.lon},${item.lat})`;
+      res.location = sql`point(${item.lon},${item.lat})` as any;
     }
 
     // Convert to make sure we have the longitude and latitude as a point
-    return res;
+    return res as any;
   }
 
-  afterDBTransform(stop: DatabaseStop): Stop {
+  afterDBTransform(stop: Selectable<DatabaseStop>): Stop {
     // Convert the location saved as latitude and longitude
     const { lon, lat } = convertPointStringToPoint(stop.location);
-    return {
-      ...stop,
-      lon,
-      lat,
-    };
+    const res = { ...stop, lon, lat };
+    delete (res as any).location;
+    return res as any as Stop;
   }
 }

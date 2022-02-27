@@ -7,11 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "data-api-client": "^1.2.0",
+    "kysely-data-api": "^0.0.9",
     "luxon": "^2.3.0"
   },
   "devDependencies": {
-    "@types/data-api-client": "^1.2.4",
     "@types/luxon": "^2.0.9",
     "@types/uuid": "^8.3.4",
     "esbuild-runner": "^2.2.1"

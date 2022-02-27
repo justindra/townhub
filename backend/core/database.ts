@@ -1,49 +1,29 @@
-import client, { iDataAPIClient } from 'data-api-client';
+import { RDSDataService } from 'aws-sdk';
+import { Kysely, MutationObject, Selectable, Updateable } from 'kysely';
+import { DataApiDialect } from 'kysely-data-api';
 import { DateTime } from 'luxon';
-import {
-  BaseEntity,
-  DatabaseCreateInput,
-  DatabaseUpdateInput,
-} from './interfaces';
 
-const db = client({
-  database: process.env.DATABASE_NAME ?? '',
-  resourceArn: process.env.DATABASE_CLUSTER_ARN ?? '',
-  secretArn: process.env.DATABASE_SECRET_ARN ?? '',
+const db = new Kysely({
+  dialect: new DataApiDialect({
+    mode: 'postgres',
+    driver: {
+      client: new RDSDataService(),
+      database: process.env.DATABASE_NAME ?? '',
+      resourceArn: process.env.DATABASE_CLUSTER_ARN ?? '',
+      secretArn: process.env.DATABASE_SECRET_ARN ?? '',
+    },
+  }),
 });
 
-const convertItemToColumnAndValues = <TItem extends Record<string, any>>(
-  item: TItem,
-  ignoredFields: (keyof TItem)[] = []
-) => {
-  let columns: (keyof TItem)[] = [];
-  let values: string[] = [];
-
-  Object.keys(item)
-    .filter((key) => !ignoredFields.includes(key))
-    .forEach((key) => {
-      if (!item[key as keyof TItem]) return;
-      columns.push(key as keyof TItem);
-      values.push(item[key as keyof TItem]?.toString() || '');
-    });
-
-  return { columns, values };
-};
-
 export class DatabaseTable<
-  TItem extends BaseEntity,
-  TDatabaseItem extends BaseEntity = TItem
+  TDatabase extends Record<string, any>,
+  TTableName extends keyof TDatabase & string,
+  TItem = Selectable<TDatabase[TTableName]>
 > {
-  /** The database instance to send queries to */
-  private db: iDataAPIClient;
+  protected readonly kysely: Kysely<TDatabase>;
 
-  /**
-   * The client for an Agency Table to make it easier to just create and update
-   * item(s).
-   * @param tableName The tablename to use
-   */
-  constructor(private tableName: string) {
-    this.db = db;
+  constructor(private tableName: TTableName) {
+    this.kysely = db as Kysely<TDatabase>;
   }
 
   /**
@@ -52,23 +32,19 @@ export class DatabaseTable<
    * @param actorId The Id of the user adding the items
    * @returns
    */
-  async create(
-    item: DatabaseCreateInput<TItem>,
-    actorId: string
-  ): Promise<TItem> {
-    const { columns, values } = convertItemToColumnAndValues(
-      this.beforeDBTransform({
-        ...item,
-        created_by: actorId,
-        updated_by: actorId,
-      } as Partial<TItem>)
-    );
+  async create(row: TItem, actorId: string) {
+    const newValues = this.beforeDBTransform({
+      ...(row as any as TItem),
+      created_by: actorId,
+      updated_by: actorId,
+    });
+    const res = await this.kysely
+      .insertInto(this.tableName)
+      .values(newValues as any)
+      .returningAll()
+      .executeTakeFirstOrThrow();
 
-    const query = `INSERT INTO ${this.tableName}(${columns.join(', ')})
-VALUES (${values.map((val) => `'${val}'`).join(', ')})
-RETURNING *`;
-    const res = await this.db.query(query);
-    return this.afterDBTransform(res.records?.[0]);
+    return this.afterDBTransform(res);
   }
 
   /**
@@ -80,35 +56,36 @@ RETURNING *`;
    */
   async update(
     id: string,
-    item: DatabaseUpdateInput<TItem>,
+    item: MutationObject<TDatabase, TTableName>,
     actorId: string
-  ): Promise<TItem> {
-    const { columns, values } = convertItemToColumnAndValues(
-      this.beforeDBTransform({
-        ...item,
-        // Set the audit values
-        updated_at: DateTime.local().toISO(),
-        updated_by: actorId,
-      }),
-      // Ignore these values, so that it can never be updated
-      ['created_at', 'created_by', 'id']
-    );
+  ) {
+    const values = this.beforeDBTransform({
+      ...(item as any),
+      // Set the audit values
+      updated_at: DateTime.local().toISO(),
+      updated_by: actorId,
+    });
 
-    const query = `UPDATE ${this.tableName}
-SET ${columns.map((col, index) => `${col} = '${values[index]}'`).join(', ')}
-WHERE id = '${id}'
-RETURNING *`;
+    const res = await this.kysely
+      .updateTable(this.tableName)
+      .set(values as MutationObject<TDatabase, TTableName>)
+      .where('id', '=', id as any)
+      .returningAll()
+      .executeTakeFirst();
 
-    const res = await this.db.query(query);
-    return this.afterDBTransform(res.records?.[0]);
+    return this.afterDBTransform(res as any);
   }
 
   /**
    * List all data from the table
    */
-  async list(): Promise<TItem[]> {
-    const res = await this.db.query(`SELECT * from ${this.tableName}`);
-    return res.records.map(this.afterDBTransform);
+  async list() {
+    const res = await this.kysely
+      .selectFrom(this.tableName)
+      .selectAll()
+      .execute();
+
+    return res.map(this.afterDBTransform as any);
   }
 
   /**
@@ -116,10 +93,10 @@ RETURNING *`;
    * before it gets inserted back in, or updated.
    * @param item The item to push in
    */
-  beforeDBTransform<TBeforeItem = Partial<TItem>>(
-    item: TBeforeItem
-  ): TDatabaseItem {
-    return item as any as TDatabaseItem;
+  beforeDBTransform<TAfterItem extends Updateable<TDatabase[TTableName]>>(
+    item: TItem
+  ): TAfterItem {
+    return item as any as TAfterItem;
   }
 
   /**
@@ -127,7 +104,9 @@ RETURNING *`;
    * the interface as required for usage
    * @param databaseItem The raw database item
    */
-  afterDBTransform(databaseItem: TDatabaseItem): TItem {
+  afterDBTransform(
+    databaseItem: Awaited<Selectable<TDatabase[TTableName]>>
+  ): TItem {
     return databaseItem as any as TItem;
   }
 }
