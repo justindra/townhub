@@ -27,6 +27,15 @@ export type NonNegativeInteger<T extends number = number> = number extends T
 
 export type URL = string;
 
+/**
+ * Service day in the YYYYMMDD format. Since time within a service day can be
+ * above 24:00:00, a service day often contains information for the subsequent
+ * day(s).
+ *
+ * Example: 20180913 for September 13th, 2018.
+ */
+export type Date = string;
+
 export type BaseEntity = {
   /** The id of this entity, should be a v4 UUID */
   id: Generated<string>;
