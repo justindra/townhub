@@ -1,7 +1,7 @@
 import { DatabaseTable } from 'core/database';
 import { CalendarDate } from './interfaces';
 
-export const DEFAULT_CALENDAR_DATES_TABLE_NAME = 'calendar-dates';
+export const DEFAULT_CALENDAR_DATES_TABLE_NAME = 'calendar_dates';
 
 type Database = {
   [DEFAULT_CALENDAR_DATES_TABLE_NAME]: CalendarDate;

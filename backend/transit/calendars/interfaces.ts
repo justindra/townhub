@@ -1,4 +1,4 @@
-import { BaseEntity } from 'core/interfaces';
+import { BaseEntity, Date } from 'core/interfaces';
 
 enum ServiceAvailability {
   /**
@@ -13,11 +13,9 @@ enum ServiceAvailability {
 
 export type Calendar = BaseEntity & {
   /**
-   * Uniquely identifies a set of dates when service is available for one or
-   * more routes. Each `service_id` value can appear at most once in a
-   * `calendar.txt` file.
+   * The service_id provided when data is imported, if it was imported at all.
    */
-  service_id: string;
+  imported_id: string | null;
   /**
    * Indicates whether the service operates on all Mondays in the date range
    * specified by the `start_date` and `end_date` fields. Note that exceptions
@@ -51,10 +49,10 @@ export type Calendar = BaseEntity & {
   /**
    * Start service day for the service interval.
    */
-  start_date: string;
+  start_date: Date;
   /**
    * End service day for the service interval. This service day is included in
    * the interval.
    */
-  end_date: string;
+  end_date: Date;
 };

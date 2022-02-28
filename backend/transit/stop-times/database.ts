@@ -1,7 +1,7 @@
 import { DatabaseTable } from 'core/database';
 import { StopTime } from './interfaces';
 
-export const DEFAULT_STOP_TIMES_TABLE_NAME = 'stop-times';
+export const DEFAULT_STOP_TIMES_TABLE_NAME = 'stop_times';
 
 type Database = {
   [DEFAULT_STOP_TIMES_TABLE_NAME]: StopTime;

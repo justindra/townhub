@@ -36,16 +36,16 @@ export enum TripBikesAllowed {
 }
 
 export type Trip = BaseEntity & {
+  /**
+   * The trip_id provided when data is imported, if it was imported at all.
+   */
+  imported_id: string | null;
   /** Identifies a route. */
   route_id: string;
   /**
    * Identifies a set of dates when service is available for one or more routes.
    */
   service_id: string;
-  /**
-   * The id provided when data is imported, if it was imported at all.
-   */
-  imported_id: string | null;
   /**
    * Text that appears on signage identifying the trip's destination to riders.
    * Use this field to distinguish between different patterns of service on the
