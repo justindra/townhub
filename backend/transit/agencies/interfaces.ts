@@ -6,12 +6,6 @@ import { BaseEntity, LanguageCode, Nullable, Timezone } from '@townhub/core';
 export type Agency = BaseEntity & {
   /**
    * The id provided when data is imported, if it was imported at all.
-   * Identifies a transit brand which is often synonymous with a transit agency.
-   * Note that in some cases, such as when a single agency operates multiple
-   * separate services, agencies and brands are distinct. This document uses the
-   * term "agency" in place of "brand". A dataset may contain data from multiple
-   * agencies. This field is required when the dataset contains data for
-   * multiple transit agencies, otherwise it is optional.
    */
   imported_id: Nullable<string>;
   /** Full name of the transit agency. */
