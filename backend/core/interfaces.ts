@@ -18,6 +18,15 @@ export type Timezone = string;
 /** Set field as nullable */
 export type Nullable<TField> = TField | null;
 
+/** A non-negative integer value */
+export type NonNegativeInteger<T extends number = number> = number extends T
+  ? never
+  : `${T}` extends `-${string}` | `${string}.${string}`
+  ? never
+  : T;
+
+export type URL = string;
+
 export type BaseEntity = {
   /** The id of this entity, should be a v4 UUID */
   id: Generated<string>;

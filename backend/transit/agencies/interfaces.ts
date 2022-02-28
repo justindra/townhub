@@ -1,5 +1,8 @@
 import { BaseEntity, LanguageCode, Nullable, Timezone } from '@townhub/core';
 
+/**
+ * Transit agencies with service represented in this dataset.
+ */
 export type Agency = BaseEntity & {
   /**
    * The id provided when data is imported, if it was imported at all.

@@ -63,7 +63,8 @@ enum StopWheelchairBoarding {
 export const STOP_ENTITY_TYPE = 'transit-stop';
 
 /**
- * Identifies a stop, station, or station entrance.
+ * Stops where vehicles pick up or drop off riders. Also defines stations and
+ * station entrances. Identifies a stop, station, or station entrance.
  *
  * The term "station entrance" refers to both station entrances and station
  * exits. Stops, stations or station entrances are collectively referred to as
