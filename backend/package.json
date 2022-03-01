@@ -4,6 +4,7 @@
   "main": "core/index",
   "scripts": {
     "script": "esr",
+    "seed": "AWS_PROFILE=townhub-dev ts-node-script ./scripts/seed/index.ts",
     "test": "jest"
   },
   "dependencies": {
@@ -13,6 +14,7 @@
   "devDependencies": {
     "@types/luxon": "^2.0.9",
     "@types/uuid": "^8.3.4",
-    "esbuild-runner": "^2.2.1"
+    "esbuild-runner": "^2.2.1",
+    "ts-node": "10.5.0"
   }
 }

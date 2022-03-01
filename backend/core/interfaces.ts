@@ -1,4 +1,10 @@
-import { ColumnType, Generated } from 'kysely';
+import {
+  ColumnType,
+  Generated,
+  Insertable,
+  NonNullableInsertKeys,
+  NullableInsertKeys,
+} from 'kysely';
 import { DateTime } from 'luxon';
 
 /**
@@ -36,6 +42,42 @@ export type URL = string;
  */
 export type Date = string;
 
+type Latitude = number;
+type Longitude = number;
+
+export type Point = {
+  /**
+   * 	Latitude of the location.
+   *
+   * For stops/platforms (location_type=0) and boarding area (location_type=4),
+   * the coordinates must be the ones of the bus pole — if exists — and
+   * otherwise of where the travelers are boarding the vehicle (on the sidewalk
+   * or the platform, and not on the roadway or the track where the vehicle stops).
+   *
+   * Conditionally Required:
+   * * Required for locations which are stops (location_type=0), stations
+   *   (location_type=1) or entrances/exits (location_type=2).
+   * * Optional for locations which are generic nodes (location_type=3) or
+   *   boarding areas (location_type=4).
+   */
+  lat: Latitude | null;
+  /**
+   * 	Longitude of the location.
+   *
+   * For stops/platforms (location_type=0) and boarding area (location_type=4),
+   * the coordinates must be the ones of the bus pole — if exists — and
+   * otherwise of where the travelers are boarding the vehicle (on the sidewalk
+   * or the platform, and not on the roadway or the track where the vehicle stops).
+   *
+   * Conditionally Required:
+   * * Required for locations which are stops (location_type=0), stations
+   *   (location_type=1) or entrances/exits (location_type=2).
+   * * Optional for locations which are generic nodes (location_type=3) or
+   *   boarding areas (location_type=4).
+   */
+  lon: Longitude | null;
+};
+
 export type BaseEntity = {
   /** The id of this entity, should be a v4 UUID */
   id: Generated<string>;
@@ -55,5 +97,5 @@ export type OmitAuditFields<TItem = BaseEntity> = Omit<
 >;
 export type OmitId<TItem> = Omit<TItem, 'id'>;
 
-export type DatabaseCreateInput<TItem> = OmitAuditFields<OmitId<TItem>>;
+export type DatabaseCreateInput<TItem> = OmitAuditFields<Insertable<TItem>>;
 export type DatabaseUpdateInput<TItem> = Partial<TItem>;

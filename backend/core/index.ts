@@ -4,6 +4,7 @@ export type {
   Nullable,
   Timezone,
   LanguageCode,
+  Point,
 } from './interfaces';
 
 // Re-export the modules

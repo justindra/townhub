@@ -1,4 +1,4 @@
-import { DatabaseTable } from 'core/database';
+import { DatabaseTable } from '../../core/database';
 import { CalendarDate } from './interfaces';
 
 export const DEFAULT_CALENDAR_DATES_TABLE_NAME = 'calendar_dates';

@@ -1,4 +1,4 @@
-import { DatabaseTable } from 'core/database';
+import { DatabaseTable } from '../../core/database';
 import { Agency } from './interfaces';
 
 export const DEFAULT_AGENCIES_TABLE_NAME = 'agencies';

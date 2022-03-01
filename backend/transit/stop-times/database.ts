@@ -1,4 +1,4 @@
-import { DatabaseTable } from 'core/database';
+import { DatabaseTable } from '../../core/database';
 import { StopTime } from './interfaces';
 
 export const DEFAULT_STOP_TIMES_TABLE_NAME = 'stop_times';

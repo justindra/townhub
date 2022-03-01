@@ -1,4 +1,4 @@
-import { BaseEntity, NonNegativeInteger } from 'core/interfaces';
+import { BaseEntity, NonNegativeInteger } from '../../core/interfaces';
 
 enum PickupType {
   /** Regularly scheduled pickup. (default when empty) */

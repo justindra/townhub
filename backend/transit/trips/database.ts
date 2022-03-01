@@ -1,4 +1,4 @@
-import { DatabaseTable } from 'core/database';
+import { DatabaseTable } from '../../core/database';
 import { Trip } from './interfaces';
 
 export const DEFAULT_TRIPS_TABLE_NAME = 'trips';

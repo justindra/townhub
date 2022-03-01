@@ -1,9 +1,14 @@
-import { BaseEntity, NonNegativeInteger, URL } from 'core/interfaces';
+import {
+  BaseEntity,
+  NonNegativeInteger,
+  Nullable,
+  URL,
+} from '../../core/interfaces';
 
 /** Color in Hex code, e.g. FFFFFF or 000000 */
 type Color = string;
 
-enum RouteType {
+export enum RouteType {
   /**
    * Tram, Streetcar, Light rail. Any light rail or street level system within
    * a metropolitan area.
@@ -50,7 +55,7 @@ enum RouteType {
   Monorail = 12,
 }
 
-enum ContinuousBehaviour {
+export enum ContinuousBehaviour {
   /** Continuous stopping pickup/drop-off. */
   Continuous = 0,
   /** No continuous stopping pickup/drop-off. */
@@ -69,9 +74,10 @@ export const ROUTE_ENTITY_TYPE = 'transit-route';
  */
 export type Route = BaseEntity & {
   /**
-   * The id provided when data is imported, if it was imported at all.
+   * The service_id provided when data is imported, if it was imported at all.
+   * @added This field is added ontop of the standard GTFS spec
    */
-  imported_id: string | null;
+  imported_id: Nullable<string>;
   /**
    * Agency for the specified route.
    */

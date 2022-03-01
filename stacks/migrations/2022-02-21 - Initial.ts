@@ -77,7 +77,7 @@ export async function up(db: KyselyWithRaw): Promise<void> {
     .addColumn('imported_id', 'text', (col) => col.unique())
     .addColumn('code', 'text')
     .addColumn('name', 'text', (col) => col.notNull())
-    .addColumn('location', 'point' as any)
+    .addColumn('point', 'point' as any)
     .addColumn('zone_id', 'uuid')
     .addColumn('url', 'text')
     .addColumn('location_type', 'integer')
@@ -118,6 +118,7 @@ export async function up(db: KyselyWithRaw): Promise<void> {
     .addColumn('sunday', 'integer', (col) => col.notNull())
     .addColumn('start_date', 'date', (col) => col.notNull())
     .addColumn('end_date', 'date', (col) => col.notNull())
+    .addColumn('service_name', 'text')
     .execute();
 
   // Create the trips table

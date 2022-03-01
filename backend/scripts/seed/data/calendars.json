@@ -1,0 +1,54 @@
+[
+  {
+    "service_id": "winter-2021-2022",
+    "service_name": "Winter 2021/2022 Daily Service",
+    "start_date": "2021-11-27",
+    "end_date": "2022-04-18",
+    "monday": 1,
+    "tuesday": 1,
+    "wednesday": 1,
+    "thursday": 1,
+    "friday": 1,
+    "saturday": 1,
+    "sunday": 1
+  },
+  {
+    "service_id": "winter-2021-2022-weekend-only",
+    "service_name": "Winter 2021/2022 Weekend Service",
+    "start_date": "2021-11-27",
+    "end_date": "2022-03-20",
+    "monday": 0,
+    "tuesday": 0,
+    "wednesday": 0,
+    "thursday": 0,
+    "friday": 0,
+    "saturday": 1,
+    "sunday": 1
+  },
+  {
+    "service_id": "winter-2021-2022-weekend-extra",
+    "service_name": "Winter 2021/2022 Early Season Weekend Service",
+    "start_date": "2021-11-27",
+    "end_date": "2021-12-17",
+    "monday": 0,
+    "tuesday": 0,
+    "wednesday": 0,
+    "thursday": 0,
+    "friday": 0,
+    "saturday": 1,
+    "sunday": 1
+  },
+  {
+    "service_id": "winter-2021-2022-daily-extra",
+    "service_name": "Winter 2021/2022 Later Season Daily Service",
+    "start_date": "2021-12-18",
+    "end_date": "2022-03-20",
+    "monday": 1,
+    "tuesday": 1,
+    "wednesday": 1,
+    "thursday": 1,
+    "friday": 1,
+    "saturday": 1,
+    "sunday": 1
+  }
+]

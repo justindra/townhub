@@ -2,27 +2,7 @@ import { RDSDataService } from 'aws-sdk';
 import { Kysely, MutationObject, Selectable, Updateable } from 'kysely';
 import { DataApiDialect } from 'kysely-data-api';
 import { DateTime } from 'luxon';
-
-// Setup Kysely configuration
-const db = new Kysely({
-  dialect: new DataApiDialect({
-    mode: 'postgres',
-    driver: {
-      client: new RDSDataService(),
-      database: process.env.DATABASE_NAME ?? '',
-      resourceArn: process.env.DATABASE_CLUSTER_ARN ?? '',
-      secretArn: process.env.DATABASE_SECRET_ARN ?? '',
-    },
-  }),
-});
-
-/**
- * TODO:
- *  - Setup Kysely plugin to automatically transform date fields from DateTime
- *    to ISO string before sending to the database and then re-transform back
- *    to the DateTime object when it comes back. (See the camelCase plugin for
- *    inspiration)
- */
+import { DatabaseCreateInput, Nullable } from './interfaces';
 
 /**
  * A wrapper around the database so that we can just make some simple calls to
@@ -36,7 +16,24 @@ export class DatabaseTable<
   protected readonly kysely: Kysely<TDatabase>;
 
   constructor(private tableName: TTableName) {
-    this.kysely = db as Kysely<TDatabase>;
+    this.kysely = new Kysely<TDatabase>({
+      dialect: new DataApiDialect({
+        mode: 'postgres',
+        driver: {
+          client: new RDSDataService(),
+          database: process.env.DATABASE_NAME ?? '',
+          resourceArn: process.env.DATABASE_CLUSTER_ARN ?? '',
+          secretArn: process.env.DATABASE_SECRET_ARN ?? '',
+        },
+      }),
+    });
+    /**
+     * TODO:
+     *  - Setup Kysely plugin to automatically transform date fields from DateTime
+     *    to ISO string before sending to the database and then re-transform back
+     *    to the DateTime object when it comes back. (See the camelCase plugin for
+     *    inspiration), we can do this for any fields that ends with `_at`.
+     */
   }
 
   /**
@@ -45,7 +42,10 @@ export class DatabaseTable<
    * @param actorId The Id of the user adding the items
    * @returns
    */
-  async create(row: TItem, actorId: string) {
+  async create(
+    row: DatabaseCreateInput<TDatabase[TTableName]>,
+    actorId: Nullable<string>
+  ) {
     const newValues = this.beforeDBTransform({
       ...(row as any as TItem),
       created_by: actorId,
@@ -70,7 +70,7 @@ export class DatabaseTable<
   async update(
     id: string,
     item: MutationObject<TDatabase, TTableName>,
-    actorId: string
+    actorId: Nullable<string>
   ) {
     const values = this.beforeDBTransform({
       ...(item as any),

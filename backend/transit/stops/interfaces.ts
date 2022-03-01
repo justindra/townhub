@@ -1,7 +1,5 @@
-import { BaseEntity, Timezone } from '../../core';
-
-type Latitude = number;
-type Longitude = number;
+import { ColumnType } from 'kysely';
+import { BaseEntity, Nullable, Point, Timezone } from '../../core';
 
 enum StopLocationType {
   /**
@@ -72,9 +70,10 @@ export const STOP_ENTITY_TYPE = 'transit-stop';
  */
 export type Stop = BaseEntity & {
   /**
-   * The id provided when data is imported, if it was imported at all.
+   * The service_id provided when data is imported, if it was imported at all.
+   * @added This field is added ontop of the standard GTFS spec
    */
-  imported_id: string | null;
+  imported_id: Nullable<string>;
   /**
    * Short text or a number that identifies the location for riders. These
    * codes are often used in phone-based transit information systems or printed
@@ -112,35 +111,14 @@ export type Stop = BaseEntity & {
    */
   description: string | null;
   /**
-   * 	Latitude of the location.
-   *
-   * For stops/platforms (location_type=0) and boarding area (location_type=4),
-   * the coordinates must be the ones of the bus pole — if exists — and
-   * otherwise of where the travelers are boarding the vehicle (on the sidewalk
-   * or the platform, and not on the roadway or the track where the vehicle stops).
-   *
-   * Conditionally Required:
-   * * Required for locations which are stops (location_type=0), stations
-   *   (location_type=1) or entrances/exits (location_type=2).
-   * * Optional for locations which are generic nodes (location_type=3) or
-   *   boarding areas (location_type=4).
+   * The GeoPoint for the location. This is automatically populated using the
+   * provided longitude and latitude.
    */
-  lat: Latitude | null;
-  /**
-   * 	Longitude of the location.
-   *
-   * For stops/platforms (location_type=0) and boarding area (location_type=4),
-   * the coordinates must be the ones of the bus pole — if exists — and
-   * otherwise of where the travelers are boarding the vehicle (on the sidewalk
-   * or the platform, and not on the roadway or the track where the vehicle stops).
-   *
-   * Conditionally Required:
-   * * Required for locations which are stops (location_type=0), stations
-   *   (location_type=1) or entrances/exits (location_type=2).
-   * * Optional for locations which are generic nodes (location_type=3) or
-   *   boarding areas (location_type=4).
-   */
-  lon: Longitude | null;
+  point: ColumnType<
+    Nullable<string>,
+    Nullable<string | Point>,
+    Nullable<string | Point>
+  >;
   /**
    * Identifies the fare zone for a stop. This field is required if providing
    * fare information using fare_rules.txt, otherwise it is optional. If this

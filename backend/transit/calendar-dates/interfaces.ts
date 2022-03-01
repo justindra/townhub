@@ -1,4 +1,4 @@
-import { BaseEntity, Date } from 'core/interfaces';
+import { BaseEntity, Date } from '../../core/interfaces';
 
 export enum CalendarDateExceptionType {
   /** Service has been added for the specified date. */

@@ -1,4 +1,4 @@
-import { BaseEntity } from 'core/interfaces';
+import { BaseEntity, Nullable } from '../../core/interfaces';
 
 export enum TripDirection {
   Outbound = 0,
@@ -37,9 +37,10 @@ export enum TripBikesAllowed {
 
 export type Trip = BaseEntity & {
   /**
-   * The trip_id provided when data is imported, if it was imported at all.
+   * The service_id provided when data is imported, if it was imported at all.
+   * @added This field is added ontop of the standard GTFS spec
    */
-  imported_id: string | null;
+  imported_id: Nullable<string>;
   /** Identifies a route. */
   route_id: string;
   /**

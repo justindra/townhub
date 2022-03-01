@@ -1,4 +1,4 @@
-import { BaseEntity, Date } from 'core/interfaces';
+import { BaseEntity, Date, Nullable } from '../../core/interfaces';
 
 enum ServiceAvailability {
   /**
@@ -14,8 +14,15 @@ enum ServiceAvailability {
 export type Calendar = BaseEntity & {
   /**
    * The service_id provided when data is imported, if it was imported at all.
+   * @added This field is added ontop of the standard GTFS spec
    */
-  imported_id: string | null;
+  imported_id: Nullable<string>;
+  /**
+   * The name of the service, to make it easily identifiable. E.g. `Winter
+   * service` or `2021 Summer Weekend Service`
+   * @added This field is added ontop of the standard GTFS spec
+   */
+  service_name: Nullable<string>;
   /**
    * Indicates whether the service operates on all Mondays in the date range
    * specified by the `start_date` and `end_date` fields. Note that exceptions

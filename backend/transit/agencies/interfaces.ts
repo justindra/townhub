@@ -5,7 +5,8 @@ import { BaseEntity, LanguageCode, Nullable, Timezone } from '@townhub/core';
  */
 export type Agency = BaseEntity & {
   /**
-   * The id provided when data is imported, if it was imported at all.
+   * The service_id provided when data is imported, if it was imported at all.
+   * @added This field is added ontop of the standard GTFS spec
    */
   imported_id: Nullable<string>;
   /** Full name of the transit agency. */

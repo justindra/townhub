@@ -5,7 +5,7 @@ import {
   Stack,
   StackProps,
 } from '@serverless-stack/resources';
-import { RemovalPolicy } from 'aws-cdk-lib';
+import { CfnOutput, RemovalPolicy } from 'aws-cdk-lib';
 
 const DATABASE_NAME = 'TownhubDatabase';
 export class StaticStack extends Stack {
@@ -32,6 +32,19 @@ export class StaticStack extends Stack {
         DATABASE_SECRET_ARN: cluster.secretArn,
       },
       permissions: [cluster],
+    });
+
+    new CfnOutput(this, 'DatabaseName', {
+      exportName: 'DatabaseName',
+      value: DATABASE_NAME,
+    });
+    new CfnOutput(this, 'DatabaseClusterArn', {
+      exportName: 'DatabaseClusterArn',
+      value: cluster.clusterArn,
+    });
+    new CfnOutput(this, 'DatabaseSecretArn', {
+      exportName: 'DatabaseSecretArn',
+      value: cluster.secretArn,
     });
   }
 }
