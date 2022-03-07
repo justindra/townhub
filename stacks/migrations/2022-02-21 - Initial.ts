@@ -32,8 +32,12 @@ const createBaseTable = (db: KyselyWithRaw, tableName: string) => {
     .addColumn('updated_at', 'timestamptz', (col) =>
       col.defaultTo('NOW()').notNull()
     )
-    .addColumn('created_by', 'uuid', (col) => col.references('users.id'))
-    .addColumn('updated_by', 'uuid', (col) => col.references('users.id'));
+    .addColumn('created_by', 'uuid', (col) =>
+      col.references(`${DEFAULT_USERS_TABLE_NAME}.id`)
+    )
+    .addColumn('updated_by', 'uuid', (col) =>
+      col.references(`${DEFAULT_USERS_TABLE_NAME}.id`)
+    );
 };
 
 export async function up(db: KyselyWithRaw): Promise<void> {
