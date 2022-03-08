@@ -1,5 +1,5 @@
 import { RDSDataService } from 'aws-sdk';
-import { Kysely, MutationObject, Selectable, Updateable } from 'kysely';
+import { Kysely, MutationObject, Selectable, sql, Updateable } from 'kysely';
 import { DataApiDialect } from 'kysely-data-api';
 import { DateTime } from 'luxon';
 import { DatabaseCreateInput, Nullable } from './interfaces';
@@ -33,6 +33,7 @@ export class DatabaseTable<
      *    to ISO string before sending to the database and then re-transform back
      *    to the DateTime object when it comes back. (See the camelCase plugin for
      *    inspiration), we can do this for any fields that ends with `_at`.
+     *  - May also need the same with UUIDs for id fields
      */
   }
 
@@ -43,11 +44,11 @@ export class DatabaseTable<
    * @returns
    */
   async create(
-    row: DatabaseCreateInput<TDatabase[TTableName]>,
+    item: DatabaseCreateInput<TDatabase[TTableName]>,
     actorId: Nullable<string>
   ) {
     const newValues = this.beforeDBTransform({
-      ...(row as any as TItem),
+      ...(item as any as TItem),
       created_by: actorId,
       updated_by: actorId,
     });
@@ -87,6 +88,22 @@ export class DatabaseTable<
       .executeTakeFirst();
 
     return this.afterDBTransform(res as any);
+  }
+
+  /**
+   * Get an item from the table
+   * @param id the id of the item to get
+   */
+  async get(id: string) {
+    const res = await this.kysely
+      .selectFrom(this.tableName)
+      .selectAll()
+      .where('id', '=', sql`${id}::uuid`)
+      .execute();
+
+    if (!res.length) return null;
+
+    return this.afterDBTransform(res[0] as any);
   }
 
   /**
