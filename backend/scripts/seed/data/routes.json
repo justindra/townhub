@@ -1,0 +1,18 @@
+[
+  {
+    "route_id": "rmr",
+    "agency_id": "everything-revelstoke",
+    "route_short_name": "1",
+    "route_long_name": "Downtown/RMR",
+    "route_desc": "Goes from Downtown to RMR and back",
+    "route_type": "Bus"
+  },
+  {
+    "route_id": "nordic",
+    "agency_id": "everything-revelstoke",
+    "route_short_name": "2",
+    "route_long_name": "Downtown/Nordic Ski Club",
+    "route_desc": "Goes from Downtown to the Nordic Ski Club and back",
+    "route_type": "Bus"
+  }
+]

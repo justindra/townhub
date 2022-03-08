@@ -2,6 +2,6 @@ module.exports = {
   singleQuote: true,
   arrowParens: 'always',
   jsxSingleQuote: true,
-  jsxBracketSameLine: true,
+  bracketSameLine: true,
   tabWidth: 2,
 };

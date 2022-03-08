@@ -1,0 +1,20 @@
+{
+  "name": "@townhub/core",
+  "version": "0.0.1",
+  "main": "core/index",
+  "scripts": {
+    "script": "esr",
+    "seed": "AWS_PROFILE=townhub-dev ts-node-script ./scripts/seed/index.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "kysely-data-api": "^0.0.9",
+    "luxon": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/luxon": "^2.0.9",
+    "@types/uuid": "^8.3.4",
+    "esbuild-runner": "^2.2.1",
+    "ts-node": "10.5.0"
+  }
+}

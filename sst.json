@@ -1,0 +1,5 @@
+{
+  "name": "townhub",
+  "region": "us-west-2",
+  "main": "stacks/index.ts"
+}

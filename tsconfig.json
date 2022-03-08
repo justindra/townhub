@@ -1,26 +1,7 @@
 {
+  "extends": "@tsconfig/node14",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "es2019",
-    "moduleResolution": "node",
-
-    "sourceMap": true,
-    "declaration": true,
-
-    "strict": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-
-    // Paths to shared libraries
-    "baseUrl": ".",
-    "paths": {
-      "@townhub-libs/core": ["libs/core/src"],
-      "@townhub-libs/core/*": ["libs/core/src/*"],
-      "@townhub-libs/shuttles": ["libs/shuttles/src"],
-      "@townhub-libs/shuttles/*": ["libs/shuttles/src/*"],
-      "@townhub-libs/towns": ["libs/towns/src"],
-      "@townhub-libs/towns/*": ["libs/towns/src/*"],
-    }
+    "resolveJsonModule": true
   },
-  "exclude": ["node_modules", "dist"]
+  "include": ["stacks"]
 }
